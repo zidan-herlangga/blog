@@ -3,6 +3,7 @@ layout: post
 title:  "Python Dasar"
 date:   2023-05-28 13:16:28 +0700
 categories: python dasar
+permalink: /python/dasar/
 author: Hackbymee
 ---
 
