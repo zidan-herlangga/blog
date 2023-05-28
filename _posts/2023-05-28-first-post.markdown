@@ -38,3 +38,25 @@ Bahasa Phyton memiliki beberapa kasus penggunaan dalam pengembangan aplikasi, te
 #### Pengembangan web sisi server
 <br />
 Pengembangan web sisi server meliputi fungsi backend kompleks yang dijalankan situs web untuk menampilkan informasi kepada pengguna. Contohnya, situs web harus berinteraksi dengan basis data, berkomunikasi dengan situs web lain, dan melindungi data saat mengirimkannya melalui jaringan. 
+
+## Program pertama
+Walaupun script ini sangat mudah sekali, namun kita harus mengetahui fungsi syntax yang ada.
+
+#### Berikut contoh kode :
+<br />
+
+{% highlight pyhton %}
+print("Hello Wolrd!")
+#=> mencetak 'Hello World!'.
+{% end highlight %}
+
+<br />
+Syntax `print` berfungsi untuk mencetak atau menghasilkan sesuatu yang ada di dalamnya.
+
+Jika kalian ingin belajar bahasa program Python, kalian bisa mengunjungi situs resminya [Python] : https://www.python.org/
+
+<p>Motivasi</p>
+<blockquote>
+<p>Saya masih berpikir bahwa salah satu tes terbaik dari kemampuan pemrograman adalah memberikan programmer sekitar 30 halaman kode dan melihat seberapa cepat dia dapat membaca dan memahaminya.</p>
+</blockquote>
+<p>has been ascribed to Bill Gates.</p>
