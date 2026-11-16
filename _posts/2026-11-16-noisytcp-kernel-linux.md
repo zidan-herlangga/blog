@@ -4,9 +4,9 @@ title: "NoisyTCP: Bug 11 Tahun di Kernel Linux yang Bisa Mematikan Server"
 description: "CVE-2026-99288 memungkinkan penyerang tanpa login memicu kernel panic dari jarak jauh. Hampir semua distro Linux terdampak."
 date: 2026-11-16 10:00:00 +0700
 categories: [keamanan, linux]
-image: /assets/images/news/noisytcp-cover.png
+image: /assets/images/news/noisytcp-cover.jpg
 image_alt: "Foto lorong data center dengan rak server"
-cover: /assets/images/news/noisytcp-cover.png
+cover: /assets/images/news/noisytcp-cover.jpg
 cover_alt: "Foto lorong data center dengan rak server"
 ---
 
