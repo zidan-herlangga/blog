@@ -464,34 +464,83 @@ body {
   position: relative;
   z-index: 1;
   border-top: 1px solid var(--line);
-  padding: 2rem 0 2.5rem;
+  padding: 2.25rem 0 2.5rem;
   margin-top: 4rem;
   color: var(--muted);
   font-size: 0.85rem;
 }
 
-.site-footer p {
-  margin: 0;
+.site-footer__top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.25rem;
+  flex-wrap: wrap;
+  margin-bottom: 1.1rem;
 }
 
-.site-footer a {
+.site-footer__copy {
+  margin: 0 0 0.35rem;
+  color: var(--fg);
+  font-weight: 500;
+}
+
+.site-footer__copy a {
   color: var(--accent-text);
   text-decoration: none;
 }
 
-.site-footer a:hover {
+.site-footer__copy a:hover {
   text-decoration: underline;
 }
 
-.site-footer__copy {
-  margin-bottom: 0.85rem;
+.site-footer__note {
+  margin: 0;
+  color: var(--muted);
+  font-size: 0.76rem;
+  opacity: 0.78;
+}
+
+.site-footer__social {
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+}
+
+.site-footer__social a {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 10px;
+  border: 1px solid var(--line);
+  background: var(--card);
+  color: var(--fg);
+  text-decoration: none;
+  transition: transform 0.18s ease, border-color 0.18s ease, background-color 0.18s ease, color 0.18s ease;
+}
+
+.site-footer__social a:hover {
+  transform: translateY(-2px);
+  border-color: color-mix(in oklab, var(--accent) 45%, var(--line));
+  background: color-mix(in oklab, var(--accent) 12%, var(--card));
+  color: var(--accent-text);
+  text-decoration: none;
+}
+
+.site-footer__social svg {
+  width: 17px;
+  height: 17px;
 }
 
 .site-footer__links {
   display: flex;
   flex-wrap: wrap;
   gap: 0.35rem 1rem;
-  margin-bottom: 0.85rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--line);
+  margin-bottom: 0;
 }
 
 .site-footer__links a {
@@ -505,11 +554,11 @@ body {
   text-decoration: underline;
 }
 
-.site-footer__note {
-  color: var(--muted);
-  font-size: 0.76rem;
-  opacity: 0.75;
-  margin-top: 0.4rem;
+@media (max-width: 560px) {
+  .site-footer__top {
+    flex-direction: column;
+    align-items: flex-start;
+  }
 }
 
 /* ---------- tipografi ---------- */
