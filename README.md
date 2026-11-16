@@ -10,8 +10,8 @@ Portal artikel pribadi berbasis Jekyll, live di **https://zidan-herlangga.github
 - `assets/css/style.css` — stylesheet (palet steel blue, sama dengan situs utama)
 - `index.md` — beranda
 - `about.md` — halaman Tentang
-- `kategori.md` — halaman semua kategori (`/blog/kategori/`)
-- `arsip.md` — halaman arsip per tahun (`/blog/arsip/`)
+- `kategori.html` — halaman semua kategori (`/blog/kategori/`)
+- `arsip.html` — halaman arsip per tahun (`/blog/arsip/`)
 
 ## Sidebar
 Sidebar kanan otomatis terisi dari data Jekyll:
@@ -44,6 +44,8 @@ Repo: `zidan-herlangga/blog` → Settings → Pages → Source: `Deploy from a b
 ## Catatan penting
 - Situs ini adalah **project page**, jadi semua aset & tautan dirender memakai
   `relative_url` agar otomatis berawalan `/blog/`. Jangan ganti `baseurl`.
+- Halaman `kategori.html` & `arsip.html` sengaja berekstensi **.html**, bukan `.md`,
+  karena kramdown meng-*escape* blok HTML mentah di dalam Markdown.
 - Nama repo harus `blog` agar URL akhirnya `https://zidan-herlangga.github.io/blog/`.
 - Tema gelap default, bisa diganti ke terang lewat tombol di header
   (`localStorage` key `theme`).
