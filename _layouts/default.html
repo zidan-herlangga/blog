@@ -44,7 +44,8 @@
       <div class="header-actions">
         <form class="site-search" action="{{ '/cari/' | relative_url }}" method="get" role="search">
           <svg class="site-search__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="7"></circle><path d="m20 20-3.5-3.5"></path></svg>
-          <input type="search" name="q" class="site-search__input" placeholder="Cari..." aria-label="Cari tulisan">
+          <input type="search" name="q" id="headerSearch" class="site-search__input" placeholder="Cari..." aria-label="Cari tulisan" autocomplete="off">
+          <div class="site-search__dropdown" id="headerSearchDropdown" hidden></div>
         </form>
         <nav class="site-nav">
           <a href="{{ '/' | relative_url }}">Beranda</a>
@@ -203,6 +204,45 @@
         if (!ticking) { requestAnimationFrame(update); ticking = true; }
       }, { passive: true });
       update();
+    })();
+  </script>
+  <script>
+    (() => {
+      const input = document.getElementById('headerSearch');
+      const dropdown = document.getElementById('headerSearchDropdown');
+      if (!input || !dropdown) return;
+      let posts = null;
+      let timer = null;
+      const load = () => posts ? Promise.resolve(posts) : fetch('{{ "/search.json" | relative_url }}').then((r) => r.json()).then((d) => { posts = Array.isArray(d) ? d : []; return posts; }).catch(() => { posts = []; return posts; });
+      const esc = (s) => String(s).replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+      const render = (q) => {
+        if (!posts) return;
+        const query = q.trim().toLowerCase();
+        if (!query) { dropdown.hidden = true; dropdown.innerHTML = ''; return; }
+        const hits = posts.filter((p) => [p.title, p.description, (p.categories || []).join(' ')].join(' ').toLowerCase().includes(query)).slice(0, 6);
+        if (!hits.length) {
+          dropdown.innerHTML = '<div class="live-search__empty">Tidak ada hasil</div>';
+          dropdown.hidden = false;
+          return;
+        }
+        dropdown.innerHTML = hits.map((p) => `
+          <a class="live-search__item" href="${esc(p.url)}">
+            <img src="${esc(p.image)}" alt="" loading="lazy" decoding="async">
+            <span class="live-search__text">
+              <span class="live-search__title">${esc(p.title)}</span>
+              <span class="live-search__meta">${esc(p.date)} · ${(p.categories || []).map(esc).join(', ')}</span>
+            </span>
+          </a>
+        `).join('') + `<a class="live-search__all" href="{{ '/cari/' | relative_url }}?q=${encodeURIComponent(query)}">Lihat semua hasil →</a>`;
+        dropdown.hidden = false;
+      };
+      input.addEventListener('input', () => {
+        clearTimeout(timer);
+        timer = setTimeout(() => { load().then(() => render(input.value)); }, 180);
+      });
+      input.addEventListener('focus', () => { if (input.value.trim()) load().then(() => render(input.value)); });
+      document.addEventListener('click', (e) => { if (!input.parentElement.contains(e.target)) dropdown.hidden = true; });
+      input.addEventListener('keydown', (e) => { if (e.key === 'Escape') { dropdown.hidden = true; input.blur(); } });
     })();
   </script>
 </body>
