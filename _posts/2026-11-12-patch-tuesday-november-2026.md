@@ -1,4 +1,4 @@
-﻿---
+---
 layout: post
 title: "Patch Tuesday November 2026: 1.093 Celah, Zero-Day Outlook, dan Prioritas Update"
 description: "Patch Tuesday November 2026 membawa 1.093 perbaikan, 63 kritis, dan zero-day Outlook CVE-2026-124194 yang sudah dieksploitasi."

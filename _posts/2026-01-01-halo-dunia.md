@@ -1,4 +1,4 @@
-﻿---
+---
 layout: post
 title: "Halo Dunia – Tulisan Pertama"
 description: "Pembuka: rencana isi blog, contoh gambar, dan cara ikut berkomentar."

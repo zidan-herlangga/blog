@@ -1,4 +1,4 @@
-﻿---
+---
 layout: post
 title: "Insiden Cursor: Kunci API Bocor hingga Backdoor SSH di 5.000 Developer"
 description: "Kunci API Fireworks AI yang bocor membuka jalan bagi ekstensi Claude Code palsu di Cursor. Hingga 5.000 developer terpapar backdoor SSH."

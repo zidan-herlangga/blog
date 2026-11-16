@@ -1,4 +1,4 @@
-﻿---
+---
 layout: post
 title: "Google GTIG: Serangan AI yang Sepenuhnya Otomatis Sudah Dimulai"
 description: "GTIG mengonfirmasi ancaman baru: kerangka kerja LLM yang mengotomatiskan pencarian dan eksploitasi celah tanpa manusia di loop."

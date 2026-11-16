@@ -1,4 +1,4 @@
-﻿---
+---
 layout: post
 title: "Dirty Frag & Januscape: Dua Celah Kernel yang Lebih Berbahaya dari NoisyTCP"
 description: "Dirty Frag memberi root, Januscape memungkinkan escape dari VM. Keduanya ditemukan peneliti yang sama yang menemukan NoisyTCP."

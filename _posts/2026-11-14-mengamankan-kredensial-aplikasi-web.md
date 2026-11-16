@@ -1,4 +1,4 @@
-﻿---
+---
 layout: post
 title: "Cara Mengamankan Kredensial di Aplikasi Web"
 description: "Checklist praktis menyimpan secret: env var, secret manager, rotasi, scanning, dan least privilege."

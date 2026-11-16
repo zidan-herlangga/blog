@@ -1,4 +1,4 @@
-﻿---
+---
 layout: post
 title: "ARTEX dan Serangan Berbasis AI: Akses Istimewa dalam Waktu di Bawah 3 Jam"
 description: "FBI mewaspadai ARTEX, framework pentest berbasis AI yang mempercepat serangan ke akses istimewa dalam hitungan jam."

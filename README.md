@@ -1,4 +1,4 @@
-﻿# Blog (Jekyll)
+# Blog (Jekyll)
 
 Portal artikel pribadi berbasis Jekyll, live di **https://zidan-herlangga.github.io/blog/**.
 

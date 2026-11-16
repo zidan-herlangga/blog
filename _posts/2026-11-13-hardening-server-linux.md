@@ -1,4 +1,4 @@
-﻿---
+---
 layout: post
 title: "Checklist Hardening Server Linux untuk Pemula"
 description: "Langkah-langkah praktis mengamankan server Linux: SSH, firewall, update, fail2ban, backup, dan monitoring."
