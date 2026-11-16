@@ -5,6 +5,22 @@ url: "https://zidan-herlangga.github.io"
 baseurl: "/blog"
 author: "Zidan Herlangga"
 email: "zidanherlangga24@gmail.com"
+lang: id
+locale: id_ID
+
+# SEO: dipakai jekyll-seo-tag untuk og:image default & twitter card
+logo: /assets/images/og-default.png
+twitter:
+  card: summary_large_image
+  username: dansec04_
+social:
+  name: Zidan Herlangga
+  links:
+    - https://zidanherlangga.vercel.app
+    - https://github.com/zidan-herlangga
+    - https://www.instagram.com/zidanherlangga_
+    - https://www.linkedin.com/in/zidanherlangga
+    - https://x.com/dansec04_
 
 # Build settings
 markdown: kramdown

@@ -1,0 +1,23 @@
+{%- assign cat_name = page.categories.first | default: 'Tulisan' -%}
+{%- assign cat_slug = cat_name | slugify -%}
+{%- assign home_url = '/' | absolute_url -%}
+{%- assign cat_url = '/kategori/' | absolute_url | append: '#' | append: cat_slug -%}
+<nav class="breadcrumbs" aria-label="Breadcrumb">
+  <a href="{{ '/' | relative_url }}">Beranda</a>
+  <span class="breadcrumbs__sep" aria-hidden="true">/</span>
+  <a href="{{ '/kategori/#' | append: cat_slug | relative_url }}">{{ cat_name }}</a>
+  <span class="breadcrumbs__sep" aria-hidden="true">/</span>
+  <span aria-current="page">{{ page.title }}</span>
+</nav>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    { "@type": "ListItem", "position": 1, "name": "Beranda", "item": {{ home_url | jsonify }} },
+    { "@type": "ListItem", "position": 2, "name": {{ cat_name | jsonify }}, "item": {{ cat_url | jsonify }} },
+    { "@type": "ListItem", "position": 3, "name": {{ page.title | jsonify }}, "item": {{ page.url | absolute_url | jsonify }} }
+  ]
+}
+</script>

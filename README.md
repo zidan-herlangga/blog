@@ -8,8 +8,10 @@ Portal artikel pribadi berbasis Jekyll, live di **https://zidan-herlangga.github
 - `_includes/sidebar.html` — sidebar kanan (kategori, tulisan terbaru, arsip, tautan)
 - `_includes/figure.html` — komponen gambar + caption
 - `_includes/comments.html` — kolom komentar (utterances)
+- `_includes/breadcrumbs.html` — breadcrumb tampil + JSON-LD BreadcrumbList
 - `_posts/` — artikel (format `YYYY-MM-DD-judul.md`)
-- `assets/images/` — gambar artikel
+- `assets/images/` — gambar artikel (termasuk `og-default.png`)
+- `assets/fonts/` — font Inter & Space Grotesk (self-hosted)
 - `assets/css/style.css` — stylesheet (palet steel blue, sama dengan situs utama)
 - `index.md` — beranda
 - `about.html` — halaman Tentang (dengan foto profil)
@@ -96,6 +98,32 @@ comments:
 
 Moderasi: edit/hapus issue di tab **Issues** repo. Untuk menonaktifkan komentar,
 set `comments.enabled: false`.
+
+## SEO
+Sudah otomatis, tidak perlu diurus per artikel:
+
+- `jekyll-seo-tag` menulis `<title>`, description, canonical, Open Graph,
+  Twitter card, dan JSON-LD (`BlogPosting`, `Person`, `WebSite`)
+- `jekyll-sitemap` → `https://zidan-herlangga.github.io/blog/sitemap.xml`
+- `jekyll-feed` → `https://zidan-herlangga.github.io/blog/feed.xml`
+- Breadcrumb (`BreadcrumbList`) + navigasi antar artikel
+- Gambar OG default: `assets/images/og-default.png` (dipakai kalau artikel
+  tidak punya `image:` di front matter)
+- Font di-self-host, tanpa request ke Google Fonts
+
+**Checklist sekali saja (manual):**
+
+1. Buka [Google Search Console](https://search.google.com/search-console)
+2. **Add property** → **URL prefix** → `https://zidan-herlangga.github.io/blog/`
+3. Verifikasi dengan salah satu cara:
+   - **HTML tag**: salin `<meta name="google-site-verification" ...>` ke
+     `_layouts/default.html` (di dalam `<head>`), atau
+   - **HTML file**: taruh file `googleXXXX.html` dari Google di folder root repo
+4. **Sitemaps** → tambahkan `sitemap.xml` → Submit
+5. **URL Inspection** → tempel URL artikel → **Request indexing**
+
+Tips konten: satu artikel = satu topik/kata kunci, description 120–155 karakter,
+saling tautkan antar artikel, dan posting rutin (minimal 1–2× per bulan).
 
 ## Catatan penting
 - Situs ini adalah **project page**, jadi semua aset & tautan dirender memakai

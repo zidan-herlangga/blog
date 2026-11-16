@@ -3,6 +3,24 @@
    Palet & komponen disamakan dengan situs utama (steel blue).
    ========================================================= */
 
+/* Font di-self-host agar tidak ada request ke pihak ketiga
+   (lebih cepat + tidak ada data yang dikirim ke Google Fonts). */
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 100 900;
+  font-display: swap;
+  src: url('../fonts/inter-latin-wght-normal.woff2') format('woff2-variations');
+}
+
+@font-face {
+  font-family: 'Space Grotesk';
+  font-style: normal;
+  font-weight: 300 700;
+  font-display: swap;
+  src: url('../fonts/space-grotesk-latin-wght-normal.woff2') format('woff2-variations');
+}
+
 :root {
   --accent: #7d9cc0;
   --accent-2: color-mix(in oklab, var(--accent) 58%, #b7c5d4);
@@ -603,6 +621,38 @@ hr {
   z-index: 1;
 }
 
+.breadcrumbs {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.4rem;
+  margin-bottom: 1.1rem;
+  color: var(--muted);
+  font-size: 0.76rem;
+}
+
+.breadcrumbs a {
+  color: var(--muted);
+  text-decoration: none;
+}
+
+.breadcrumbs a:hover {
+  color: var(--accent-text);
+  text-decoration: underline;
+}
+
+.breadcrumbs__sep {
+  opacity: 0.45;
+}
+
+.breadcrumbs [aria-current='page'] {
+  color: var(--fg);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  max-width: 45ch;
+}
+
 .post-header {
   padding-bottom: 1.5rem;
   margin-bottom: 2rem;
@@ -723,6 +773,57 @@ hr {
 
 .post-footer a:hover {
   text-decoration: underline;
+}
+
+.post-nav {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.75rem;
+  margin-top: 2.5rem;
+}
+
+.post-nav__item {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+  padding: 0.85rem 1rem;
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  background: var(--card);
+  text-decoration: none;
+  transition: border-color 0.18s ease, background-color 0.18s ease;
+}
+
+.post-nav__item:hover {
+  border-color: color-mix(in oklab, var(--accent) 45%, var(--line));
+  text-decoration: none;
+}
+
+.post-nav__item--next {
+  text-align: right;
+}
+
+.post-nav__label {
+  color: var(--muted);
+  font-size: 0.72rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.post-nav__title {
+  color: var(--fg);
+  font-size: 0.9rem;
+  line-height: 1.45;
+}
+
+@media (max-width: 560px) {
+  .post-nav {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .post-nav__item--next {
+    text-align: left;
+  }
 }
 
 /* ---------- gambar & komentar ---------- */

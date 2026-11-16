@@ -2,6 +2,8 @@
 layout: default
 ---
 <article class="post">
+  {% include breadcrumbs.html %}
+
   <header class="post-header">
     <h1 class="post-title">{{ page.title }}</h1>
     <p class="post-meta">
@@ -25,6 +27,23 @@ layout: default
   <div class="post-content">
     {{ content }}
   </div>
+
+  {% if page.previous or page.next %}
+  <nav class="post-nav" aria-label="Navigasi antar tulisan">
+    {% if page.previous %}
+    <a class="post-nav__item post-nav__item--prev" href="{{ page.previous.url | relative_url }}">
+      <span class="post-nav__label">&larr; Sebelumnya</span>
+      <span class="post-nav__title">{{ page.previous.title }}</span>
+    </a>
+    {% endif %}
+    {% if page.next %}
+    <a class="post-nav__item post-nav__item--next" href="{{ page.next.url | relative_url }}">
+      <span class="post-nav__label">Berikutnya &rarr;</span>
+      <span class="post-nav__title">{{ page.next.title }}</span>
+    </a>
+    {% endif %}
+  </nav>
+  {% endif %}
 
   <footer class="post-footer">
     <a href="{{ '/' | relative_url }}">&larr; Kembali ke beranda</a>
