@@ -1,4 +1,4 @@
----
+﻿---
 layout: post
 title: "ARTEX dan Serangan Berbasis AI: Akses Istimewa dalam Waktu di Bawah 3 Jam"
 description: "FBI mewaspadai ARTEX, framework pentest berbasis AI yang mempercepat serangan ke akses istimewa dalam hitungan jam."
@@ -10,7 +10,7 @@ cover: /assets/images/news/artex-cover.webp
 cover_alt: "Foto gembok logam dengan kunci"
 ---
 
-FBI merilis FLASH advisory pada Jumat, 13 November 2026, tentang **ARTEX** — framework *penetration testing* otonom yang dipakai penyerang untuk mengotomatiskan serangan. Kalimat yang paling penting dalam advisory itu bukan soal teknologinya, melainkan soal kecepatan: sebagian intrusi berjalan dari tahap targeting ke akses istimewa **di bawah tiga jam**.
+FBI merilis FLASH advisory pada Jumat, 13 November 2026, tentang **ARTEX** – framework *penetration testing* otonom yang dipakai penyerang untuk mengotomatiskan serangan. Kalimat yang paling penting dalam advisory itu bukan soal teknologinya, melainkan soal kecepatan: sebagian intrusi berjalan dari tahap targeting ke akses istimewa **di bawah tiga jam**.
 
 Tiga hari setelahnya, Google Threat Intelligence Group (GTIG) merilis peringatan serupa: serangan yang sepenuhnya otomatis, tanpa manusia di dalam loop, sudah bukan proyeksi lagi. Kuartal ini mereka menemukannya di lapangan.
 
@@ -26,9 +26,9 @@ Alurnya meniru pekerjaan tim red team:
 4. Eskalasi hak akses.
 5. Pengambilan data.
 
-Yang membuatnya efektif bukan kecanggihan satu langkah, tetapi kemampuannya **merangkai langkah-langkah itu secara otomatis dan paralel** pada banyak target sekaligus. FBI mencatat framework ini sangat berguna untuk menemukan celah di partner portal, aplikasi internal karyawan, layanan legacy, dan integrasi pihak ketiga — area yang sering luput dari pemindaian rutin.
+Yang membuatnya efektif bukan kecanggihan satu langkah, tetapi kemampuannya **merangkai langkah-langkah itu secara otomatis dan paralel** pada banyak target sekaligus. FBI mencatat framework ini sangat berguna untuk menemukan celah di partner portal, aplikasi internal karyawan, layanan legacy, dan integrasi pihak ketiga – area yang sering luput dari pemindaian rutin.
 
-{% include figure.html src="/assets/images/news/diagram-artex.png" alt="Diagram lima tahap serangan ARTEX dari recon hingga eksfiltrasi" caption="Alur kerja ARTEX: recon, pencarian celah, eksekusi, eskalasi hak, dan eksfiltrasi — sebagian besar tanpa campur tangan manusia." %}
+{% include figure.html src="/assets/images/news/diagram-artex.png" alt="Diagram lima tahap serangan ARTEX dari recon hingga eksfiltrasi" caption="Alur kerja ARTEX: recon, pencarian celah, eksekusi, eskalasi hak, dan eksfiltrasi – sebagian besar tanpa campur tangan manusia." %}
 
 ## Asal-usul dan skala
 
@@ -91,13 +91,13 @@ Karena serangan bisa mencapai akses istimewa dalam tiga jam, playbook yang disus
 
 Kemunculan ARTEX bukan berarti AI "mengalahkan" pertahanan. Banyak organisasi yang diserang lewat celah yang sebenarnya sudah bisa ditutup dengan patch dan konfigurasi yang benar. Yang berubah adalah **kecepatan dan biaya**: penyerang sekarang bisa mencoba lebih banyak hal, lebih cepat, dengan tim yang lebih kecil.
 
-Pertahanan yang efektif mengikuti logika yang sama — otomatis, konsisten, dan tidak bergantung pada satu orang yang kebetulan sedang jaga. Artikel [insiden Cursor]({{ '/2026/11/15/insiden-cursor-backdoor-ssh/' | relative_url }}) menunjukkan sisi lain dari masalah ini: rantai pasok dan kredensial tetap menjadi pintu masuk favorit, bahkan ketika serangannya sudah diotomatiskan.
+Pertahanan yang efektif mengikuti logika yang sama – otomatis, konsisten, dan tidak bergantung pada satu orang yang kebetulan sedang jaga. Artikel [insiden Cursor]({{ '/2026/11/15/insiden-cursor-backdoor-ssh/' | relative_url }}) menunjukkan sisi lain dari masalah ini: rantai pasok dan kredensial tetap menjadi pintu masuk favorit, bahkan ketika serangannya sudah diotomatiskan.
 
 ## Sumber
 
-- [FBI warns ARTEX AI hacking tool is powering global cyberattacks — BleepingComputer](https://www.bleepingcomputer.com/news/security/fbi-warns-artex-ai-hacking-tool-is-powering-global-cyberattacks/)
-- [FBI flash alert says Artex tool automating cyberattacks at 'machine speed' — The Record](https://therecord.media/artex-ai-tool-fbi-flash-alert)
-- [Google warns that fully-automated AI attacks are coming soon — BleepingComputer](https://www.bleepingcomputer.com/news/security/google-warns-that-fully-automated-ai-attacks-are-coming-soon/)
-- [Clear padlock and keys, CC BY 2.0 — Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Clear_padlock_and_keys.jpg)
+- [FBI warns ARTEX AI hacking tool is powering global cyberattacks – BleepingComputer](https://www.bleepingcomputer.com/news/security/fbi-warns-artex-ai-hacking-tool-is-powering-global-cyberattacks/)
+- [FBI flash alert says Artex tool automating cyberattacks at 'machine speed' – The Record](https://therecord.media/artex-ai-tool-fbi-flash-alert)
+- [Google warns that fully-automated AI attacks are coming soon – BleepingComputer](https://www.bleepingcomputer.com/news/security/google-warns-that-fully-automated-ai-attacks-are-coming-soon/)
+- [Clear padlock and keys, CC BY 2.0 – Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Clear_padlock_and_keys.jpg)
 
 *Artikel ini ringkasan dan analisis pribadi. Untuk daftar IOC dan rekomendasi resmi, baca advisory FBI secara lengkap.*

@@ -1,4 +1,4 @@
----
+﻿---
 layout: post
 title: "Insiden Cursor: Kunci API Bocor hingga Backdoor SSH di 5.000 Developer"
 description: "Kunci API Fireworks AI yang bocor membuka jalan bagi ekstensi Claude Code palsu di Cursor. Hingga 5.000 developer terpapar backdoor SSH."
@@ -20,7 +20,7 @@ Urutannya kurang lebih seperti ini:
 
 1. Penyerang mendapatkan kunci akses yang tersimpan di **Fireworks AI**, penyedia pihak ketiga yang dipakai Cursor untuk training dan inference model.
 2. Kunci itu dipakai membaca bucket penyimpanan *read-only* yang berisi **trace historis coding agent**, kebanyakan dari 2025. Trace ini berasal dari pengguna yang tidak mengaktifkan Privacy Mode.
-3. Sebagian trace masih menyimpan **kredensial API mentah** — bukan hanya potongan kode.
+3. Sebagian trace masih menyimpan **kredensial API mentah** – bukan hanya potongan kode.
 4. Kredensial tersebut membuka akses ke beberapa sistem internal dan tool SaaS Cursor.
 5. Dari situ penyerang memperoleh kredensial yang bisa **mempublikasikan ekstensi ke marketplace** Cursor.
 6. Pada 29 Oktober, mereka mengunggah salinan palsu ekstensi Claude Code versi **2.1.312** dan **2.1.313** ke cache marketplace yang melayani pengguna VS Code.
@@ -110,8 +110,8 @@ Periksa `~/.ssh/authorized_keys`, rotasi semua kredensial yang pernah disimpan d
 
 ## Sumber
 
-- [Cursor confirms security breach led to malicious Claude Code extension — BleepingComputer](https://www.bleepingcomputer.com/news/security/cursor-confirms-security-breach-led-to-malicious-claude-code-extension/)
-- [Stolen Fireworks AI key led to Cursor extension incident — The Hacker News](https://thehackernews.com/2026/11/stolen-fireworks-ai-key-led-to-cursor.html)
-- [Code on computer monitor (Unsplash), CC0 — Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Code_on_computer_monitor_(Unsplash).jpg)
+- [Cursor confirms security breach led to malicious Claude Code extension – BleepingComputer](https://www.bleepingcomputer.com/news/security/cursor-confirms-security-breach-led-to-malicious-claude-code-extension/)
+- [Stolen Fireworks AI key led to Cursor extension incident – The Hacker News](https://thehackernews.com/2026/11/stolen-fireworks-ai-key-led-to-cursor.html)
+- [Code on computer monitor (Unsplash), CC0 – Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Code_on_computer_monitor_(Unsplash).jpg)
 
 *Artikel ini ringkasan dan analisis pribadi. Detail resmi ada di laporan insiden Cursor dan pemberitaan di atas.*

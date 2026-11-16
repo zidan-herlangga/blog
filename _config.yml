@@ -1,4 +1,4 @@
-title: "Zidan Herlangga — Blog"
+﻿title: "Zidan Herlangga – Blog"
 description: "Catatan, tulisan, dan eksperimen seputar web development, keamanan siber, dan teknologi."
 # Situs ini disajikan sebagai project page: https://<user>.github.io/blog/
 url: "https://zidan-herlangga.github.io"
@@ -33,7 +33,7 @@ plugins:
   - jekyll-seo-tag
   - jekyll-sitemap
 
-# Komentar (utterances, berbasis GitHub Issues — tanpa database)
+# Komentar (utterances, berbasis GitHub Issues – tanpa database)
 comments:
   enabled: true
   repo: "zidan-herlangga/blog"

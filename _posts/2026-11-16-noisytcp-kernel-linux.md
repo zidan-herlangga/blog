@@ -1,4 +1,4 @@
----
+﻿---
 layout: post
 title: "NoisyTCP: Bug 11 Tahun di Kernel Linux yang Bisa Mematikan Server"
 description: "CVE-2026-99288 memungkinkan penyerang tanpa login memicu kernel panic dari jarak jauh. Hampir semua distro Linux terdampak."
@@ -12,7 +12,7 @@ cover_alt: "Foto lorong data center dengan rak server"
 
 Ada bug di kernel Linux yang sudah berumur 11 tahun dan baru sekarang ditambal. Namanya **NoisyTCP**, tercatat sebagai **CVE-2026-99288**. Dampaknya bukan pencurian data, bukan eksekusi kode, tetapi sesuatu yang cukup untuk membuat layanan mati: **kernel panic**.
 
-Yang membuatnya serius adalah syaratnya yang rendah. Penyerang tidak perlu login, tidak perlu mengirim payload rumit, dan hampir semua distribusi Linux terdampak — termasuk server yang menjalankan Nginx, Apache, atau SSH dengan konfigurasi default.
+Yang membuatnya serius adalah syaratnya yang rendah. Penyerang tidak perlu login, tidak perlu mengirim payload rumit, dan hampir semua distribusi Linux terdampak – termasuk server yang menjalankan Nginx, Apache, atau SSH dengan konfigurasi default.
 
 ## Akar masalahnya: race condition di socket lookup
 
@@ -33,7 +33,7 @@ Red Hat menjelaskan intinya begini: diperlukan lookup ehash yang basi bersamaan 
 
 Untuk konteks yang jujur: ini **denial of service**, bukan kompromi penuh. Penyerang tidak bisa mencuri data, mengubah isi disk, atau menjalankan kode arbitrer. Dampaknya adalah layanan berhenti sampai server di-reboot.
 
-Tetapi jangan meremehkan DoS. Untuk bisnis, server yang mati sama saja dengan gangguan layanan. Untuk penyedia hosting, satu bug yang bisa mematikan banyak tenant sekaligus adalah masalah operasional besar. Dan karena kernel dipakai bersama, **container ikut terdampak walau container-nya sendiri tidak menjalankan Nginx** — yang menentukan adalah kernel host.
+Tetapi jangan meremehkan DoS. Untuk bisnis, server yang mati sama saja dengan gangguan layanan. Untuk penyedia hosting, satu bug yang bisa mematikan banyak tenant sekaligus adalah masalah operasional besar. Dan karena kernel dipakai bersama, **container ikut terdampak walau container-nya sendiri tidak menjalankan Nginx** – yang menentukan adalah kernel host.
 
 Penemunya, Hyunwoo Kim, mencatat bahwa jendela race-nya sempit. Pada server *bare-metal* yang lalu lintasnya sepi, memicu bug ini bisa memakan waktu lama. Tetapi penyerang tidak perlu berhasil pada percobaan pertama; mereka bisa mengirim traffic terus-menerus.
 
@@ -93,8 +93,8 @@ Artinya jelas: kernel adalah permukaan serangan yang sangat besar, dan sebagian 
 
 ## Sumber
 
-- [New NoisyTCP Linux kernel flaw lets attackers crash servers — BleepingComputer](https://www.bleepingcomputer.com/news/linux/new-noisytcp-linux-kernel-flaw-lets-attackers-crash-servers/)
-- [CVE-2026-99288 — Red Hat Customer Portal](https://access.redhat.com/security/cve/CVE-2026-99288)
-- [BalticServers data center, CC BY-SA 3.0 — Wikimedia Commons](https://commons.wikimedia.org/wiki/File:BalticServers_data_center.jpg)
+- [New NoisyTCP Linux kernel flaw lets attackers crash servers – BleepingComputer](https://www.bleepingcomputer.com/news/linux/new-noisytcp-linux-kernel-flaw-lets-attackers-crash-servers/)
+- [CVE-2026-99288 – Red Hat Customer Portal](https://access.redhat.com/security/cve/CVE-2026-99288)
+- [BalticServers data center, CC BY-SA 3.0 – Wikimedia Commons](https://commons.wikimedia.org/wiki/File:BalticServers_data_center.jpg)
 
 *Artikel ini ringkasan dan analisis pribadi. Selalu ikuti advisory resmi distribusi dan vendor infrastruktur kamu sebelum menerapkan perubahan pada sistem produksi.*

@@ -1,23 +1,23 @@
-# Blog (Jekyll)
+﻿# Blog (Jekyll)
 
 Portal artikel pribadi berbasis Jekyll, live di **https://zidan-herlangga.github.io/blog/**.
 
 ## Struktur
-- `_config.yml` — konfigurasi situs (`url` + `baseurl: /blog`)
-- `_layouts/` — template (`default.html`, `post.html`)
-- `_includes/sidebar.html` — sidebar kanan (kategori, tulisan terbaru, arsip, tautan)
-- `_includes/figure.html` — komponen gambar + caption
-- `_includes/comments.html` — kolom komentar (utterances)
-- `_includes/breadcrumbs.html` — breadcrumb tampil + JSON-LD BreadcrumbList
-- `_posts/` — artikel (format `YYYY-MM-DD-judul.md`)
-- `assets/images/` — gambar artikel (termasuk `og-default.png`)
-- `assets/images/news/` — cover & diagram untuk seri sorotan keamanan
-- `assets/fonts/` — font Inter & Space Grotesk (self-hosted)
-- `assets/css/style.css` — stylesheet (palet steel blue, sama dengan situs utama)
-- `index.md` — beranda
-- `about.html` — halaman Tentang (dengan foto profil)
-- `kategori.html` — halaman semua kategori (`/blog/kategori/`)
-- `arsip.html` — halaman arsip per tahun (`/blog/arsip/`)
+- `_config.yml` – konfigurasi situs (`url` + `baseurl: /blog`)
+- `_layouts/` – template (`default.html`, `post.html`)
+- `_includes/sidebar.html` – sidebar kanan (kategori, tulisan terbaru, arsip, tautan)
+- `_includes/figure.html` – komponen gambar + caption
+- `_includes/comments.html` – kolom komentar (utterances)
+- `_includes/breadcrumbs.html` – breadcrumb tampil + JSON-LD BreadcrumbList
+- `_posts/` – artikel (format `YYYY-MM-DD-judul.md`)
+- `assets/images/` – gambar artikel (termasuk `og-default.png`)
+- `assets/images/news/` – cover & diagram untuk seri sorotan keamanan
+- `assets/fonts/` – font Inter & Space Grotesk (self-hosted)
+- `assets/css/style.css` – stylesheet (palet steel blue, sama dengan situs utama)
+- `index.md` – beranda
+- `about.html` – halaman Tentang (dengan foto profil)
+- `kategori.html` – halaman semua kategori (`/blog/kategori/`)
+- `arsip.html` – halaman arsip per tahun (`/blog/arsip/`)
 
 ## Sidebar
 Sidebar kanan otomatis terisi dari data Jekyll:
@@ -42,7 +42,7 @@ categories: [web]
 Isi artikel...
 ```
 
-Commit & push ke `main` — GitHub Pages akan build otomatis.
+Commit & push ke `main` – GitHub Pages akan build otomatis.
 
 ## Deploy
 Repo: `zidan-herlangga/blog` → Settings → Pages → Source: `Deploy from a branch`, branch `main`, folder `/ (root)`.
@@ -78,7 +78,7 @@ cover_alt: "Deskripsi cover"
 
 ## Komentar
 
-Komentar memakai **[utterances](https://utteranc.es)** — berbasis GitHub Issues,
+Komentar memakai **[utterances](https://utteranc.es)** – berbasis GitHub Issues,
 tanpa database, tanpa iklan, tanpa pelacakan. Konfigurasinya di `_config.yml`:
 
 ```yaml
