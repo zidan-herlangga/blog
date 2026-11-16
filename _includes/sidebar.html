@@ -1,0 +1,66 @@
+<aside class="sidebar" aria-label="Sidebar">
+  <section class="side-card">
+    <div class="side-head">
+      <h2 class="side-title">Kategori</h2>
+      <a class="side-more" href="{{ '/kategori/' | relative_url }}">Semua</a>
+    </div>
+    {% if site.categories.size > 0 %}
+      <ul class="side-list">
+        {% assign cats = site.categories | sort %}
+        {% for cat in cats %}
+          {% assign slug = cat[0] | slugify %}
+          <li>
+            <a href="{{ '/kategori/#' | append: slug | relative_url }}">
+              <span>{{ cat[0] }}</span>
+              <span class="side-count">{{ cat[1].size }}</span>
+            </a>
+          </li>
+        {% endfor %}
+      </ul>
+    {% else %}
+      <p class="side-empty">Belum ada kategori.</p>
+    {% endif %}
+  </section>
+
+  <section class="side-card">
+    <h2 class="side-title">Tulisan terbaru</h2>
+    <ul class="side-list side-list--posts">
+      {% for post in site.posts limit: 5 %}
+        <li>
+          <a href="{{ post.url | relative_url }}">
+            <span>{{ post.title }}</span>
+          </a>
+        </li>
+      {% endfor %}
+    </ul>
+  </section>
+
+  <section class="side-card">
+    <h2 class="side-title">Arsip</h2>
+    {% assign by_year = site.posts | group_by_exp: "post", "post.date | date: '%Y'" %}
+    {% if by_year.size > 0 %}
+      <ul class="side-list">
+        {% for year in by_year %}
+          <li>
+            <a href="{{ '/arsip/#' | append: year.name | relative_url }}">
+              <span>{{ year.name }}</span>
+              <span class="side-count">{{ year.items.size }}</span>
+            </a>
+          </li>
+        {% endfor %}
+      </ul>
+    {% else %}
+      <p class="side-empty">Belum ada arsip.</p>
+    {% endif %}
+  </section>
+
+  <section class="side-card">
+    <h2 class="side-title">Tautan</h2>
+    <ul class="side-list">
+      <li><a href="https://zidanherlangga-bio.vercel.app"><span>Situs utama</span></a></li>
+      <li><a href="https://github.com/zidan-herlangga"><span>GitHub</span></a></li>
+      <li><a href="{{ '/feed.xml' | relative_url }}"><span>RSS Feed</span></a></li>
+      <li><a href="mailto:zidanherlangga24@gmail.com"><span>Email</span></a></li>
+    </ul>
+  </section>
+</aside>

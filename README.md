@@ -5,10 +5,22 @@ Portal artikel pribadi berbasis Jekyll, live di **https://zidan-herlangga.github
 ## Struktur
 - `_config.yml` — konfigurasi situs (`url` + `baseurl: /blog`)
 - `_layouts/` — template (`default.html`, `post.html`)
+- `_includes/sidebar.html` — sidebar kanan (kategori, tulisan terbaru, arsip, tautan)
 - `_posts/` — artikel (format `YYYY-MM-DD-judul.md`)
 - `assets/css/style.css` — stylesheet (palet steel blue, sama dengan situs utama)
 - `index.md` — beranda
 - `about.md` — halaman Tentang
+- `kategori.md` — halaman semua kategori (`/blog/kategori/`)
+- `arsip.md` — halaman arsip per tahun (`/blog/arsip/`)
+
+## Sidebar
+Sidebar kanan otomatis terisi dari data Jekyll:
+- **Kategori** diambil dari `categories` di front matter tiap artikel
+- **Tulisan terbaru** = 5 artikel terakhir
+- **Arsip** dikelompokkan per tahun
+- **Tautan** statis (situs utama, GitHub, RSS, email)
+
+Di layar < 900px sidebar turun ke bawah konten (2 kolom), lalu 1 kolom di ponsel.
 
 ## Menambah artikel
 Buat file di `_posts/` dengan nama `YYYY-MM-DD-judul.md`:
