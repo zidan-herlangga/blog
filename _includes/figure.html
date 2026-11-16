@@ -1,0 +1,12 @@
+{%- assign figure_src = include.src | relative_url -%}
+<figure class="post-figure">
+  <img
+    src="{{ figure_src }}"
+    alt="{{ include.alt | default: '' }}"
+    loading="lazy"
+    decoding="async"
+    {%- if include.width %} width="{{ include.width }}"{% endif %}>
+  {%- if include.caption %}
+  <figcaption>{{ include.caption }}</figcaption>
+  {%- endif %}
+</figure>

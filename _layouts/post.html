@@ -12,6 +12,16 @@ layout: default
     </p>
   </header>
 
+  {% if page.cover %}
+  <figure class="post-cover">
+    <img
+      src="{{ page.cover | relative_url }}"
+      alt="{{ page.cover_alt | default: page.title }}"
+      loading="eager"
+      decoding="async">
+  </figure>
+  {% endif %}
+
   <div class="post-content">
     {{ content }}
   </div>
@@ -20,3 +30,5 @@ layout: default
     <a href="{{ '/' | relative_url }}">&larr; Kembali ke beranda</a>
   </footer>
 </article>
+
+{% include comments.html %}

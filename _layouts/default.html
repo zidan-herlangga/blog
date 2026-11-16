@@ -90,6 +90,7 @@
         const dark = root.classList.toggle('dark');
         try { localStorage.setItem('theme', dark ? 'dark' : 'light'); } catch (e) { /* abaikan */ }
         sync();
+        document.dispatchEvent(new CustomEvent('themechange', { detail: { dark } }));
       });
     })();
   </script>

@@ -17,6 +17,15 @@ plugins:
   - jekyll-seo-tag
   - jekyll-sitemap
 
+# Komentar (utterances, berbasis GitHub Issues — tanpa database)
+comments:
+  enabled: true
+  repo: "zidan-herlangga/blog"
+  issue_term: "pathname"
+  label: ""
+  theme_light: "github-light"
+  theme_dark: "github-dark"
+
 # Exclude
 exclude:
   - Gemfile

@@ -1,0 +1,49 @@
+{%- if site.comments.enabled and site.comments.repo -%}
+<section class="comments" id="komentar">
+  <h2>Komentar</h2>
+  <p class="comments-hint">
+    Diskusi memakai GitHub Issues &mdash; masuk dengan akun GitHub untuk ikut berkomentar.
+    <a href="https://github.com/{{ site.comments.repo }}/issues" rel="noopener noreferrer">Lihat semua diskusi</a>.
+  </p>
+
+  <div
+    class="comments-frame"
+    data-comments
+    data-repo="{{ site.comments.repo }}"
+    data-issue-term="{{ site.comments.issue_term | default: 'pathname' }}"
+    data-label="{{ site.comments.label }}"
+    data-theme-light="{{ site.comments.theme_light | default: 'github-light' }}"
+    data-theme-dark="{{ site.comments.theme_dark | default: 'github-dark' }}"></div>
+
+  <noscript>
+    <p class="comments-fallback">Aktifkan JavaScript untuk memuat komentar.</p>
+  </noscript>
+</section>
+
+<script>
+  (() => {
+    const host = document.querySelector('[data-comments]');
+    if (!host) return;
+
+    const mount = () => {
+      const dark = document.documentElement.classList.contains('dark');
+      host.innerHTML = '';
+      const s = document.createElement('script');
+      s.src = 'https://utteranc.es/client.js';
+      s.async = true;
+      s.crossOrigin = 'anonymous';
+      s.setAttribute('repo', host.dataset.repo);
+      s.setAttribute('issue-term', host.dataset.issueTerm);
+      if (host.dataset.label) s.setAttribute('label', host.dataset.label);
+      s.setAttribute(
+        'theme',
+        dark ? host.dataset.themeDark : host.dataset.themeLight
+      );
+      host.appendChild(s);
+    };
+
+    mount();
+    document.addEventListener('themechange', mount);
+  })();
+</script>
+{%- endif -%}

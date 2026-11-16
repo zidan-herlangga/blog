@@ -725,6 +725,75 @@ hr {
   text-decoration: underline;
 }
 
+/* ---------- gambar & komentar ---------- */
+
+.post-figure {
+  margin: 1.75rem 0;
+}
+
+.post-figure img {
+  display: block;
+  width: 100%;
+  height: auto;
+  border: 1px solid var(--line);
+  border-radius: 14px;
+}
+
+.post-figure figcaption {
+  margin-top: 0.65rem;
+  color: var(--muted);
+  font-size: 0.8rem;
+  line-height: 1.5;
+  text-align: center;
+}
+
+.post-cover {
+  margin: 0 0 2rem;
+}
+
+.post-cover img {
+  display: block;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+  border: 1px solid var(--line);
+  border-radius: 18px;
+}
+
+.comments {
+  margin-top: 3rem;
+  padding-top: 1.75rem;
+  border-top: 1px solid var(--line);
+}
+
+.comments h2 {
+  margin-top: 0;
+  font-size: 1.05rem;
+}
+
+.comments-hint {
+  margin-bottom: 1.1rem;
+  color: var(--muted);
+  font-size: 0.84rem;
+}
+
+.comments-hint a {
+  color: var(--accent-text);
+}
+
+.comments-frame {
+  min-height: 140px;
+}
+
+.comments-frame .utterances {
+  max-width: 100%;
+}
+
+.comments-fallback {
+  color: var(--muted);
+  font-size: 0.85rem;
+}
+
 /* ---------- halaman kategori & arsip ---------- */
 
 .page-intro {
