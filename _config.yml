@@ -26,12 +26,18 @@ social:
 markdown: kramdown
 highlighter: rouge
 permalink: /:year/:month/:day/:title/
+future: true
+
+# Pagination (jekyll-paginate, didukung GitHub Pages)
+paginate: 6
+paginate_path: "/halaman/:num/"
 
 # Plugins (didukung GitHub Pages)
 plugins:
   - jekyll-feed
   - jekyll-seo-tag
   - jekyll-sitemap
+  - jekyll-paginate
 
 # Komentar (utterances, berbasis GitHub Issues – tanpa database)
 comments:

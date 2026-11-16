@@ -7,12 +7,18 @@ description: "Catatan, tulisan, dan eksperimen seputar web development, keamanan
 <section class="posts">
   <div class="section-heading">
     <h2>Semua tulisan</h2>
-    <span class="post-date">{{ site.posts | size }} artikel</span>
+    <span class="post-date">{{ paginator.total_posts | default: site.posts.size }} artikel</span>
   </div>
 
-  {% if site.posts.size > 0 %}
+  {% if paginator %}
+    {% assign current_posts = paginator.posts %}
+  {% else %}
+    {% assign current_posts = site.posts %}
+  {% endif %}
+
+  {% if current_posts.size > 0 %}
   <div class="news-list">
-    {% for post in site.posts %}
+    {% for post in current_posts %}
     <article class="news-item">
       <a class="news-item__link" href="{{ post.url | relative_url }}">
         <span class="news-item__media">
@@ -38,6 +44,22 @@ description: "Catatan, tulisan, dan eksperimen seputar web development, keamanan
     </article>
     {% endfor %}
   </div>
+
+  {% if paginator.total_pages > 1 %}
+  <nav class="pagination" aria-label="Navigasi halaman">
+    {% if paginator.previous_page %}
+      <a class="pagination__btn" href="{{ paginator.previous_page_path | relative_url }}">← Sebelumnya</a>
+    {% else %}
+      <span class="pagination__btn pagination__btn--disabled">← Sebelumnya</span>
+    {% endif %}
+    <span class="pagination__info">Halaman {{ paginator.page }} dari {{ paginator.total_pages }}</span>
+    {% if paginator.next_page %}
+      <a class="pagination__btn" href="{{ paginator.next_page_path | relative_url }}">Berikutnya →</a>
+    {% else %}
+      <span class="pagination__btn pagination__btn--disabled">Berikutnya →</span>
+    {% endif %}
+  </nav>
+  {% endif %}
   {% else %}
   <p class="empty">Belum ada tulisan. Nantikan segera.</p>
   {% endif %}
