@@ -19,8 +19,11 @@ layout: default
     <img
       src="{{ page.cover | relative_url }}"
       alt="{{ page.cover_alt | default: page.title }}"
+      width="1200"
+      height="630"
       loading="eager"
-      decoding="async">
+      decoding="async"
+      fetchpriority="high">
   </figure>
   {% endif %}
 
