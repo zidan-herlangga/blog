@@ -4,49 +4,6 @@ title: Beranda
 description: "Catatan, tulisan, dan eksperimen seputar web development, keamanan siber, dan teknologi."
 ---
 
-{% if site.posts.size > 0 %}
-<section class="carousel" aria-label="Tulisan terbaru" data-carousel>
-  <div class="carousel__head">
-    <h2>Sorotan terbaru</h2>
-    <span class="carousel__count">{{ site.posts | size }} artikel</span>
-  </div>
-
-  <div class="carousel__viewport" tabindex="0">
-    <div class="carousel__track">
-      {% for post in site.posts limit:5 %}
-      <article class="carousel__slide">
-        <a class="carousel__card" href="{{ post.url | relative_url }}">
-          <span class="carousel__media">
-            <img
-              src="{{ post.image | default: '/assets/images/og-default.png' | relative_url }}"
-              alt="{{ post.image_alt | default: post.title }}"
-              loading="{% if forloop.first %}eager{% else %}lazy{% endif %}"
-              decoding="async"
-              width="1200"
-              height="630">
-          </span>
-          <span class="carousel__body">
-            <span class="carousel__meta">
-              <time datetime="{{ post.date | date_to_xmlschema }}">{{ post.date | date: "%d %b %Y" }}</time>
-              {% if post.categories.size > 0 %} · {{ post.categories | join: ", " }}{% endif %}
-            </span>
-            <h3 class="carousel__title">{{ post.title }}</h3>
-            <p class="carousel__excerpt">{{ post.description | default: post.excerpt | strip_html | truncate: 130 }}</p>
-            <span class="carousel__cta">Baca selengkapnya →</span>
-          </span>
-        </a>
-      </article>
-      {% endfor %}
-    </div>
-  </div>
-
-  <button class="carousel__btn carousel__btn--prev" type="button" aria-label="Slide sebelumnya">‹</button>
-  <button class="carousel__btn carousel__btn--next" type="button" aria-label="Slide berikutnya">›</button>
-
-  <div class="carousel__dots" aria-hidden="true"></div>
-</section>
-{% endif %}
-
 <section class="posts">
   <div class="section-heading">
     <h2>Semua tulisan</h2>
@@ -54,27 +11,27 @@ description: "Catatan, tulisan, dan eksperimen seputar web development, keamanan
   </div>
 
   {% if site.posts.size > 0 %}
-  <div class="news-grid">
+  <div class="news-list">
     {% for post in site.posts %}
-    <article class="news-card">
-      <a class="news-card__link" href="{{ post.url | relative_url }}">
-        <span class="news-card__media">
+    <article class="news-item">
+      <a class="news-item__link" href="{{ post.url | relative_url }}">
+        <span class="news-item__media">
           <img
             src="{{ post.image | default: '/assets/images/og-default.png' | relative_url }}"
             alt="{{ post.image_alt | default: post.title }}"
             loading="lazy"
             decoding="async">
         </span>
-        <span class="news-card__body">
-          <span class="news-card__meta">
+        <span class="news-item__body">
+          <span class="news-item__meta">
             <time datetime="{{ post.date | date_to_xmlschema }}">{{ post.date | date: "%d %b %Y" }}</time>
             {% if post.categories.size > 0 %} · {{ post.categories | join: ", " }}{% endif %}
           </span>
-          <h3 class="news-card__title">{{ post.title }}</h3>
+          <h3 class="news-item__title">{{ post.title }}</h3>
           {% if post.description %}
-            <p class="news-card__excerpt">{{ post.description }}</p>
+            <p class="news-item__excerpt">{{ post.description }}</p>
           {% else %}
-            <p class="news-card__excerpt">{{ post.excerpt | strip_html | truncate: 140 }}</p>
+            <p class="news-item__excerpt">{{ post.excerpt | strip_html | truncate: 140 }}</p>
           {% endif %}
         </span>
       </a>

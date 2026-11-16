@@ -1463,14 +1463,21 @@ hr {
   .header-actions {
     width: 100%;
     justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 0.5rem;
   }
 
   .site-nav {
-    display: none;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.35rem 0.75rem;
+    order: 2;
+    width: 100%;
   }
 
   .site-search {
     flex: 1;
+    min-width: 0;
   }
 
   .site-search__input {
