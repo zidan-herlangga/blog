@@ -4,60 +4,57 @@ title: Beranda
 description: "Catatan, tulisan, dan eksperimen seputar web development, keamanan siber, dan teknologi."
 ---
 
+{% assign per_page = 6 %}
+{% assign total_posts = site.posts.size %}
+{% assign total_pages = total_posts | divided_by: per_page | ceil %}
+{% if total_pages < 1 %}{% assign total_pages = 1 %}{% endif %}
+
 <section class="posts">
   <div class="section-heading">
     <h2>Semua tulisan</h2>
-    <span class="post-date">{{ paginator.total_posts | default: site.posts.size }} artikel</span>
+    <span class="post-date">{{ total_posts }} artikel</span>
   </div>
 
-  {% if paginator %}
-    {% assign current_posts = paginator.posts %}
-  {% else %}
-    {% assign current_posts = site.posts %}
-  {% endif %}
-
-  {% if current_posts.size > 0 %}
-  <div class="news-list">
-    {% for post in current_posts %}
-    <article class="news-item">
-      <a class="news-item__link" href="{{ post.url | relative_url }}">
-        <span class="news-item__media">
-          <img
-            src="{{ post.image | default: '/assets/images/og-default.png' | relative_url }}"
-            alt="{{ post.image_alt | default: post.title }}"
-            loading="lazy"
-            decoding="async">
-        </span>
-        <span class="news-item__body">
-          <span class="news-item__meta">
-            <time datetime="{{ post.date | date_to_xmlschema }}">{{ post.date | date: "%d %b %Y" }}</time>
-            {% if post.categories.size > 0 %} · {{ post.categories | join: ", " }}{% endif %}
+  {% if site.posts.size > 0 %}
+  <div class="news-list" id="newsList">
+    {% for post in site.posts %}
+      {% assign page_num = forloop.index0 | divided_by: per_page | plus: 1 %}
+      <article class="news-item" data-page="{{ page_num }}">
+        <a class="news-item__link" href="{{ post.url | relative_url }}">
+          <span class="news-item__media">
+            <img
+              src="{{ post.image | default: '/assets/images/og-default.png' | relative_url }}"
+              alt="{{ post.image_alt | default: post.title }}"
+              loading="lazy"
+              decoding="async">
           </span>
-          <h3 class="news-item__title">{{ post.title }}</h3>
-          {% if post.description %}
-            <p class="news-item__excerpt">{{ post.description }}</p>
-          {% else %}
-            <p class="news-item__excerpt">{{ post.excerpt | strip_html | truncate: 140 }}</p>
-          {% endif %}
-        </span>
-      </a>
-    </article>
+          <span class="news-item__body">
+            <span class="news-item__meta">
+              <time datetime="{{ post.date | date_to_xmlschema }}">{{ post.date | date: "%d %b %Y" }}</time>
+              {% if post.categories.size > 0 %} · {{ post.categories | join: ", " }}{% endif %}
+            </span>
+            <h3 class="news-item__title">{{ post.title }}</h3>
+            {% if post.description %}
+              <p class="news-item__excerpt">{{ post.description }}</p>
+            {% else %}
+              <p class="news-item__excerpt">{{ post.excerpt | strip_html | truncate: 140 }}</p>
+            {% endif %}
+          </span>
+        </a>
+      </article>
     {% endfor %}
   </div>
 
-  {% if paginator.total_pages > 1 %}
-  <nav class="pagination" aria-label="Navigasi halaman">
-    {% if paginator.previous_page %}
-      <a class="pagination__btn" href="{{ paginator.previous_page_path | relative_url }}">← Sebelumnya</a>
-    {% else %}
-      <span class="pagination__btn pagination__btn--disabled">← Sebelumnya</span>
-    {% endif %}
-    <span class="pagination__info">Halaman {{ paginator.page }} dari {{ paginator.total_pages }}</span>
-    {% if paginator.next_page %}
-      <a class="pagination__btn" href="{{ paginator.next_page_path | relative_url }}">Berikutnya →</a>
-    {% else %}
-      <span class="pagination__btn pagination__btn--disabled">Berikutnya →</span>
-    {% endif %}
+  {% if total_pages > 1 %}
+  <nav class="pagination" id="pagination" aria-label="Navigasi halaman" data-total="{{ total_pages }}">
+    <button class="pagination__btn" type="button" data-prev>← Sebelumnya</button>
+    <span class="pagination__pages">
+      {% for p in (1..total_pages) %}
+      <button class="pagination__num {% if p == 1 %}is-active{% endif %}" type="button" data-page="{{ p }}">{{ p }}</button>
+      {% endfor %}
+    </span>
+    <span class="pagination__info" id="pageInfo">Halaman 1 dari {{ total_pages }}</span>
+    <button class="pagination__btn" type="button" data-next>Berikutnya →</button>
   </nav>
   {% endif %}
   {% else %}
@@ -67,74 +64,36 @@ description: "Catatan, tulisan, dan eksperimen seputar web development, keamanan
 
 <script>
 (function () {
-  const root = document.querySelector('[data-carousel]');
-  if (!root) return;
-  const viewport = root.querySelector('.carousel__viewport');
-  const slides = [...root.querySelectorAll('.carousel__slide')];
-  const prev = root.querySelector('.carousel__btn--prev');
-  const next = root.querySelector('.carousel__btn--next');
-  const dotsWrap = root.querySelector('.carousel__dots');
-  if (!slides.length) return;
+  const list = document.getElementById('newsList');
+  const nav = document.getElementById('pagination');
+  if (!list || !nav) return;
+  const items = [...list.querySelectorAll('.news-item')];
+  const total = Number(nav.dataset.total || 1);
+  const perPage = 6;
+  let current = 1;
 
-  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const nums = [...nav.querySelectorAll('[data-page]')];
+  const prev = nav.querySelector('[data-prev]');
+  const next = nav.querySelector('[data-next]');
+  const info = document.getElementById('pageInfo');
 
-  slides.forEach((_, i) => {
-    const b = document.createElement('button');
-    b.type = 'button';
-    b.setAttribute('aria-label', 'Ke slide ' + (i + 1));
-    b.addEventListener('click', () => goTo(i));
-    dotsWrap.appendChild(b);
-  });
-  const dots = [...dotsWrap.querySelectorAll('button')];
+  function show(page) {
+    current = Math.max(1, Math.min(total, page));
+    items.forEach((it) => {
+      const p = Number(it.dataset.page);
+      it.style.display = p === current ? '' : 'none';
+    });
+    nums.forEach((n) => n.classList.toggle('is-active', Number(n.dataset.page) === current));
+    if (info) info.textContent = 'Halaman ' + current + ' dari ' + total;
+    if (prev) prev.disabled = current === 1;
+    if (next) next.disabled = current === total;
+    window.scrollTo({ top: list.offsetTop - 80, behavior: 'smooth' });
+  }
 
-  let index = 0;
-  const goTo = (i) => {
-    index = Math.max(0, Math.min(slides.length - 1, i));
-    const left = slides[index].offsetLeft - viewport.offsetLeft;
-    viewport.scrollTo({ left, behavior: reduceMotion ? 'auto' : 'smooth' });
-    updateDots();
-  };
-  const updateDots = () => {
-    dots.forEach((d, i) => d.classList.toggle('is-active', i === index));
-  };
+  nums.forEach((n) => n.addEventListener('click', () => show(Number(n.dataset.page))));
+  prev.addEventListener('click', () => show(current - 1));
+  next.addEventListener('click', () => show(current + 1));
 
-  prev.addEventListener('click', () => goTo(index - 1));
-  next.addEventListener('click', () => goTo(index + 1));
-
-  let scrollTimer;
-  viewport.addEventListener('scroll', () => {
-    clearTimeout(scrollTimer);
-    scrollTimer = setTimeout(() => {
-      const vLeft = viewport.scrollLeft;
-      let best = 0, bestDist = Infinity;
-      slides.forEach((s, i) => {
-        const d = Math.abs(s.offsetLeft - viewport.offsetLeft - vLeft);
-        if (d < bestDist) { bestDist = d; best = i; }
-      });
-      index = best;
-      updateDots();
-    }, 120);
-  }, { passive: true });
-
-  viewport.addEventListener('keydown', (e) => {
-    if (e.key === 'ArrowRight') { e.preventDefault(); goTo(index + 1); }
-    if (e.key === 'ArrowLeft') { e.preventDefault(); goTo(index - 1); }
-  });
-
-  let timer = null;
-  const startAuto = () => {
-    if (reduceMotion) return;
-    stopAuto();
-    timer = setInterval(() => goTo((index + 1) % slides.length), 6000);
-  };
-  const stopAuto = () => { if (timer) { clearInterval(timer); timer = null; } };
-
-  root.addEventListener('mouseenter', stopAuto);
-  root.addEventListener('mouseleave', startAuto);
-  root.addEventListener('focusin', stopAuto);
-  root.addEventListener('focusout', startAuto);
-
-  updateDots();
-  startAuto();
+  show(1);
 })();
 </script>
