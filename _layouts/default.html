@@ -18,6 +18,9 @@
   <link rel="stylesheet" href="{{ '/assets/css/style.css' | relative_url }}">
   {% feed_meta %}
   {% seo %}
+  <meta property="og:image:alt" content="{{ page.image_alt | default: page.title | default: site.title }}">
+  <meta name="twitter:image:alt" content="{{ page.image_alt | default: page.title | default: site.title }}">
+  <link rel="sitemap" type="application/xml" href="{{ '/sitemap.xml' | relative_url }}">
 </head>
 <body>
   <div class="backdrop" aria-hidden="true">
