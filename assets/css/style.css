@@ -886,13 +886,6 @@ hr {
   font-size: 1.05rem;
 }
 
-.comments-hint a {
-  color: var(--fg);
-  text-decoration: underline;
-  text-decoration-thickness: 1px;
-  text-underline-offset: 0.16em;
-}
-
 .comments-hint {
   margin-bottom: 1.1rem;
   color: var(--muted);
@@ -900,7 +893,10 @@ hr {
 }
 
 .comments-hint a {
-  color: var(--accent-text);
+  color: var(--fg);
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.16em;
 }
 
 .comments-frame {
