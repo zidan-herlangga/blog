@@ -1468,11 +1468,7 @@ hr {
   }
 
   .site-nav {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.35rem 0.75rem;
-    order: 2;
-    width: 100%;
+    display: none;
   }
 
   .site-search {
