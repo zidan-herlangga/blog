@@ -6,7 +6,7 @@ description: "Catatan, tulisan, dan eksperimen seputar web development, keamanan
 
 {% assign per_page = 6 %}
 {% assign total_posts = site.posts.size %}
-{% assign total_pages = total_posts | divided_by: per_page | ceil %}
+{% assign total_pages = total_posts | divided_by: 6.0 | ceil %}
 {% if total_pages < 1 %}{% assign total_pages = 1 %}{% endif %}
 
 <section class="posts">
