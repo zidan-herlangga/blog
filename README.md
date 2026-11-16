@@ -12,7 +12,7 @@ Portal artikel pribadi berbasis Jekyll, live di **https://zidan-herlangga.github
 - `assets/images/` — gambar artikel
 - `assets/css/style.css` — stylesheet (palet steel blue, sama dengan situs utama)
 - `index.md` — beranda
-- `about.md` — halaman Tentang
+- `about.html` — halaman Tentang (dengan foto profil)
 - `kategori.html` — halaman semua kategori (`/blog/kategori/`)
 - `arsip.html` — halaman arsip per tahun (`/blog/arsip/`)
 

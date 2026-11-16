@@ -870,3 +870,67 @@ hr {
   backdrop-filter: blur(18px);
   -webkit-backdrop-filter: blur(18px);
 }
+
+/* ---------- halaman tentang ---------- */
+
+.about-card {
+  display: grid;
+  grid-template-columns: 168px minmax(0, 1fr);
+  align-items: start;
+  gap: 1.75rem;
+  padding: 1.75rem;
+}
+
+.about-photo {
+  display: block;
+  width: 168px;
+  height: 168px;
+  border-radius: 9999px;
+  object-fit: cover;
+  border: 1px solid var(--line);
+  box-shadow: 0 0 0 6px color-mix(in oklab, var(--accent) 9%, transparent);
+}
+
+.about-body h1 {
+  margin-bottom: 0.3rem;
+}
+
+.about-role {
+  margin: 0 0 1.15rem;
+  color: var(--accent-text);
+  font-size: 0.86rem;
+  letter-spacing: 0.02em;
+}
+
+.about-body ul {
+  margin: 0 0 1rem;
+  padding-left: 1.2rem;
+}
+
+.about-body li::marker {
+  color: var(--accent-text);
+}
+
+.about-links {
+  margin: 1.25rem 0 0;
+  color: var(--muted);
+  font-size: 0.88rem;
+}
+
+.about-links span {
+  margin: 0 0.35rem;
+  opacity: 0.5;
+}
+
+@media (max-width: 560px) {
+  .about-card {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 1.25rem;
+    padding: 1.35rem;
+  }
+
+  .about-photo {
+    width: 112px;
+    height: 112px;
+  }
+}
