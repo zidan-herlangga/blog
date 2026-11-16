@@ -4,9 +4,9 @@ title: "Insiden Cursor: Kunci API Bocor hingga Backdoor SSH di 5.000 Developer"
 description: "Kunci API Fireworks AI yang bocor membuka jalan bagi ekstensi Claude Code palsu di Cursor. Hingga 5.000 developer terpapar backdoor SSH."
 date: 2026-11-15 09:30:00 +0700
 categories: [keamanan, rantai-pasok]
-image: /assets/images/news/cursor-cover.jpg
+image: /assets/images/news/cursor-cover.webp
 image_alt: "Foto monitor yang menampilkan kode sumber di editor"
-cover: /assets/images/news/cursor-cover.jpg
+cover: /assets/images/news/cursor-cover.webp
 cover_alt: "Foto monitor yang menampilkan kode sumber di editor"
 ---
 
@@ -72,6 +72,41 @@ Untuk tim engineering, ini checklist yang lebih tahan lama:
 3. **Perlakukan marketplace sebagai dependensi.** Pin versi, tinjau publisher, dan blokir instalasi otomatis untuk ekstensi baru di lingkungan kerja.
 4. **Batasi egress.** Backdoor SSH butuh koneksi keluar. Aturan egress yang ketat memutus banyak rantai serangan di tengah jalan.
 5. **Siapkan playbook rotasi.** Saat kunci bocor, yang menentukan adalah berapa menit, bukan berapa halaman dokumen.
+
+## Pertanyaan yang sering diajukan
+
+**Apakah ekstensi resmi Anthropic ikut terdampak?**
+Tidak. Penyerang mempublikasikan *salinan palsu* di cache marketplace Cursor. Ekstensi resmi Anthropic dan Open VSX tidak terdampak.
+
+**Berapa banyak developer yang terpapar?**
+Hingga 5.000 pengguna yang meminta versi 2.1.312 atau 2.1.313 selama jendela paparan ±11 jam. Kurang dari 0,05% pengguna memiliki trace yang terekspos, dan kurang dari 0,01% pelanggan mengalami kebocoran kredensial API.
+
+**Apa yang harus dilakukan jika sempat memasang ekstensi terdampak?**
+Periksa `~/.ssh/authorized_keys`, rotasi semua kredensial yang pernah disimpan di proyek, cari koneksi SSH keluar yang tidak wajar, dan ikuti panduan remediasi Cursor.
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "Apakah ekstensi resmi Anthropic ikut terdampak?",
+      "acceptedAnswer": { "@type": "Answer", "text": "Tidak. Penyerang mempublikasikan salinan palsu di cache marketplace Cursor. Ekstensi resmi Anthropic dan Open VSX tidak terdampak." }
+    },
+    {
+      "@type": "Question",
+      "name": "Berapa banyak developer yang terpapar?",
+      "acceptedAnswer": { "@type": "Answer", "text": "Hingga 5.000 pengguna yang meminta versi 2.1.312 atau 2.1.313 selama jendela paparan sekitar 11 jam." }
+    },
+    {
+      "@type": "Question",
+      "name": "Apa yang harus dilakukan jika sempat memasang ekstensi terdampak?",
+      "acceptedAnswer": { "@type": "Answer", "text": "Periksa authorized_keys, rotasi semua kredensial yang pernah disimpan di proyek, cari koneksi SSH keluar yang tidak wajar, dan ikuti panduan remediasi Cursor." }
+    }
+  ]
+}
+</script>
 
 ## Sumber
 

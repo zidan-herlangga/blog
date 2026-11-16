@@ -4,9 +4,9 @@ title: "ARTEX dan Serangan Berbasis AI: Akses Istimewa dalam Waktu di Bawah 3 Ja
 description: "FBI mewaspadai ARTEX, framework pentest berbasis AI yang mempercepat serangan ke akses istimewa dalam hitungan jam."
 date: 2026-11-16 20:00:00 +0700
 categories: [keamanan, ai]
-image: /assets/images/news/artex-cover.jpg
+image: /assets/images/news/artex-cover.webp
 image_alt: "Foto gembok logam dengan kunci"
-cover: /assets/images/news/artex-cover.jpg
+cover: /assets/images/news/artex-cover.webp
 cover_alt: "Foto gembok logam dengan kunci"
 ---
 

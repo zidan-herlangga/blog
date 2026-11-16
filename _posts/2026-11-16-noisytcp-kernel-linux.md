@@ -4,9 +4,9 @@ title: "NoisyTCP: Bug 11 Tahun di Kernel Linux yang Bisa Mematikan Server"
 description: "CVE-2026-99288 memungkinkan penyerang tanpa login memicu kernel panic dari jarak jauh. Hampir semua distro Linux terdampak."
 date: 2026-11-16 10:00:00 +0700
 categories: [keamanan, linux]
-image: /assets/images/news/noisytcp-cover.jpg
+image: /assets/images/news/noisytcp-cover.webp
 image_alt: "Foto lorong data center dengan rak server"
-cover: /assets/images/news/noisytcp-cover.jpg
+cover: /assets/images/news/noisytcp-cover.webp
 cover_alt: "Foto lorong data center dengan rak server"
 ---
 
@@ -65,6 +65,31 @@ Langkah lain yang masuk akal:
 NoisyTCP bukan bug pertama di subsistem kernel yang baru ditemukan setelah bertahun-tahun. Pada Mei 2026, peneliti yang sama mengungkap **Dirty Frag**, rantai dua celah page-cache yang bisa berujung root. Pada Juli, ada **Januscape**, bug berumur 16 tahun yang memungkinkan escape dari virtual machine.
 
 Artinya jelas: kernel adalah permukaan serangan yang sangat besar, dan sebagian bug lama baru terlihat ketika orang mulai mencarinya dengan cara yang lebih sistematis. Bagi tim operasional, prioritasnya bukan membaca setiap CVE, tetapi memastikan jalur patch kernel berjalan cepat dan bisa diuji tanpa takut downtime.
+
+## Cara mitigasi (langkah demi langkah)
+
+1. **Cek versi kernel** dan advisory distribusi yang kamu pakai (Ubuntu, Debian, RHEL, dll.).
+2. **Pasang patch kernel** yang menyediakan perbaikan CVE-2026-99288.
+3. **Reboot server** agar kernel baru aktif (patch tidak aktif tanpa reboot).
+4. Jika belum bisa patch hari ini: **matikan SYN cookie** dengan `sysctl -w net.ipv4.tcp_syncookies=0` (trade-off: perlindungan SYN flood melemah).
+5. **Paksa satu RX queue**: `ethtool -L <interface> combined 1` (trade-off: throughput turun).
+6. **Pantau log kernel** untuk `NULL pointer dereference` di subsistem jaringan.
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "HowTo",
+  "name": "Mitigasi NoisyTCP (CVE-2026-99288) pada server Linux",
+  "step": [
+    { "@type": "HowToStep", "name": "Cek versi kernel", "text": "Periksa versi kernel dan advisory distribusi yang dipakai." },
+    { "@type": "HowToStep", "name": "Pasang patch", "text": "Pasang patch kernel yang menyediakan perbaikan CVE-2026-99288." },
+    { "@type": "HowToStep", "name": "Reboot", "text": "Reboot server agar kernel baru aktif." },
+    { "@type": "HowToStep", "name": "Matikan SYN cookie (darurat)", "text": "Jalankan sysctl -w net.ipv4.tcp_syncookies=0 jika belum bisa patch." },
+    { "@type": "HowToStep", "name": "Satu RX queue (darurat)", "text": "Jalankan ethtool -L <interface> combined 1." },
+    { "@type": "HowToStep", "name": "Pantau log", "text": "Pantau log kernel untuk NULL pointer dereference." }
+  ]
+}
+</script>
 
 ## Sumber
 

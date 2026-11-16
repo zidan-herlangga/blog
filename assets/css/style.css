@@ -2008,3 +2008,79 @@ hr {
 .live-search__all:hover {
   text-decoration: underline;
 }
+
+/* ---------- halaman tentang ---------- */
+
+.about-card {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.5rem;
+  padding: 1.5rem;
+  border: 1px solid var(--line);
+  border-radius: 20px;
+  background: var(--card);
+}
+
+@media (min-width: 640px) {
+  .about-card {
+    grid-template-columns: 160px 1fr;
+    gap: 2rem;
+    padding: 2rem;
+  }
+}
+
+.about-photo {
+  width: 160px;
+  height: 160px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid var(--line);
+}
+
+.about-body h1 {
+  margin-top: 0;
+}
+
+.about-role {
+  color: var(--accent-text);
+  font-weight: 600;
+  margin-bottom: 1rem;
+}
+
+.about-heading {
+  font-size: 1.05rem;
+  margin: 1.5rem 0 0.75rem;
+  color: var(--fg);
+}
+
+.skill-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.45rem;
+}
+
+.skill-chips span {
+  padding: 0.35rem 0.75rem;
+  border-radius: 999px;
+  border: 1px solid var(--line);
+  background: var(--card);
+  font-size: 0.8rem;
+  color: var(--fg);
+}
+
+.about-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem 0.5rem;
+  align-items: center;
+}
+
+.about-links a {
+  color: var(--accent-text);
+  text-decoration: none;
+  font-size: 0.9rem;
+}
+
+.about-links a:hover {
+  text-decoration: underline;
+}
