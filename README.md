@@ -11,6 +11,7 @@ Portal artikel pribadi berbasis Jekyll, live di **https://zidan-herlangga.github
 - `_includes/breadcrumbs.html` — breadcrumb tampil + JSON-LD BreadcrumbList
 - `_posts/` — artikel (format `YYYY-MM-DD-judul.md`)
 - `assets/images/` — gambar artikel (termasuk `og-default.png`)
+- `assets/images/news/` — cover & diagram untuk seri sorotan keamanan
 - `assets/fonts/` — font Inter & Space Grotesk (self-hosted)
 - `assets/css/style.css` — stylesheet (palet steel blue, sama dengan situs utama)
 - `index.md` — beranda
