@@ -1800,10 +1800,6 @@ hr {
   .menu-toggle {
     display: flex;
   }
-
-  .site-nav {
-    display: none;
-  }
 }
 
 .offcanvas {
