@@ -69,6 +69,17 @@
     </div>
   </main>
 
+  <div class="new-post-banner" id="newPostBanner" hidden role="status" aria-live="polite">
+    <div class="new-post-banner__body">
+      <span class="new-post-banner__badge" id="npCount">Tulisan baru</span>
+      <p class="new-post-banner__title" id="npTitle"></p>
+    </div>
+    <div class="new-post-banner__actions">
+      <a class="new-post-banner__link" id="npLink" href="#">Baca</a>
+      <button class="new-post-banner__close" id="npClose" type="button" aria-label="Tutup notifikasi">&times;</button>
+    </div>
+  </div>
+
   <footer class="site-footer">
     <div class="container">
       <div class="site-footer__top">
@@ -128,6 +139,44 @@
         sync();
         document.dispatchEvent(new CustomEvent('themechange', { detail: { dark } }));
       });
+    })();
+  </script>
+  <script>
+    (() => {
+      const banner = document.getElementById('newPostBanner');
+      if (!banner) return;
+      const countEl = document.getElementById('npCount');
+      const titleEl = document.getElementById('npTitle');
+      const linkEl = document.getElementById('npLink');
+      const closeEl = document.getElementById('npClose');
+      const KEY = 'blog_last_seen';
+      fetch('{{ "/feed.xml" | relative_url }}')
+        .then((r) => r.text())
+        .then((xml) => {
+          const doc = new DOMParser().parseFromString(xml, 'application/xml');
+          const items = [...doc.querySelectorAll('item')];
+          if (!items.length) return;
+          const dates = items.map((it) => new Date(it.querySelector('pubDate')?.textContent || 0).getTime());
+          const latest = dates[0];
+          const lastSeen = Number(localStorage.getItem(KEY) || 0);
+          if (lastSeen === 0) {
+            localStorage.setItem(KEY, String(latest));
+            return;
+          }
+          const newCount = dates.filter((d) => d > lastSeen).length;
+          if (newCount === 0) return;
+          countEl.textContent = newCount > 1 ? `${newCount} tulisan baru` : 'Tulisan baru';
+          titleEl.textContent = items[0].querySelector('title')?.textContent || '';
+          linkEl.setAttribute('href', items[0].querySelector('link')?.textContent || '/');
+          banner.hidden = false;
+          const dismiss = () => {
+            banner.hidden = true;
+            localStorage.setItem(KEY, String(latest));
+          };
+          closeEl.addEventListener('click', dismiss);
+          linkEl.addEventListener('click', dismiss);
+        })
+        .catch(() => { /* abaikan */ });
     })();
   </script>
 </body>
