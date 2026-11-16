@@ -1,22 +1,37 @@
 <!DOCTYPE html>
-<html lang="id">
+<html lang="id" class="dark">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>{% if page.title %}{{ page.title }} — {% endif %}{{ site.title }}</title>
   <meta name="description" content="{{ page.description | default: site.description }}">
+  <meta name="theme-color" content="#090b0f">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="{{ '/assets/css/style.css' | relative_url }}">
   {% feed_meta %}
   {% seo %}
 </head>
 <body>
+  <div class="backdrop" aria-hidden="true">
+    <div class="orb orb--1"></div>
+    <div class="orb orb--2"></div>
+    <div class="backdrop__glyphs"></div>
+    <div class="backdrop__noise"></div>
+  </div>
+
   <header class="site-header">
     <div class="container">
-      <a class="site-title" href="{{ '/' | relative_url }}">{{ site.title }}</a>
+      <a class="site-title" href="{{ '/' | relative_url }}">
+        <span class="brand-mark">ZH</span>
+        <span>{{ site.title }}</span>
+      </a>
       <nav class="site-nav">
         <a href="{{ '/' | relative_url }}">Beranda</a>
         <a href="{{ '/about/' | relative_url }}">Tentang</a>
         <a href="{{ '/feed.xml' | relative_url }}">RSS</a>
+        <a href="https://zidanherlangga-bio.vercel.app" class="back-link">← Bio</a>
       </nav>
     </div>
   </header>
