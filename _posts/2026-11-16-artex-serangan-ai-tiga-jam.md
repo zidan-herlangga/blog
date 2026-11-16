@@ -5,9 +5,9 @@ description: "FBI mewaspadai ARTEX, framework pentest berbasis AI yang mempercep
 date: 2026-11-16 20:00:00 +0700
 categories: [keamanan, ai]
 image: /assets/images/news/artex-cover.png
-image_alt: "Kartu artikel bertema steel blue: ARTEX dan serangan otomatis berbasis AI"
+image_alt: "Foto gembok logam dengan kunci"
 cover: /assets/images/news/artex-cover.png
-cover_alt: "Ilustrasi alur serangan otomatis dengan agen AI, dari recon hingga eksfiltrasi data"
+cover_alt: "Foto gembok logam dengan kunci"
 ---
 
 FBI merilis FLASH advisory pada Jumat, 13 November 2026, tentang **ARTEX** — framework *penetration testing* otonom yang dipakai penyerang untuk mengotomatiskan serangan. Kalimat yang paling penting dalam advisory itu bukan soal teknologinya, melainkan soal kecepatan: sebagian intrusi berjalan dari tahap targeting ke akses istimewa **di bawah tiga jam**.
@@ -98,5 +98,6 @@ Pertahanan yang efektif mengikuti logika yang sama — otomatis, konsisten, dan 
 - [FBI warns ARTEX AI hacking tool is powering global cyberattacks — BleepingComputer](https://www.bleepingcomputer.com/news/security/fbi-warns-artex-ai-hacking-tool-is-powering-global-cyberattacks/)
 - [FBI flash alert says Artex tool automating cyberattacks at 'machine speed' — The Record](https://therecord.media/artex-ai-tool-fbi-flash-alert)
 - [Google warns that fully-automated AI attacks are coming soon — BleepingComputer](https://www.bleepingcomputer.com/news/security/google-warns-that-fully-automated-ai-attacks-are-coming-soon/)
+- [Clear padlock and keys, CC BY 2.0 — Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Clear_padlock_and_keys.jpg)
 
 *Artikel ini ringkasan dan analisis pribadi. Untuk daftar IOC dan rekomendasi resmi, baca advisory FBI secara lengkap.*

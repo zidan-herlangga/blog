@@ -5,9 +5,9 @@ description: "CVE-2026-99288 memungkinkan penyerang tanpa login memicu kernel pa
 date: 2026-11-16 10:00:00 +0700
 categories: [keamanan, linux]
 image: /assets/images/news/noisytcp-cover.png
-image_alt: "Kartu artikel bertema steel blue: bug kernel Linux NoisyTCP dan server yang mati"
+image_alt: "Foto lorong data center dengan rak server"
 cover: /assets/images/news/noisytcp-cover.png
-cover_alt: "Ilustrasi kernel Linux, paket TCP, dan kernel panic"
+cover_alt: "Foto lorong data center dengan rak server"
 ---
 
 Ada bug di kernel Linux yang sudah berumur 11 tahun dan baru sekarang ditambal. Namanya **NoisyTCP**, tercatat sebagai **CVE-2026-99288**. Dampaknya bukan pencurian data, bukan eksekusi kode, tetapi sesuatu yang cukup untuk membuat layanan mati: **kernel panic**.
@@ -70,5 +70,6 @@ Artinya jelas: kernel adalah permukaan serangan yang sangat besar, dan sebagian 
 
 - [New NoisyTCP Linux kernel flaw lets attackers crash servers — BleepingComputer](https://www.bleepingcomputer.com/news/linux/new-noisytcp-linux-kernel-flaw-lets-attackers-crash-servers/)
 - [CVE-2026-99288 — Red Hat Customer Portal](https://access.redhat.com/security/cve/CVE-2026-99288)
+- [BalticServers data center, CC BY-SA 3.0 — Wikimedia Commons](https://commons.wikimedia.org/wiki/File:BalticServers_data_center.jpg)
 
 *Artikel ini ringkasan dan analisis pribadi. Selalu ikuti advisory resmi distribusi dan vendor infrastruktur kamu sebelum menerapkan perubahan pada sistem produksi.*

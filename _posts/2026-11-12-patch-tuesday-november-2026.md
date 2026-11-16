@@ -5,9 +5,9 @@ description: "Patch Tuesday November 2026 membawa 1.093 perbaikan, 63 kritis, da
 date: 2026-11-12 08:00:00 +0700
 categories: [keamanan, patch]
 image: /assets/images/news/patch-tuesday-cover.png
-image_alt: "Kartu artikel bertema steel blue: Patch Tuesday November 2026 dan zero-day Outlook"
+image_alt: "Foto layar yang menampilkan kode program"
 cover: /assets/images/news/patch-tuesday-cover.png
-cover_alt: "Ilustrasi patch keamanan, daftar kerentanan, dan prioritas update"
+cover_alt: "Foto layar yang menampilkan kode program"
 ---
 
 Microsoft kembali merilis pembaruan empat digit. Patch Tuesday November 2026 memperbaiki **1.093 kerentanan**, termasuk **63 celah kritis** dan satu **zero-day di Outlook** yang sudah dieksploitasi di lapangan.
@@ -74,5 +74,6 @@ Kalau masih ada Server 2016 di produksi, ini saatnya memilih: migrasi, upgrade, 
 
 - [Microsoft Fixes Nearly 1,100 Security Vulnerabilities — Krebs on Security](https://krebsonsecurity.com/2026/11/microsoft-fixes-nearly-1100-security-vulnerabilities/)
 - [Microsoft: Windows Server 2016 reaches end of support in 60 days — BleepingComputer](https://www.bleepingcomputer.com/news/microsoft/microsoft-windows-server-2016-reaches-end-of-support-in-60-days/)
+- [Programming code, CC BY-SA 4.0 — Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Programming_code.jpg)
 
 *Artikel ini ringkasan dan analisis pribadi. Selalu rujuk MSRC, advisory vendor, dan hasil pengujian lingkungan kamu sendiri sebelum menerapkan patch.*

@@ -5,9 +5,9 @@ description: "Kunci API Fireworks AI yang bocor membuka jalan bagi ekstensi Clau
 date: 2026-11-15 09:30:00 +0700
 categories: [keamanan, rantai-pasok]
 image: /assets/images/news/cursor-cover.png
-image_alt: "Kartu artikel bertema steel blue: kunci API bocor, ekstensi palsu, backdoor SSH"
+image_alt: "Foto monitor yang menampilkan kode sumber di editor"
 cover: /assets/images/news/cursor-cover.png
-cover_alt: "Ilustrasi rantai pasok perangkat lunak: kunci API, marketplace ekstensi, dan backdoor"
+cover_alt: "Foto monitor yang menampilkan kode sumber di editor"
 ---
 
 Cursor mengungkap insiden keamanan yang berakhir di tempat yang paling sensitif bagi developer: marketplace ekstensi editor. Bukan karena bug di VS Code atau di ekstensi resmi Anthropic, tetapi karena kredensial yang bocor dan data latih AI yang menyimpan rahasia.
@@ -77,5 +77,6 @@ Untuk tim engineering, ini checklist yang lebih tahan lama:
 
 - [Cursor confirms security breach led to malicious Claude Code extension — BleepingComputer](https://www.bleepingcomputer.com/news/security/cursor-confirms-security-breach-led-to-malicious-claude-code-extension/)
 - [Stolen Fireworks AI key led to Cursor extension incident — The Hacker News](https://thehackernews.com/2026/11/stolen-fireworks-ai-key-led-to-cursor.html)
+- [Code on computer monitor (Unsplash), CC0 — Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Code_on_computer_monitor_(Unsplash).jpg)
 
 *Artikel ini ringkasan dan analisis pribadi. Detail resmi ada di laporan insiden Cursor dan pemberitaan di atas.*
