@@ -13,6 +13,7 @@
     })();
   </script>
   <meta name="theme-color" content="#090b0f">
+  {% if page.noindex %}<meta name="robots" content="noindex, follow">{% endif %}
   <link rel="icon" href="{{ '/assets/favicon.svg' | relative_url }}" type="image/svg+xml">
   <link rel="preload" href="{{ '/assets/fonts/inter-latin-wght-normal.woff2' | relative_url }}" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="{{ '/assets/fonts/space-grotesk-latin-wght-normal.woff2' | relative_url }}" as="font" type="font/woff2" crossorigin>
@@ -122,6 +123,9 @@
         <a href="{{ '/about/' | relative_url }}">Tentang</a>
         <a href="{{ '/kategori/' | relative_url }}">Kategori</a>
         <a href="{{ '/arsip/' | relative_url }}">Arsip</a>
+        <a href="{{ '/cari/' | relative_url }}">Cari</a>
+        <a href="{{ '/kontak/' | relative_url }}">Kontak</a>
+        <a href="{{ '/privasi/' | relative_url }}">Privasi</a>
         <a href="{{ '/sitemap.xml' | relative_url }}">Sitemap</a>
       </nav>
     </div>

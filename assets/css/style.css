@@ -2084,3 +2084,170 @@ hr {
 .about-links a:hover {
   text-decoration: underline;
 }
+
+/* ---------- halaman privasi, kontak, 404 ---------- */
+
+.legal,
+.contact,
+.notfound {
+  max-width: 760px;
+}
+
+.legal h1,
+.contact h1,
+.notfound h1 {
+  margin-top: 0;
+}
+
+.legal__updated {
+  color: var(--muted);
+  font-size: 0.8rem;
+  margin-bottom: 1.5rem;
+}
+
+.legal h2 {
+  font-size: 1.1rem;
+  margin-top: 1.75rem;
+}
+
+.legal ul {
+  padding-left: 1.25rem;
+}
+
+.legal li {
+  margin-bottom: 0.5rem;
+}
+
+.contact__lead {
+  color: var(--muted);
+  margin-bottom: 1.5rem;
+}
+
+.contact__grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0.75rem;
+  margin-bottom: 1.5rem;
+}
+
+@media (min-width: 640px) {
+  .contact__grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+.contact__card {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+  padding: 0.9rem 1rem;
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  background: var(--card);
+  text-decoration: none;
+  color: var(--fg);
+  transition: transform 0.18s ease, border-color 0.18s ease;
+}
+
+.contact__card:hover {
+  transform: translateY(-2px);
+  border-color: color-mix(in oklab, var(--accent) 45%, var(--line));
+  text-decoration: none;
+}
+
+.contact__icon {
+  display: grid;
+  place-items: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 10px;
+  background: color-mix(in oklab, var(--accent) 14%, transparent);
+  color: var(--accent-text);
+  font-weight: 700;
+  font-size: 0.95rem;
+  flex-shrink: 0;
+}
+
+.contact__label {
+  display: block;
+  font-size: 0.72rem;
+  color: var(--muted);
+}
+
+.contact__value {
+  display: block;
+  font-size: 0.88rem;
+  font-weight: 500;
+  word-break: break-all;
+}
+
+.contact__note {
+  color: var(--muted);
+  font-size: 0.85rem;
+}
+
+.notfound {
+  text-align: center;
+  padding: 3rem 1rem;
+}
+
+.notfound__code {
+  font-size: 5rem;
+  font-weight: 700;
+  line-height: 1;
+  margin: 0 0 0.5rem;
+  color: var(--accent-text);
+  opacity: 0.6;
+}
+
+.notfound__lead {
+  color: var(--muted);
+  margin-bottom: 1.75rem;
+}
+
+.notfound__actions {
+  display: flex;
+  justify-content: center;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+  margin-bottom: 2rem;
+}
+
+.notfound__btn {
+  padding: 0.6rem 1.1rem;
+  border-radius: 10px;
+  background: var(--accent);
+  color: #0b1118;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.notfound__btn--ghost {
+  background: var(--card);
+  color: var(--fg);
+  border: 1px solid var(--line);
+}
+
+.notfound__btn:hover {
+  filter: brightness(1.06);
+  text-decoration: none;
+}
+
+.notfound__links ul {
+  list-style: none;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  gap: 1.25rem;
+  flex-wrap: wrap;
+}
+
+.notfound__links a {
+  color: var(--accent-text);
+  text-decoration: none;
+  font-size: 0.9rem;
+}
+
+.notfound__links a:hover {
+  text-decoration: underline;
+}

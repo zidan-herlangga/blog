@@ -1,0 +1,27 @@
+---
+layout: default
+title: "404 — Halaman tidak ditemukan"
+description: "Halaman yang kamu cari tidak ada."
+permalink: /404.html
+noindex: true
+---
+
+<section class="notfound">
+  <p class="notfound__code">404</p>
+  <h1>Halaman tidak ditemukan</h1>
+  <p class="notfound__lead">Tautan yang kamu buka mungkin sudah dipindah, dihapus, atau salah ketik.</p>
+
+  <div class="notfound__actions">
+    <a class="notfound__btn" href="{{ '/' | relative_url }}">Kembali ke beranda</a>
+    <a class="notfound__btn notfound__btn--ghost" href="{{ '/cari/' | relative_url }}">Cari tulisan</a>
+  </div>
+
+  <div class="notfound__links">
+    <p>Atau coba:</p>
+    <ul>
+      <li><a href="{{ '/kategori/' | relative_url }}">Semua kategori</a></li>
+      <li><a href="{{ '/arsip/' | relative_url }}">Arsip tulisan</a></li>
+      <li><a href="{{ '/about/' | relative_url }}">Tentang</a></li>
+    </ul>
+  </div>
+</section>
