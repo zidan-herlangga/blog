@@ -483,6 +483,35 @@ body {
   text-decoration: underline;
 }
 
+.site-footer__copy {
+  margin-bottom: 0.85rem;
+}
+
+.site-footer__links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem 1rem;
+  margin-bottom: 0.85rem;
+}
+
+.site-footer__links a {
+  color: var(--muted);
+  text-decoration: none;
+  font-size: 0.82rem;
+}
+
+.site-footer__links a:hover {
+  color: var(--accent-text);
+  text-decoration: underline;
+}
+
+.site-footer__note {
+  color: var(--muted);
+  font-size: 0.76rem;
+  opacity: 0.75;
+  margin-top: 0.4rem;
+}
+
 /* ---------- tipografi ---------- */
 
 h1,

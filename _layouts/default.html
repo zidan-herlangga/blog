@@ -71,7 +71,18 @@
 
   <footer class="site-footer">
     <div class="container">
-      <p>&copy; {{ 'now' | date: "%Y" }} {{ site.author }} · <a href="https://zidanherlangga.vercel.app">zidanherlangga.vercel.app</a></p>
+      <p class="site-footer__copy">&copy; {{ 'now' | date: "%Y" }} {{ site.author }} · <a href="https://zidanherlangga.vercel.app">zidanherlangga.vercel.app</a></p>
+      <nav class="site-footer__links" aria-label="Tautan footer">
+        <a href="{{ '/' | relative_url }}">Beranda</a>
+        <a href="{{ '/about/' | relative_url }}">Tentang</a>
+        <a href="{{ '/kategori/' | relative_url }}">Kategori</a>
+        <a href="{{ '/arsip/' | relative_url }}">Arsip</a>
+        <a href="{{ '/feed.xml' | relative_url }}">RSS</a>
+        <a href="https://github.com/zidan-herlangga/blog">GitHub</a>
+        <a href="mailto:zidanherlangga24@gmail.com">Email</a>
+        <a href="{{ '/sitemap.xml' | relative_url }}">Sitemap</a>
+      </nav>
+      <p class="site-footer__note">Dibangun dengan Jekyll &amp; GitHub Pages · Tanpa database, tanpa pelacakan.</p>
     </div>
   </footer>
 
@@ -84,7 +95,7 @@
         const dark = root.classList.contains('dark');
         toggle.setAttribute('aria-label', dark ? 'Aktifkan tema terang' : 'Aktifkan tema gelap');
         const meta = document.querySelector('meta[name="theme-color"]');
-        if (meta) meta.setAttribute('content', dark ? '#090b0f' : '#f2f3f5');
+        if (meta) meta.setAttribute('content', dark ? '#090b0f' : '#e9ecf1');
       };
       sync();
       toggle.addEventListener('click', () => {
