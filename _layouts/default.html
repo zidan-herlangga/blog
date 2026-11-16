@@ -42,6 +42,9 @@
       </a>
 
       <div class="header-actions">
+        <button class="menu-toggle" type="button" data-menu-toggle aria-label="Buka menu" aria-expanded="false">
+          <span></span><span></span><span></span>
+        </button>
         <form class="site-search" action="{{ '/cari/' | relative_url }}" method="get" role="search">
           <svg class="site-search__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="7"></circle><path d="m20 20-3.5-3.5"></path></svg>
           <input type="search" name="q" class="site-search__input" placeholder="Cari..." aria-label="Cari tulisan">
@@ -64,6 +67,31 @@
       </div>
     </div>
   </header>
+
+  <div class="offcanvas" id="offcanvas" aria-hidden="true">
+    <div class="offcanvas__backdrop" data-offcanvas-close></div>
+    <aside class="offcanvas__panel" aria-label="Menu navigasi">
+      <div class="offcanvas__head">
+        <span class="brand-mark">ZH</span>
+        <button class="offcanvas__close" type="button" data-offcanvas-close aria-label="Tutup menu">&times;</button>
+      </div>
+      <form class="offcanvas__search" action="{{ '/cari/' | relative_url }}" method="get" role="search">
+        <input type="search" name="q" placeholder="Cari tulisan..." aria-label="Cari tulisan">
+        <button type="submit">Cari</button>
+      </form>
+      <nav class="offcanvas__nav">
+        <a href="{{ '/' | relative_url }}">Beranda</a>
+        <a href="{{ '/about/' | relative_url }}">Tentang</a>
+        <a href="{{ '/kategori/' | relative_url }}">Kategori</a>
+        <a href="{{ '/arsip/' | relative_url }}">Arsip</a>
+        <a href="{{ '/cari/' | relative_url }}">Pencarian</a>
+        <a href="{{ '/feed.xml' | relative_url }}">RSS Feed</a>
+        <a href="https://zidanherlangga.vercel.app">Situs utama</a>
+        <a href="https://github.com/zidan-herlangga/blog">GitHub</a>
+        <a href="mailto:zidanherlangga24@gmail.com">Email</a>
+      </nav>
+    </aside>
+  </div>
 
   <main class="container">
     <div class="layout">
@@ -203,6 +231,29 @@
         if (!ticking) { requestAnimationFrame(update); ticking = true; }
       }, { passive: true });
       update();
+    })();
+  </script>
+  <script>
+    (() => {
+      const toggle = document.querySelector('[data-menu-toggle]');
+      const offcanvas = document.getElementById('offcanvas');
+      if (!toggle || !offcanvas) return;
+      const open = () => {
+        offcanvas.classList.add('is-open');
+        offcanvas.setAttribute('aria-hidden', 'false');
+        toggle.setAttribute('aria-expanded', 'true');
+        document.body.style.overflow = 'hidden';
+      };
+      const close = () => {
+        offcanvas.classList.remove('is-open');
+        offcanvas.setAttribute('aria-hidden', 'true');
+        toggle.setAttribute('aria-expanded', 'false');
+        document.body.style.overflow = '';
+      };
+      toggle.addEventListener('click', open);
+      offcanvas.querySelectorAll('[data-offcanvas-close]').forEach((el) => el.addEventListener('click', close));
+      offcanvas.querySelectorAll('a').forEach((a) => a.addEventListener('click', close));
+      document.addEventListener('keydown', (e) => { if (e.key === 'Escape') close(); });
     })();
   </script>
 </body>
