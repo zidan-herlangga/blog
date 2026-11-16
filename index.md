@@ -5,7 +5,6 @@ description: "Catatan, tulisan, dan eksperimen seputar web development, keamanan
 ---
 
 {% if site.posts.size > 0 %}
-
 <section class="carousel" aria-label="Tulisan terbaru" data-carousel>
   <div class="carousel__head">
     <h2>Sorotan terbaru</h2>
@@ -41,8 +40,8 @@ description: "Catatan, tulisan, dan eksperimen seputar web development, keamanan
     </div>
   </div>
 
-<button class="carousel__btn carousel__btn--prev" type="button" aria-label="Slide sebelumnya">‹</button>
-<button class="carousel__btn carousel__btn--next" type="button" aria-label="Slide berikutnya">›</button>
+  <button class="carousel__btn carousel__btn--prev" type="button" aria-label="Slide sebelumnya">‹</button>
+  <button class="carousel__btn carousel__btn--next" type="button" aria-label="Slide berikutnya">›</button>
 
   <div class="carousel__dots" aria-hidden="true"></div>
 </section>
@@ -54,24 +53,34 @@ description: "Catatan, tulisan, dan eksperimen seputar web development, keamanan
     <span class="post-date">{{ site.posts | size }} artikel</span>
   </div>
 
-{% if site.posts.size > 0 %}
-
-  <ul class="post-list">
+  {% if site.posts.size > 0 %}
+  <div class="news-grid">
     {% for post in site.posts %}
-    <li>
-      <a href="{{ post.url | relative_url }}">{{ post.title }}</a>
-      <span class="post-date">
-        <time datetime="{{ post.date | date_to_xmlschema }}">{{ post.date | date: "%d %b %Y" }}</time>
-        {% if post.categories.size > 0 %} · {{ post.categories | join: ", " }}{% endif %}
-      </span>
-      {% if post.description %}
-        <p>{{ post.description }}</p>
-      {% else %}
-        <p>{{ post.excerpt | strip_html | truncate: 160 }}</p>
-      {% endif %}
-    </li>
+    <article class="news-card">
+      <a class="news-card__link" href="{{ post.url | relative_url }}">
+        <span class="news-card__media">
+          <img
+            src="{{ post.image | default: '/assets/images/og-default.png' | relative_url }}"
+            alt="{{ post.image_alt | default: post.title }}"
+            loading="lazy"
+            decoding="async">
+        </span>
+        <span class="news-card__body">
+          <span class="news-card__meta">
+            <time datetime="{{ post.date | date_to_xmlschema }}">{{ post.date | date: "%d %b %Y" }}</time>
+            {% if post.categories.size > 0 %} · {{ post.categories | join: ", " }}{% endif %}
+          </span>
+          <h3 class="news-card__title">{{ post.title }}</h3>
+          {% if post.description %}
+            <p class="news-card__excerpt">{{ post.description }}</p>
+          {% else %}
+            <p class="news-card__excerpt">{{ post.excerpt | strip_html | truncate: 140 }}</p>
+          {% endif %}
+        </span>
+      </a>
+    </article>
     {% endfor %}
-  </ul>
+  </div>
   {% else %}
   <p class="empty">Belum ada tulisan. Nantikan segera.</p>
   {% endif %}

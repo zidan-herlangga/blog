@@ -42,6 +42,10 @@
       </a>
 
       <div class="header-actions">
+        <form class="site-search" action="{{ '/cari/' | relative_url }}" method="get" role="search">
+          <svg class="site-search__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="7"></circle><path d="m20 20-3.5-3.5"></path></svg>
+          <input type="search" name="q" class="site-search__input" placeholder="Cari..." aria-label="Cari tulisan">
+        </form>
         <nav class="site-nav">
           <a href="{{ '/' | relative_url }}">Beranda</a>
           <a href="{{ '/about/' | relative_url }}">Tentang</a>
