@@ -1,26 +1,21 @@
 title: "Zidan Herlangga — Blog"
 description: "Catatan, tulisan, dan eksperimen seputar web development, keamanan siber, dan teknologi."
-baseurl: ""
-url: "https://zidanherlangga.github.io"
+# Situs ini disajikan sebagai project page: https://<user>.github.io/blog/
+url: "https://zidan-herlangga.github.io"
+baseurl: "/blog"
 author: "Zidan Herlangga"
 email: "zidanherlangga24@gmail.com"
 
 # Build settings
 markdown: kramdown
 highlighter: rouge
-permalink: /:categories/:year/:month/:day/:title/
+permalink: /:year/:month/:day/:title/
 
-# Plugins (supported by GitHub Pages)
+# Plugins (didukung GitHub Pages)
 plugins:
   - jekyll-feed
   - jekyll-seo-tag
   - jekyll-sitemap
-
-# Collections
-collections:
-  posts:
-    output: true
-    permalink: /:year/:month/:day/:title/
 
 # Exclude
 exclude:
@@ -28,3 +23,4 @@ exclude:
   - Gemfile.lock
   - node_modules
   - vendor
+  - README.md

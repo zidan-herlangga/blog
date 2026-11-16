@@ -6,7 +6,9 @@ layout: default
     <h1 class="post-title">{{ page.title }}</h1>
     <p class="post-meta">
       <time datetime="{{ page.date | date_to_xmlschema }}">{{ page.date | date: "%d %B %Y" }}</time>
-      {% if page.categories %} · {{ page.categories | join: ", " }}{% endif %}
+      {% if page.categories.size > 0 %} · {{ page.categories | join: ", " }}{% endif %}
+      {% assign words = content | number_of_words %}
+      · {{ words | divided_by: 200 | plus: 1 }} menit baca
     </p>
   </header>
 

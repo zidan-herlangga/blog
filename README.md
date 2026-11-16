@@ -1,32 +1,37 @@
 # Blog (Jekyll)
 
-Portal artikel pribadi berbasis Jekyll, siap deploy ke GitHub Pages.
+Portal artikel pribadi berbasis Jekyll, live di **https://zidan-herlangga.github.io/blog/**.
 
 ## Struktur
-- `_config.yml` — konfigurasi situs
-- `_layouts/` — template
+- `_config.yml` — konfigurasi situs (`url` + `baseurl: /blog`)
+- `_layouts/` — template (`default.html`, `post.html`)
 - `_posts/` — artikel (format `YYYY-MM-DD-judul.md`)
-- `assets/css/style.css` — stylesheet
+- `assets/css/style.css` — stylesheet (palet steel blue, sama dengan situs utama)
+- `index.md` — beranda
 - `about.md` — halaman Tentang
-
-## Deploy ke GitHub Pages
-1. Buat repo GitHub baru (mis. `zidanherlangga.github.io` atau `blog`).
-2. Copy isi folder `blog/` ke root repo tersebut.
-3. Di repo → Settings → Pages → Source: `Deploy from a branch` → branch `main`, folder `/ (root)`.
-4. GitHub Pages akan build Jekyll otomatis. URL: `https://<username>.github.io/<repo>/`.
 
 ## Menambah artikel
 Buat file di `_posts/` dengan nama `YYYY-MM-DD-judul.md`:
+
 ```markdown
 ---
 layout: post
 title: "Judul Artikel"
+description: "Ringkasan singkat untuk daftar & SEO."
 date: 2026-01-02
 categories: [web]
 ---
 Isi artikel...
 ```
 
-## Catatan
-- Tema gelap mengikuti palet steel blue (#7d9cc0) situs utama.
-- Untuk deploy ke Vercel, gunakan GitHub Actions (Jekyll tidak native di Vercel).
+Commit & push ke `main` — GitHub Pages akan build otomatis.
+
+## Deploy
+Repo: `zidan-herlangga/blog` → Settings → Pages → Source: `Deploy from a branch`, branch `main`, folder `/ (root)`.
+
+## Catatan penting
+- Situs ini adalah **project page**, jadi semua aset & tautan dirender memakai
+  `relative_url` agar otomatis berawalan `/blog/`. Jangan ganti `baseurl`.
+- Nama repo harus `blog` agar URL akhirnya `https://zidan-herlangga.github.io/blog/`.
+- Tema gelap default, bisa diganti ke terang lewat tombol di header
+  (`localStorage` key `theme`).
