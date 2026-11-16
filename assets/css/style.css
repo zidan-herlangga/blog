@@ -511,6 +511,19 @@ a:hover {
   text-decoration: underline;
 }
 
+/* Link di dalam artikel diberi garis bawah agar tidak hanya
+   dibedakan lewat warna (audit aksesibilitas link-in-text-block). */
+.post-content a {
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-decoration-color: color-mix(in oklab, var(--accent) 60%, transparent);
+  text-underline-offset: 0.16em;
+}
+
+.post-content a:hover {
+  text-decoration-color: currentColor;
+}
+
 strong { font-weight: 600; }
 
 hr {
