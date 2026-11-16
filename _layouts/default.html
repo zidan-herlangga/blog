@@ -154,9 +154,9 @@
         .then((r) => r.text())
         .then((xml) => {
           const doc = new DOMParser().parseFromString(xml, 'application/xml');
-          const items = [...doc.querySelectorAll('item')];
+          const items = [...doc.querySelectorAll('entry')];
           if (!items.length) return;
-          const dates = items.map((it) => new Date(it.querySelector('pubDate')?.textContent || 0).getTime());
+          const dates = items.map((it) => new Date(it.querySelector('updated')?.textContent || 0).getTime());
           const latest = dates[0];
           const lastSeen = Number(localStorage.getItem(KEY) || 0);
           if (lastSeen === 0) {
@@ -167,7 +167,10 @@
           if (newCount === 0) return;
           countEl.textContent = newCount > 1 ? `${newCount} tulisan baru` : 'Tulisan baru';
           titleEl.textContent = items[0].querySelector('title')?.textContent || '';
-          linkEl.setAttribute('href', items[0].querySelector('link')?.textContent || '/');
+          const linkHref = items[0].querySelector('link[rel="alternate"]')?.getAttribute('href')
+            || items[0].querySelector('link')?.getAttribute('href')
+            || '/';
+          linkEl.setAttribute('href', linkHref);
           banner.hidden = false;
           const dismiss = () => {
             banner.hidden = true;
