@@ -61,6 +61,7 @@ html {
   scroll-behavior: smooth;
   -webkit-text-size-adjust: 100%;
   scroll-padding-top: 5rem;
+  overflow-x: hidden;
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -1454,8 +1455,27 @@ hr {
 .carousel__btn--next { right: -0.75rem; }
 
 @media (max-width: 640px) {
-  .carousel__btn--prev { left: 0.35rem; }
-  .carousel__btn--next { right: 0.35rem; }
+  .site-header .container {
+    flex-wrap: wrap;
+    gap: 0.6rem;
+  }
+
+  .header-actions {
+    width: 100%;
+    justify-content: space-between;
+  }
+
+  .site-nav {
+    display: none;
+  }
+
+  .site-search {
+    flex: 1;
+  }
+
+  .site-search__input {
+    width: 100%;
+  }
 }
 
 .carousel__dots {
@@ -1742,4 +1762,9 @@ hr {
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
   overflow: hidden;
+}
+
+@media (max-width: 640px) {
+  .carousel__btn--prev { left: 0.35rem; }
+  .carousel__btn--next { right: 0.35rem; }
 }
