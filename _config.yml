@@ -49,3 +49,17 @@ exclude:
   - node_modules
   - vendor
   - README.md
+
+# Gambar OG default untuk semua halaman & artikel
+# (artikel yang punya `image:` di front matter tetap menang)
+defaults:
+  - scope:
+      path: ""
+      type: posts
+    values:
+      image: /assets/images/og-default.png
+  - scope:
+      path: ""
+      type: pages
+    values:
+      image: /assets/images/og-default.png
