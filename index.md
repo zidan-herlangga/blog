@@ -4,12 +4,8 @@ title: Beranda
 description: "Catatan, tulisan, dan eksperimen seputar web development, keamanan siber, dan teknologi."
 ---
 
-<section class="intro">
-  <h1>Halo, saya Zidan 👋</h1>
-  <p>Catatan, tulisan, dan eksperimen seputar pengembangan web, keamanan siber, serta arsitektur sistem. Ditulis santai, sesekali teknis.</p>
-</section>
-
 {% if site.posts.size > 0 %}
+
 <section class="carousel" aria-label="Tulisan terbaru" data-carousel>
   <div class="carousel__head">
     <h2>Sorotan terbaru</h2>
@@ -45,8 +41,8 @@ description: "Catatan, tulisan, dan eksperimen seputar web development, keamanan
     </div>
   </div>
 
-  <button class="carousel__btn carousel__btn--prev" type="button" aria-label="Slide sebelumnya">‹</button>
-  <button class="carousel__btn carousel__btn--next" type="button" aria-label="Slide berikutnya">›</button>
+<button class="carousel__btn carousel__btn--prev" type="button" aria-label="Slide sebelumnya">‹</button>
+<button class="carousel__btn carousel__btn--next" type="button" aria-label="Slide berikutnya">›</button>
 
   <div class="carousel__dots" aria-hidden="true"></div>
 </section>
@@ -58,7 +54,8 @@ description: "Catatan, tulisan, dan eksperimen seputar web development, keamanan
     <span class="post-date">{{ site.posts | size }} artikel</span>
   </div>
 
-  {% if site.posts.size > 0 %}
+{% if site.posts.size > 0 %}
+
   <ul class="post-list">
     {% for post in site.posts %}
     <li>
