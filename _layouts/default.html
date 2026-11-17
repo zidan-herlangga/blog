@@ -39,7 +39,8 @@
     "url": {{ '/' | absolute_url | jsonify }},
     "potentialAction": {
       "@type": "SearchAction",
-      "target": {{ '/cari/?q={search_term_string}' | absolute_url | jsonify }},
+      "target": "{{ '/cari/' | absolute_url }}?q={search_term_string}",
+
       "query-input": "required name=search_term_string"
     }
   }

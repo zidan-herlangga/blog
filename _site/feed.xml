@@ -1,0 +1,813 @@
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" xml:lang="id"><generator uri="https://jekyllrb.com/" version="4.4.1">Jekyll</generator><link href="https://zidan-herlangga.github.io/blog/feed.xml" rel="self" type="application/atom+xml" /><link href="https://zidan-herlangga.github.io/blog/" rel="alternate" type="text/html" hreflang="id" /><updated>2026-11-17T07:17:20+00:00</updated><id>https://zidan-herlangga.github.io/blog/feed.xml</id><title type="html">Zidan Herlangga – Blog</title><subtitle>Catatan, tulisan, dan eksperimen seputar web development, keamanan siber, dan teknologi.</subtitle><author><name>Zidan Herlangga</name></author><entry><title type="html">Dirty Frag dan Januscape: Dua Celah Kernel yang Lebih Berbahaya dari NoisyTCP</title><link href="https://zidan-herlangga.github.io/blog/2026/11/17/dirtyfrag-januscape-kernel/" rel="alternate" type="text/html" title="Dirty Frag dan Januscape: Dua Celah Kernel yang Lebih Berbahaya dari NoisyTCP" /><published>2026-11-17T02:00:00+00:00</published><updated>2026-11-17T02:00:00+00:00</updated><id>https://zidan-herlangga.github.io/blog/2026/11/17/dirtyfrag-januscape-kernel</id><content type="html" xml:base="https://zidan-herlangga.github.io/blog/2026/11/17/dirtyfrag-januscape-kernel/"><![CDATA[<p>NoisyTCP (CVE-2026-99288) hanya menyebabkan server crash. Dua celah lain yang ditemukan peneliti yang sama – Hyunwoo Kim – jauh lebih berbahaya: <strong>Dirty Frag</strong> dan <strong>Januscape</strong>.</p>
+
+<h2 id="dirty-frag-mei-2026">Dirty Frag (Mei 2026)</h2>
+
+<p>Dirty Frag merantai dua celah page-cache write:</p>
+
+<ul>
+  <li><strong>RxRPC</strong> – CVE-2026-43500</li>
+  <li><strong>xfrm-ESP</strong> – CVE-2026-43284</li>
+</ul>
+
+<p>Kombinasi keduanya memungkinkan penyerang yang sudah punya akses lokal menulis ke page cache dan <strong>mendapatkan hak root</strong> pada distribusi utama: Ubuntu, Red Hat Enterprise Linux, CentOS Stream, dan Fedora.</p>
+
+<p>Ini adalah kelas celah yang sama dengan Dirty Pipe (2022) dan Dirty Cow (2016): menulis ke file yang seharusnya read-only dengan memanipulasi page cache kernel. Bedanya, Dirty Frag memanfaatkan dua subsistem berbeda (RxRPC dan xfrm-ESP) yang jarang diaudit bersama.</p>
+
+<h2 id="januscape-juli-2026">Januscape (Juli 2026)</h2>
+
+<p>Januscape adalah celah berumur <strong>16 tahun</strong> di kernel Linux. Dampaknya bukan root di mesin lokal, melainkan <strong>escape dari virtual machine</strong>: penyerang di dalam VM bisa menjalankan kode arbitrer di host.</p>
+
+<p>Untuk lingkungan cloud dan multi-tenant, ini adalah mimpi buruk. Satu tenant yang terkompromi bisa keluar dari isolasi VM dan mengakses data tenant lain atau host hypervisor.</p>
+
+<h2 id="pola-yang-sama">Pola yang sama</h2>
+
+<p>Ketiga celah (NoisyTCP, Dirty Frag, Januscape) ditemukan oleh peneliti yang sama dalam rentang enam bulan. Artinya:</p>
+
+<ul>
+  <li>Subsistem kernel yang jarang disentuh (RxRPC, xfrm-ESP, TCP SYN cookie) menyimpan bug lama.</li>
+  <li>Peneliti yang sistematis bisa menemukan banyak celah dalam waktu singkat.</li>
+  <li>Organisasi yang tidak mempatch kernel secara rutin terakumulasi risiko.</li>
+</ul>
+
+<h2 id="yang-perlu-dilakukan">Yang perlu dilakukan</h2>
+
+<ol>
+  <li><strong>Patch kernel</strong> untuk ketiga celah (CVE-2026-99288, CVE-2026-43500, CVE-2026-43284) sesuai advisory distro.</li>
+  <li><strong>Reboot</strong> setelah patch kernel.</li>
+  <li><strong>Batasi akses lokal</strong> – Dirty Frag butuh akses awal (meskipun hanya user biasa).</li>
+  <li>Untuk cloud: <strong>isolasi tenant yang ketat</strong>, monitor VM escape (anomali akses host), dan patch hypervisor.</li>
+  <li><strong>Audit subsistem yang jarang dipakai</strong> (RxRPC, xfrm-ESP) – nonaktifkan jika tidak diperlukan.</li>
+</ol>
+
+<h2 id="sumber">Sumber</h2>
+
+<ul>
+  <li><a href="https://www.bleepingcomputer.com/news/linux/new-noisytcp-linux-kernel-flaw-lets-attackers-crash-servers/">New NoisyTCP Linux kernel flaw lets attackers crash servers – BleepingComputer</a></li>
+  <li><a href="https://access.redhat.com/security/cve/CVE-2026-99288">CVE-2026-99288 – Red Hat Customer Portal</a></li>
+</ul>
+
+<p><em>Artikel ini ringkasan dan analisis pribadi. Detail CVE Dirty Frag dan Januscape merujuk pada pengungkapan Hyunwoo Kim yang disebut dalam artikel BleepingComputer di atas.</em></p>]]></content><author><name>Zidan Herlangga</name></author><category term="keamanan" /><category term="linux" /><summary type="html"><![CDATA[Dirty Frag memberi root, Januscape memungkinkan escape dari VM. Keduanya ditemukan peneliti yang sama yang menemukan NoisyTCP.]]></summary><media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="https://zidan-herlangga.github.io/blog/assets/images/news/dirtyfrag-cover.webp" /><media:content medium="image" url="https://zidan-herlangga.github.io/blog/assets/images/news/dirtyfrag-cover.webp" xmlns:media="http://search.yahoo.com/mrss/" /></entry><entry><title type="html">ARTEX dan Serangan Berbasis AI: Akses Istimewa dalam Waktu di Bawah 3 Jam</title><link href="https://zidan-herlangga.github.io/blog/2026/11/16/artex-serangan-ai-tiga-jam/" rel="alternate" type="text/html" title="ARTEX dan Serangan Berbasis AI: Akses Istimewa dalam Waktu di Bawah 3 Jam" /><published>2026-11-16T13:00:00+00:00</published><updated>2026-11-16T13:00:00+00:00</updated><id>https://zidan-herlangga.github.io/blog/2026/11/16/artex-serangan-ai-tiga-jam</id><content type="html" xml:base="https://zidan-herlangga.github.io/blog/2026/11/16/artex-serangan-ai-tiga-jam/"><![CDATA[<p>FBI merilis FLASH advisory pada Jumat, 13 November 2026, tentang <strong>ARTEX</strong> – framework <em>penetration testing</em> otonom yang dipakai penyerang untuk mengotomatiskan serangan. Kalimat yang paling penting dalam advisory itu bukan soal teknologinya, melainkan soal kecepatan: sebagian intrusi berjalan dari tahap targeting ke akses istimewa <strong>di bawah tiga jam</strong>.</p>
+
+<p>Tiga hari setelahnya, Google Threat Intelligence Group (GTIG) merilis peringatan serupa: serangan yang sepenuhnya otomatis, tanpa manusia di dalam loop, sudah bukan proyeksi lagi. Kuartal ini mereka menemukannya di lapangan.</p>
+
+<h2 id="apa-itu-artex">Apa itu ARTEX</h2>
+
+<p>ARTEX adalah framework open-source yang ditulis dalam <strong>Go</strong>. Ia tidak membawa model AI sendiri, tetapi terhubung ke LLM eksternal seperti Claude, GPT, DeepSeek, GLM, Grok, dan Kimi. Penyerang cukup memberi tujuan dan tugas, lalu framework ini menerjemahkannya menjadi perintah yang dijalankan oleh agen-agen khusus.</p>
+
+<p>Alurnya meniru pekerjaan tim red team:</p>
+
+<ol>
+  <li>Reconnaissance dan enumerasi target.</li>
+  <li>Pencarian celah, termasuk di sistem yang jarang diperhatikan.</li>
+  <li>Eksploitasi dan eksekusi payload.</li>
+  <li>Eskalasi hak akses.</li>
+  <li>Pengambilan data.</li>
+</ol>
+
+<p>Yang membuatnya efektif bukan kecanggihan satu langkah, tetapi kemampuannya <strong>merangkai langkah-langkah itu secara otomatis dan paralel</strong> pada banyak target sekaligus. FBI mencatat framework ini sangat berguna untuk menemukan celah di partner portal, aplikasi internal karyawan, layanan legacy, dan integrasi pihak ketiga – area yang sering luput dari pemindaian rutin.</p>
+
+<figure class="post-figure">
+  <img src="/blog/assets/images/news/diagram-artex.webp" alt="Diagram lima tahap serangan ARTEX dari recon hingga eksfiltrasi" loading="lazy" decoding="async" width="1200" height="780" />
+  <figcaption>Alur kerja ARTEX: recon, pencarian celah, eksekusi, eskalasi hak, dan eksfiltrasi – sebagian besar tanpa campur tangan manusia.</figcaption>
+</figure>
+
+<h2 id="asal-usul-dan-skala">Asal-usul dan skala</h2>
+
+<p>ARTEX dirilis di GitHub pada Juli 2026 oleh developer dengan nama <strong>Autumn-27</strong>. Repositorinya dihapus pada 8 Oktober setelah muncul laporan bahwa framework tersebut disalahgunakan. Tetapi menghapus satu repo tidak menghapus tool: masih ada fork komunitas, salinan arsip, versi lokalisasi, dan edisi komersial bernama <strong>ARTEX PRO</strong>.</p>
+
+<p>Awal November 2026, peneliti menemukan lebih dari <strong>1.600 konsol ARTEX yang terekspos di internet</strong>. Jumlah deployment sebenarnya diperkirakan jauh lebih tinggi. Artinya, ini bukan tool yang dipakai satu kelompok saja; ini ekosistem.</p>
+
+<p>FBI menyebut beberapa aktor telah memakai ARTEX sejak setidaknya Agustus 2026 untuk menyerang sektor keuangan, pemerintahan, teknologi, pertahanan, dan kesehatan. Salah satu kasus yang disebut adalah serangan rantai pasok <strong>ConnectWise Cloud Backup</strong> pada Oktober yang berujung pada akses tidak sah ke lingkungan Microsoft 365 pelanggan.</p>
+
+<h2 id="bagian-yang-paling-mengubah-permainan">Bagian yang paling mengubah permainan</h2>
+
+<p>Selama ini, biaya serangan siber dibatasi oleh dua hal: keahlian dan waktu. Framework seperti ARTEX menekan keduanya.</p>
+
+<p>FBI menyebut ARTEX “secara signifikan mengurangi waktu yang dibutuhkan untuk merangkai teknik serangan”, dan memungkinkan aktor dengan keahlian teknis minimal menjalankan operasi multi-target secara bersamaan. Deteksi juga jadi lebih sulit karena volume trafik otomatis memang besar, sehingga alert yang muncul bisa tenggelam di antara noise operasional.</p>
+
+<p>Google melengkapi gambaran itu dengan contoh konkret:</p>
+
+<ul>
+  <li>Framework multi-agen <strong>CAIRN</strong> dipakai dalam serangan terhadap sektor kedirgantaraan Amerika Serikat.</li>
+  <li>Agen bernama <strong>exploit_agent</strong> dipakai untuk mengotomatiskan pencarian dan eksploitasi celah pada situs media, hiburan, dan pendidikan di Prancis.</li>
+  <li>Dugaan aktor Korea Utara memakai Claude Code untuk membantu pengiriman malware.</li>
+</ul>
+
+<p>GTIG memperkirakan dalam <strong>tiga bulan</strong> ke depan penyerang bisa menjalankan serangan tidak canggih yang hampir sepenuhnya otomatis, dan dalam <strong>enam bulan</strong> serangan otonom yang lebih matang. Perkiraan ini bisa salah, tetapi arahnya jelas: otomasi serangan akan menjadi normal, bukan pengecualian.</p>
+
+<h2 id="yang-masih-menentukan-fundamental">Yang masih menentukan: fundamental</h2>
+
+<p>Mudah untuk panik dan membeli tool AI baru. Yang lebih berguna adalah menutup hal-hal yang memang dieksploitasi oleh otomasi: celah sederhana pada aplikasi yang menghadap internet.</p>
+
+<p>Rekomendasi FBI dan GTIG, diterjemahkan ke bahasa operasional:</p>
+
+<p><strong>Kurangi permukaan serangan</strong></p>
+
+<ul>
+  <li>Inventarisasi semua aplikasi yang terbuka ke internet, termasuk partner portal dan endpoint API yang lupa didokumentasikan.</li>
+  <li>Tutup panel admin yang seharusnya internal. Jangan andalkan “URL-nya tidak diketahui orang”.</li>
+  <li>Hapus layanan legacy dan kredensial default.</li>
+</ul>
+
+<p><strong>Percepat patch untuk celah “mudah”</strong></p>
+
+<ul>
+  <li>LLM sangat cepat menyusun exploit untuk celah dengan kompleksitas rendah. Celah yang butuh tiga hari bagi manusia bisa selesai dalam hitungan menit bagi agen.</li>
+  <li>Prioritaskan yang bisa dieksploitasi tanpa autentikasi dan berdampak langsung.</li>
+</ul>
+
+<p><strong>Perkuat identitas</strong></p>
+
+<ul>
+  <li>Wajibkan MFA untuk akses admin dan konsol cloud.</li>
+  <li>Tinjau aplikasi OAuth dan izin API yang diberikan ke pihak ketiga.</li>
+  <li>Gunakan kredensial berumur pendek, bukan token permanen.</li>
+</ul>
+
+<p><strong>Deteksi yang relevan</strong></p>
+
+<ul>
+  <li>Pantau lonjakan request otomatis, terutama ke endpoint sensitif.</li>
+  <li>Pasang rate limit di API yang melakukan pencarian data atau autentikasi.</li>
+  <li>Awasi perubahan kredensial dan hak akses yang tidak wajar.</li>
+  <li>Perhatikan transfer data keluar dalam jumlah besar, terutama ke tujuan baru.</li>
+  <li>Gunakan detection pack dari MalwareMustDie yang dirilis bersamaan dengan advisory, tetapi tetap sadari bahwa IOC bisa cepat kedaluwarsa.</li>
+</ul>
+
+<p><strong>Siapkan respons sebelum insiden</strong></p>
+
+<p>Karena serangan bisa mencapai akses istimewa dalam tiga jam, playbook yang disusun saat insiden sedang berlangsung sudah terlambat. Isolasi host, rotasi kredensial, dan penghentian sesi harus sudah diuji sebelumnya.</p>
+
+<h2 id="pertanyaan-yang-sering-diajukan">Pertanyaan yang sering diajukan</h2>
+
+<p><strong>Apa itu ARTEX?</strong>
+Framework <em>penetration testing</em> otonom berbasis AI yang mengotomatiskan tahapan serangan dari <em>reconnaissance</em> sampai eksfiltrasi, dengan terhubung ke LLM eksternal seperti Claude, GPT, dan DeepSeek.</p>
+
+<p><strong>Berapa cepat serangan yang menggunakan ARTEX?</strong>
+Sebagian intrusi berjalan dari tahap <em>targeting</em> ke akses istimewa dalam waktu di bawah tiga jam.</p>
+
+<p><strong>Apa yang sebaiknya dilakukan organisasi?</strong>
+Kurangi permukaan serangan, percepat patch untuk celah yang mudah dieksploitasi, perkuat identitas (MFA dan token berumur pendek), dan siapkan prosedur respons sebelum insiden terjadi.</p>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "Apa itu ARTEX?",
+      "acceptedAnswer": { "@type": "Answer", "text": "Framework penetration testing otonom berbasis AI yang mengotomatiskan tahapan serangan dari reconnaissance sampai eksfiltrasi, dengan terhubung ke LLM eksternal seperti Claude, GPT, dan DeepSeek." }
+    },
+    {
+      "@type": "Question",
+      "name": "Berapa cepat serangan yang menggunakan ARTEX?",
+      "acceptedAnswer": { "@type": "Answer", "text": "Sebagian intrusi berjalan dari tahap targeting ke akses istimewa dalam waktu di bawah tiga jam." }
+    },
+    {
+      "@type": "Question",
+      "name": "Apa yang sebaiknya dilakukan organisasi?",
+      "acceptedAnswer": { "@type": "Answer", "text": "Kurangi permukaan serangan, percepat patch untuk celah yang mudah dieksploitasi, perkuat identitas (MFA dan token berumur pendek), dan siapkan prosedur respons sebelum insiden terjadi." }
+    }
+  ]
+}
+</script>
+
+<h2 id="catatan-penutup">Catatan penutup</h2>
+
+<p>Kemunculan ARTEX bukan berarti AI “mengalahkan” pertahanan. Banyak organisasi yang diserang lewat celah yang sebenarnya sudah bisa ditutup dengan patch dan konfigurasi yang benar. Yang berubah adalah <strong>kecepatan dan biaya</strong>: penyerang sekarang bisa mencoba lebih banyak hal, lebih cepat, dengan tim yang lebih kecil.</p>
+
+<p>Pertahanan yang efektif mengikuti logika yang sama – otomatis, konsisten, dan tidak bergantung pada satu orang yang kebetulan sedang jaga. Artikel <a href="/blog/2026/11/15/insiden-cursor-backdoor-ssh/">insiden Cursor</a> menunjukkan sisi lain dari masalah ini: rantai pasok dan kredensial tetap menjadi pintu masuk favorit, bahkan ketika serangannya sudah diotomatiskan.</p>
+
+<h2 id="sumber">Sumber</h2>
+
+<ul>
+  <li><a href="https://www.bleepingcomputer.com/news/security/fbi-warns-artex-ai-hacking-tool-is-powering-global-cyberattacks/">FBI warns ARTEX AI hacking tool is powering global cyberattacks – BleepingComputer</a></li>
+  <li><a href="https://therecord.media/artex-ai-tool-fbi-flash-alert">FBI flash alert says Artex tool automating cyberattacks at ‘machine speed’ – The Record</a></li>
+  <li><a href="https://www.bleepingcomputer.com/news/security/google-warns-that-fully-automated-ai-attacks-are-coming-soon/">Google warns that fully-automated AI attacks are coming soon – BleepingComputer</a></li>
+  <li><a href="https://commons.wikimedia.org/wiki/File:Clear_padlock_and_keys.jpg">Clear padlock and keys, CC BY 2.0 – Wikimedia Commons</a></li>
+</ul>
+
+<p><em>Artikel ini ringkasan dan analisis pribadi. Untuk daftar IOC dan rekomendasi resmi, baca advisory FBI secara lengkap.</em></p>]]></content><author><name>Zidan Herlangga</name></author><category term="keamanan" /><category term="ai" /><summary type="html"><![CDATA[FBI mewaspadai ARTEX, framework pentest berbasis AI yang mempercepat serangan ke akses istimewa dalam hitungan jam.]]></summary><media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="https://zidan-herlangga.github.io/blog/assets/images/news/artex-cover.webp" /><media:content medium="image" url="https://zidan-herlangga.github.io/blog/assets/images/news/artex-cover.webp" xmlns:media="http://search.yahoo.com/mrss/" /></entry><entry><title type="html">Google GTIG: Serangan AI yang Sepenuhnya Otomatis Sudah Dimulai</title><link href="https://zidan-herlangga.github.io/blog/2026/11/16/google-ai-serangan-otomatis/" rel="alternate" type="text/html" title="Google GTIG: Serangan AI yang Sepenuhnya Otomatis Sudah Dimulai" /><published>2026-11-16T07:00:00+00:00</published><updated>2026-11-16T07:00:00+00:00</updated><id>https://zidan-herlangga.github.io/blog/2026/11/16/google-ai-serangan-otomatis</id><content type="html" xml:base="https://zidan-herlangga.github.io/blog/2026/11/16/google-ai-serangan-otomatis/"><![CDATA[<p>Google Threat Intelligence Group (GTIG) merilis laporan yang mengubah cara kita melihat keamanan siber: <strong>serangan yang sepenuhnya otomatis, tanpa manusia di dalam loop, sudah bukan proyeksi lagi</strong>. Kuartal ini mereka menemukannya di lapangan.</p>
+
+<h2 id="apa-yang-berubah">Apa yang berubah</h2>
+
+<p>Selama ini, AI dipakai penyerang secara eksperimental – membantu menulis skrip, meringkas hasil scan, atau mempercepat reconnaissance. Sekarang, AI dipakai untuk <strong>menjalankan seluruh rantai serangan</strong> secara otonom: pencarian celah, penyusunan exploit, eksekusi, dan eksfiltrasi data.</p>
+
+<p>GTIG mencatat adopsi besar-besaran oleh kelompok keuangan maupun aktor negara. Contoh yang disebut:</p>
+
+<ul>
+  <li>Framework multi-agen <strong>CAIRN</strong> dipakai dalam serangan terhadap sektor kedirgantaraan Amerika Serikat.</li>
+  <li>Agen <strong>exploit_agent</strong> mengotomatiskan pencarian dan eksploitasi celah pada situs media, hiburan, dan pendidikan di Prancis.</li>
+  <li>Aktor yang diduga Korea Utara memakai <strong>Claude Code</strong> untuk membantu pengiriman malware.</li>
+</ul>
+
+<p>GTIG juga menemukan penyerang secara sistematis menyalahgunakan open-source pentest suite – ARTEX, CAIRN, CyberStrikeAI, dan HexStrike AI – untuk menjalankan serangan adaptif terhadap endpoint yang terbuka ke internet dan rentan terhadap celah berkompleksitas rendah, yang LLM mudah bangun exploit-nya.</p>
+
+<h2 id="proyeksi-gtig">Proyeksi GTIG</h2>
+
+<ul>
+  <li><strong>3 bulan ke depan:</strong> serangan tidak canggih yang memerlukan sedikit atau tanpa interaksi manusia, bergantung pada beberapa agen AI.</li>
+  <li><strong>6 bulan ke depan:</strong> serangan otonom yang lebih matang dan canggih.</li>
+</ul>
+
+<p>“In the past quarter, GTIG identified threat actors using LLM frameworks to fully automate vulnerability discovery and exploitation without a human in the loop for the first time,” tulis Google.</p>
+
+<h2 id="yang-membuatnya-berbahaya">Yang membuatnya berbahaya</h2>
+
+<p>Biaya dan keahlian serangan turun drastis. Celah yang butuh tiga hari bagi manusia bisa selesai dalam hitungan menit bagi agen. Volume percobaan naik, sementara waktu respons tim bertahan tetap sama.</p>
+
+<h2 id="yang-perlu-dilakukan">Yang perlu dilakukan</h2>
+
+<ol>
+  <li><strong>Patch celah berkompleksitas rendah dengan cepat</strong> – ini yang paling mudah dieksploitasi LLM.</li>
+  <li><strong>Kurangi permukaan serangan</strong> – inventarisasi endpoint yang terbuka, tutup panel admin, hapus layanan legacy.</li>
+  <li><strong>Rate limiting &amp; WAF</strong> di API dan endpoint sensitif.</li>
+  <li><strong>MFA &amp; least privilege</strong> untuk akses admin dan konsol cloud.</li>
+  <li><strong>Monitoring</strong> – lonjakan request otomatis, perubahan kredensial, transfer data keluar.</li>
+  <li><strong>Siapkan playbook respons</strong> sebelum insiden – karena serangan bisa mencapai akses istimewa dalam hitungan jam.</li>
+</ol>
+
+<h2 id="sumber">Sumber</h2>
+
+<ul>
+  <li><a href="https://www.bleepingcomputer.com/news/security/google-warns-that-fully-automated-ai-attacks-are-coming-soon/">Google warns that fully-automated AI attacks are coming soon – BleepingComputer</a></li>
+  <li><a href="https://www.bleepingcomputer.com/news/security/fbi-warns-artex-ai-hacking-tool-is-powering-global-cyberattacks/">FBI warns ARTEX AI hacking tool is powering global cyberattacks – BleepingComputer</a></li>
+</ul>
+
+<p><em>Artikel ini ringkasan dan analisis pribadi. Untuk detail resmi, baca laporan GTIG.</em></p>]]></content><author><name>Zidan Herlangga</name></author><category term="keamanan" /><category term="ai" /><summary type="html"><![CDATA[GTIG mengonfirmasi ancaman baru: kerangka kerja LLM yang mengotomatiskan pencarian dan eksploitasi celah tanpa manusia di loop.]]></summary><media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="https://zidan-herlangga.github.io/blog/assets/images/news/google-ai-cover.webp" /><media:content medium="image" url="https://zidan-herlangga.github.io/blog/assets/images/news/google-ai-cover.webp" xmlns:media="http://search.yahoo.com/mrss/" /></entry><entry><title type="html">NoisyTCP: Bug 11 Tahun di Kernel Linux yang Bisa Mematikan Server</title><link href="https://zidan-herlangga.github.io/blog/2026/11/16/noisytcp-kernel-linux/" rel="alternate" type="text/html" title="NoisyTCP: Bug 11 Tahun di Kernel Linux yang Bisa Mematikan Server" /><published>2026-11-16T03:00:00+00:00</published><updated>2026-11-16T03:00:00+00:00</updated><id>https://zidan-herlangga.github.io/blog/2026/11/16/noisytcp-kernel-linux</id><content type="html" xml:base="https://zidan-herlangga.github.io/blog/2026/11/16/noisytcp-kernel-linux/"><![CDATA[<p>Ada bug di kernel Linux yang sudah berumur 11 tahun dan baru sekarang ditambal. Namanya <strong>NoisyTCP</strong>, tercatat sebagai <strong>CVE-2026-99288</strong>. Dampaknya bukan pencurian data, bukan eksekusi kode, tetapi sesuatu yang cukup untuk membuat layanan mati: <strong>kernel panic</strong>.</p>
+
+<p>Yang membuatnya serius adalah syaratnya yang rendah. Penyerang tidak perlu login, tidak perlu mengirim payload rumit, dan hampir semua distribusi Linux terdampak – termasuk server yang menjalankan Nginx, Apache, atau SSH dengan konfigurasi default.</p>
+
+<h2 id="akar-masalahnya-race-condition-di-socket-lookup">Akar masalahnya: race condition di socket lookup</h2>
+
+<p>Kernel Linux menangani koneksi TCP masuk dengan <em>lockless socket lookup</em>. Saat paket datang, kernel mencari socket yang cocok di tabel hash tanpa selalu mengambil lock. Untuk mengurangi overhead, Linux juga memakai <strong>SYN cookie</strong> ketika antrean koneksi mulai penuh.</p>
+
+<p>Masalahnya muncul ketika dua hal berjalan bersamaan di RX queue berbeda:</p>
+
+<ol>
+  <li>Satu paket memicu pembuatan SYN cookie dan menyimpan state sementara.</li>
+  <li>Paket lain melakukan lookup ke tabel ehash saat sebuah socket sedang dibebaskan dan dialokasikan ulang.</li>
+</ol>
+
+<p>Dalam jendela waktu yang sempit, kernel bisa membaca <strong>socket yang sudah di-recycle tetapi belum diinisialisasi dan di-hash dengan benar</strong>. Hasilnya adalah <em>NULL pointer dereference</em>, dan kernel panik.</p>
+
+<p>Red Hat menjelaskan intinya begini: diperlukan lookup ehash yang basi bersamaan dengan pembebasan dan realokasi request socket di konteks RX yang berbeda. Karena itu, serangan lebih mudah berhasil pada server dengan <strong>dua RX queue atau lebih</strong>, atau yang memakai RPS untuk menyebarkan paket ke beberapa CPU.</p>
+
+<figure class="post-figure">
+  <img src="/blog/assets/images/news/diagram-noisytcp.webp" alt="Diagram race condition NoisyTCP di dua RX queue yang berujung kernel panic" loading="lazy" decoding="async" width="1200" height="780" />
+  <figcaption>Dua RX queue memproses SYN cookie dan socket reuse secara bersamaan; jendela race yang sempit tetap bisa memicu kernel panic.</figcaption>
+</figure>
+
+<h2 id="seberapa-berbahaya">Seberapa berbahaya?</h2>
+
+<p>Untuk konteks yang jujur: ini <strong>denial of service</strong>, bukan kompromi penuh. Penyerang tidak bisa mencuri data, mengubah isi disk, atau menjalankan kode arbitrer. Dampaknya adalah layanan berhenti sampai server di-reboot.</p>
+
+<p>Tetapi jangan meremehkan DoS. Untuk bisnis, server yang mati sama saja dengan gangguan layanan. Untuk penyedia hosting, satu bug yang bisa mematikan banyak tenant sekaligus adalah masalah operasional besar. Dan karena kernel dipakai bersama, <strong>container ikut terdampak walau container-nya sendiri tidak menjalankan Nginx</strong> – yang menentukan adalah kernel host.</p>
+
+<p>Penemunya, Hyunwoo Kim, mencatat bahwa jendela race-nya sempit. Pada server <em>bare-metal</em> yang lalu lintasnya sepi, memicu bug ini bisa memakan waktu lama. Tetapi penyerang tidak perlu berhasil pada percobaan pertama; mereka bisa mengirim traffic terus-menerus.</p>
+
+<h2 id="apakah-sudah-ada-perbaikan">Apakah sudah ada perbaikan?</h2>
+
+<p>Ya. Patch sudah tersedia dan perbaikannya sudah masuk ke kernel Linux mainline sekitar dua minggu sebelum publikasi. Distribusi biasanya merilis kernel baru dengan nomor versi masing-masing, jadi langkah yang benar adalah mengikuti advisory distro kamu, bukan menunggu nomor versi tertentu.</p>
+
+<p>Setelah patch terpasang, <strong>reboot tetap wajib</strong>. Patch kernel tidak aktif sampai sistem boot ulang. Ini sering menjadi bagian yang terlewat: patch tercatat “terpasang”, tetapi host masih menjalankan kernel lama.</p>
+
+<h2 id="kalau-belum-bisa-patch-hari-ini">Kalau belum bisa patch hari ini</h2>
+
+<p>Ada mitigasi sementara yang disebut oleh peneliti, dengan trade-off yang harus dipahami:</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Mitigasi</th>
+      <th>Perintah</th>
+      <th>Konsekuensi</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Matikan SYN cookie</td>
+      <td><code class="language-plaintext highlighter-rouge">sysctl -w net.ipv4.tcp_syncookies=0</code></td>
+      <td>Perlindungan terhadap SYN flood melemah</td>
+    </tr>
+    <tr>
+      <td>Paksa satu RX queue</td>
+      <td><code class="language-plaintext highlighter-rouge">ethtool -L &lt;interface&gt; combined 1</code></td>
+      <td>Throughput dan paralelisme jaringan turun</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>Keduanya bukan solusi permanen. Anggap sebagai tambal darurat sambil menyiapkan jendela maintenance untuk patch dan reboot.</p>
+
+<p>Langkah lain yang masuk akal:</p>
+
+<ul>
+  <li>Periksa apakah host benar-benar menerima paket TCP langsung dari internet. Server di belakang load balancer dengan proteksi L4 punya paparan lebih kecil, tetapi tetap perlu dipatch.</li>
+  <li>Pantau log kernel untuk <code class="language-plaintext highlighter-rouge">NULL pointer dereference</code> di subsistem jaringan, dan siapkan auto-restart untuk layanan kritikal.</li>
+  <li>Pastikan prosedur rollback dan snapshot tersedia sebelum patch massal.</li>
+</ul>
+
+<h2 id="pola-yang-berulang">Pola yang berulang</h2>
+
+<p>NoisyTCP bukan bug pertama di subsistem kernel yang baru ditemukan setelah bertahun-tahun. Pada Mei 2026, peneliti yang sama mengungkap <strong>Dirty Frag</strong>, rantai dua celah page-cache yang bisa berujung root. Pada Juli, ada <strong>Januscape</strong>, bug berumur 16 tahun yang memungkinkan escape dari virtual machine.</p>
+
+<p>Artinya jelas: kernel adalah permukaan serangan yang sangat besar, dan sebagian bug lama baru terlihat ketika orang mulai mencarinya dengan cara yang lebih sistematis. Bagi tim operasional, prioritasnya bukan membaca setiap CVE, tetapi memastikan jalur patch kernel berjalan cepat dan bisa diuji tanpa takut downtime.</p>
+
+<h2 id="cara-mitigasi-langkah-demi-langkah">Cara mitigasi (langkah demi langkah)</h2>
+
+<ol>
+  <li><strong>Cek versi kernel</strong> dan advisory distribusi yang kamu pakai (Ubuntu, Debian, RHEL, dll.).</li>
+  <li><strong>Pasang patch kernel</strong> yang menyediakan perbaikan CVE-2026-99288.</li>
+  <li><strong>Reboot server</strong> agar kernel baru aktif (patch tidak aktif tanpa reboot).</li>
+  <li>Jika belum bisa patch hari ini: <strong>matikan SYN cookie</strong> dengan <code class="language-plaintext highlighter-rouge">sysctl -w net.ipv4.tcp_syncookies=0</code> (trade-off: perlindungan SYN flood melemah).</li>
+  <li><strong>Paksa satu RX queue</strong>: <code class="language-plaintext highlighter-rouge">ethtool -L &lt;interface&gt; combined 1</code> (trade-off: throughput turun).</li>
+  <li><strong>Pantau log kernel</strong> untuk <code class="language-plaintext highlighter-rouge">NULL pointer dereference</code> di subsistem jaringan.</li>
+</ol>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "HowTo",
+  "name": "Mitigasi NoisyTCP (CVE-2026-99288) pada server Linux",
+  "step": [
+    { "@type": "HowToStep", "name": "Cek versi kernel", "text": "Periksa versi kernel dan advisory distribusi yang dipakai." },
+    { "@type": "HowToStep", "name": "Pasang patch", "text": "Pasang patch kernel yang menyediakan perbaikan CVE-2026-99288." },
+    { "@type": "HowToStep", "name": "Reboot", "text": "Reboot server agar kernel baru aktif." },
+    { "@type": "HowToStep", "name": "Matikan SYN cookie (darurat)", "text": "Jalankan sysctl -w net.ipv4.tcp_syncookies=0 jika belum bisa patch." },
+    { "@type": "HowToStep", "name": "Satu RX queue (darurat)", "text": "Jalankan ethtool -L <interface> combined 1." },
+    { "@type": "HowToStep", "name": "Pantau log", "text": "Pantau log kernel untuk NULL pointer dereference." }
+  ]
+}
+</script>
+
+<h2 id="sumber">Sumber</h2>
+
+<ul>
+  <li><a href="https://www.bleepingcomputer.com/news/linux/new-noisytcp-linux-kernel-flaw-lets-attackers-crash-servers/">New NoisyTCP Linux kernel flaw lets attackers crash servers – BleepingComputer</a></li>
+  <li><a href="https://access.redhat.com/security/cve/CVE-2026-99288">CVE-2026-99288 – Red Hat Customer Portal</a></li>
+  <li><a href="https://commons.wikimedia.org/wiki/File:BalticServers_data_center.jpg">BalticServers data center, CC BY-SA 3.0 – Wikimedia Commons</a></li>
+</ul>
+
+<p><em>Artikel ini ringkasan dan analisis pribadi. Selalu ikuti advisory resmi distribusi dan vendor infrastruktur kamu sebelum menerapkan perubahan pada sistem produksi.</em></p>]]></content><author><name>Zidan Herlangga</name></author><category term="keamanan" /><category term="linux" /><summary type="html"><![CDATA[CVE-2026-99288 memungkinkan penyerang tanpa login memicu kernel panic dari jarak jauh. Hampir semua distro Linux terdampak.]]></summary><media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="https://zidan-herlangga.github.io/blog/assets/images/news/noisytcp-cover.webp" /><media:content medium="image" url="https://zidan-herlangga.github.io/blog/assets/images/news/noisytcp-cover.webp" xmlns:media="http://search.yahoo.com/mrss/" /></entry><entry><title type="html">Insiden Cursor: Kunci API Bocor hingga Backdoor SSH di 5.000 Developer</title><link href="https://zidan-herlangga.github.io/blog/2026/11/15/insiden-cursor-backdoor-ssh/" rel="alternate" type="text/html" title="Insiden Cursor: Kunci API Bocor hingga Backdoor SSH di 5.000 Developer" /><published>2026-11-15T02:30:00+00:00</published><updated>2026-11-15T02:30:00+00:00</updated><id>https://zidan-herlangga.github.io/blog/2026/11/15/insiden-cursor-backdoor-ssh</id><content type="html" xml:base="https://zidan-herlangga.github.io/blog/2026/11/15/insiden-cursor-backdoor-ssh/"><![CDATA[<p>Cursor mengungkap insiden keamanan yang berakhir di tempat yang paling sensitif bagi developer: marketplace ekstensi editor. Bukan karena bug di VS Code atau di ekstensi resmi Anthropic, tetapi karena kredensial yang bocor dan data latih AI yang menyimpan rahasia.</p>
+
+<p>Laporan insiden dirilis Jumat, 13 November 2026. Serangan terhadap marketplace-nya sendiri terjadi pada 29 Oktober 2026 dan berlangsung sekitar 11 jam sebelum ekstensi berbahaya dicabut.</p>
+
+<h2 id="apa-yang-sebenarnya-terjadi">Apa yang sebenarnya terjadi</h2>
+
+<p>Urutannya kurang lebih seperti ini:</p>
+
+<ol>
+  <li>Penyerang mendapatkan kunci akses yang tersimpan di <strong>Fireworks AI</strong>, penyedia pihak ketiga yang dipakai Cursor untuk training dan inference model.</li>
+  <li>Kunci itu dipakai membaca bucket penyimpanan <em>read-only</em> yang berisi <strong>trace historis coding agent</strong>, kebanyakan dari 2025. Trace ini berasal dari pengguna yang tidak mengaktifkan Privacy Mode.</li>
+  <li>Sebagian trace masih menyimpan <strong>kredensial API mentah</strong> – bukan hanya potongan kode.</li>
+  <li>Kredensial tersebut membuka akses ke beberapa sistem internal dan tool SaaS Cursor.</li>
+  <li>Dari situ penyerang memperoleh kredensial yang bisa <strong>mempublikasikan ekstensi ke marketplace</strong> Cursor.</li>
+  <li>Pada 29 Oktober, mereka mengunggah salinan palsu ekstensi Claude Code versi <strong>2.1.312</strong> dan <strong>2.1.313</strong> ke cache marketplace yang melayani pengguna VS Code.</li>
+</ol>
+
+<p>Ekstensi palsu itu menjalankan JavaScript berbahaya yang mengumpulkan informasi sistem, menanam <strong>SSH key milik penyerang</strong>, mencoba mengaktifkan SSH, lalu memasang mekanisme persistence agar akses bisa dipertahankan.</p>
+
+<figure class="post-figure">
+  <img src="/blog/assets/images/news/diagram-cursor.webp" alt="Diagram lima tahap rantai serangan Cursor" loading="lazy" decoding="async" width="1200" height="780" />
+  <figcaption>Rantai serangan: kunci pihak ketiga → trace AI → kredensial internal → marketplace → backdoor SSH.</figcaption>
+</figure>
+
+<h2 id="seberapa-besar-dampaknya">Seberapa besar dampaknya</h2>
+
+<p>Cursor menyebut angka yang relatif kecil, tetapi tetap besar dalam hitungan orang:</p>
+
+<ul>
+  <li>Kurang dari <strong>0,05% pengguna</strong> memiliki trace coding agent yang terekspos.</li>
+  <li>Kurang dari <strong>0,01% pelanggan</strong> mengalami kebocoran kredensial API.</li>
+  <li>Hingga <strong>5.000 pengguna</strong> yang meminta versi ekstensi terdampak selama jendela paparan berpotensi menerima build berbahaya.</li>
+</ul>
+
+<p>Data yang diambil dari tool SaaS mencakup arsip repositori source non-produksi, informasi kontak bisnis, percakapan dukungan pelanggan, metrik penggunaan produk, ringkasan percakapan coding agent, dan kredensial yang pernah dikirim pelanggan ke tim support.</p>
+
+<p>Yang <strong>tidak</strong> terdampak menurut Cursor: ekstensi resmi Anthropic, Open VSX, infrastruktur produksi, rilis aplikasi resmi, repositori kode pelanggan, serta kode dan prompt milik pengguna dengan Privacy Mode aktif.</p>
+
+<p>Satu hal yang sedikit melegakan: peneliti menemukan kesalahan koding pada malware tersebut, sehingga backdoor kemungkinan gagal berjalan di banyak sistem Windows dan macOS yang SSH-nya belum aktif. Tetapi mengandalkan bug milik penyerang bukan strategi pertahanan.</p>
+
+<p>Sebagai respons, Cursor memindahkan seluruh traffic inference dari Fireworks, mencabut dan merotasi kredensial, membangun ulang marketplace ekstensi, serta men-deploy ulang infrastruktur produksi.</p>
+
+<h2 id="kenapa-kasus-ini-penting">Kenapa kasus ini penting</h2>
+
+<p><strong>Pertama, marketplace ekstensi adalah rantai pasok.</strong> Developer terbiasa melakukan <code class="language-plaintext highlighter-rouge">npm audit</code> untuk dependensi, tetapi jarang mempertanyakan ekstensi editor yang berjalan dengan hak penuh di mesin lokal. Satu kredensial publikasi yang bocor bisa menjangkau ribuan laptop dalam hitungan jam.</p>
+
+<p><strong>Kedua, data latih AI bukan data biasa.</strong> Prompt, trace, dan log agen sering berisi token, connection string, dan kunci API yang tidak sengaja ditempel. Kalau data itu disimpan untuk training, kredensial di dalamnya harus dianggap sebagai secret yang bocor sejak awal.</p>
+
+<p><strong>Ketiga, ini bukan insiden tunggal.</strong> BleepingComputer menyebut gelombang serangan terhadap platform developer AI sebagai “Black October”. Railway, Northflank, Lightning AI, OpenCode, dan Warp ikut terdampak. Di Railway, kredensial curian dipakai untuk menghasilkan tagihan inference sekitar <strong>USD 740.000</strong>, dan sebagian insiden juga dikaitkan dengan upaya <em>model distillation</em>.</p>
+
+<p>Pola yang sama berulang: kredensial pihak ketiga → akses ke sistem internal → dampak ke pengguna. Serangan berbasis otomasi seperti yang dibahas di <a href="/blog/2026/11/16/artex-serangan-ai-tiga-jam/">artikel ARTEX</a> membuat rantai seperti ini makin cepat dieksekusi.</p>
+
+<h2 id="yang-perlu-kamu-lakukan-sekarang">Yang perlu kamu lakukan sekarang</h2>
+
+<p>Kalau kamu memakai Cursor atau ekstensi Claude Code:</p>
+
+<ul>
+  <li>Cek apakah kamu pernah memakai versi <strong>2.1.312</strong> atau <strong>2.1.313</strong> pada 29 Oktober 2026.</li>
+  <li>Periksa <code class="language-plaintext highlighter-rouge">~/.ssh/authorized_keys</code> (Windows: <code class="language-plaintext highlighter-rouge">%USERPROFILE%\.ssh\authorized_keys</code>) dan hapus key yang tidak kamu kenali.</li>
+  <li>Rotasi kredensial yang pernah kamu simpan di folder proyek, file <code class="language-plaintext highlighter-rouge">.env</code>, atau yang pernah kamu kirim ke tim support.</li>
+  <li>Cari koneksi SSH keluar yang tidak wajar dan proses yang mencoba mengaktifkan layanan SSH.</li>
+  <li>Aktifkan Privacy Mode untuk data kode dan prompt.</li>
+</ul>
+
+<p>Untuk tim engineering, ini checklist yang lebih tahan lama:</p>
+
+<ol>
+  <li><strong>Pisahkan secret dari data observability.</strong> Jangan pernah mengirim <code class="language-plaintext highlighter-rouge">.env</code> atau token ke prompt, log, maupun trace AI.</li>
+  <li><strong>Gunakan token berumur pendek dan berlingkup sempit.</strong> Satu kunci yang bisa membaca seluruh bucket adalah masalah arsitektur, bukan sekadar kelalaian.</li>
+  <li><strong>Perlakukan marketplace sebagai dependensi.</strong> Pin versi, tinjau publisher, dan blokir instalasi otomatis untuk ekstensi baru di lingkungan kerja.</li>
+  <li><strong>Batasi egress.</strong> Backdoor SSH butuh koneksi keluar. Aturan egress yang ketat memutus banyak rantai serangan di tengah jalan.</li>
+  <li><strong>Siapkan playbook rotasi.</strong> Saat kunci bocor, yang menentukan adalah berapa menit, bukan berapa halaman dokumen.</li>
+</ol>
+
+<h2 id="pertanyaan-yang-sering-diajukan">Pertanyaan yang sering diajukan</h2>
+
+<p><strong>Apakah ekstensi resmi Anthropic ikut terdampak?</strong>
+Tidak. Penyerang mempublikasikan <em>salinan palsu</em> di cache marketplace Cursor. Ekstensi resmi Anthropic dan Open VSX tidak terdampak.</p>
+
+<p><strong>Berapa banyak developer yang terpapar?</strong>
+Hingga 5.000 pengguna yang meminta versi 2.1.312 atau 2.1.313 selama jendela paparan ±11 jam. Kurang dari 0,05% pengguna memiliki trace yang terekspos, dan kurang dari 0,01% pelanggan mengalami kebocoran kredensial API.</p>
+
+<p><strong>Apa yang harus dilakukan jika sempat memasang ekstensi terdampak?</strong>
+Periksa <code class="language-plaintext highlighter-rouge">~/.ssh/authorized_keys</code>, rotasi semua kredensial yang pernah disimpan di proyek, cari koneksi SSH keluar yang tidak wajar, dan ikuti panduan remediasi Cursor.</p>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "Apakah ekstensi resmi Anthropic ikut terdampak?",
+      "acceptedAnswer": { "@type": "Answer", "text": "Tidak. Penyerang mempublikasikan salinan palsu di cache marketplace Cursor. Ekstensi resmi Anthropic dan Open VSX tidak terdampak." }
+    },
+    {
+      "@type": "Question",
+      "name": "Berapa banyak developer yang terpapar?",
+      "acceptedAnswer": { "@type": "Answer", "text": "Hingga 5.000 pengguna yang meminta versi 2.1.312 atau 2.1.313 selama jendela paparan sekitar 11 jam." }
+    },
+    {
+      "@type": "Question",
+      "name": "Apa yang harus dilakukan jika sempat memasang ekstensi terdampak?",
+      "acceptedAnswer": { "@type": "Answer", "text": "Periksa authorized_keys, rotasi semua kredensial yang pernah disimpan di proyek, cari koneksi SSH keluar yang tidak wajar, dan ikuti panduan remediasi Cursor." }
+    }
+  ]
+}
+</script>
+
+<h2 id="sumber">Sumber</h2>
+
+<ul>
+  <li><a href="https://www.bleepingcomputer.com/news/security/cursor-confirms-security-breach-led-to-malicious-claude-code-extension/">Cursor confirms security breach led to malicious Claude Code extension – BleepingComputer</a></li>
+  <li><a href="https://thehackernews.com/2026/11/stolen-fireworks-ai-key-led-to-cursor.html">Stolen Fireworks AI key led to Cursor extension incident – The Hacker News</a></li>
+  <li><a href="https://commons.wikimedia.org/wiki/File:Code_on_computer_monitor_(Unsplash).jpg">Code on computer monitor (Unsplash), CC0 – Wikimedia Commons</a></li>
+</ul>
+
+<p><em>Artikel ini ringkasan dan analisis pribadi. Detail resmi ada di laporan insiden Cursor dan pemberitaan di atas.</em></p>]]></content><author><name>Zidan Herlangga</name></author><category term="keamanan" /><category term="rantai-pasok" /><summary type="html"><![CDATA[Kunci API Fireworks AI yang bocor membuka jalan bagi ekstensi Claude Code palsu di Cursor. Hingga 5.000 developer terpapar backdoor SSH.]]></summary><media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="https://zidan-herlangga.github.io/blog/assets/images/news/cursor-cover.webp" /><media:content medium="image" url="https://zidan-herlangga.github.io/blog/assets/images/news/cursor-cover.webp" xmlns:media="http://search.yahoo.com/mrss/" /></entry><entry><title type="html">Cara Mengamankan Kredensial di Aplikasi Web</title><link href="https://zidan-herlangga.github.io/blog/2026/11/14/mengamankan-kredensial-aplikasi-web/" rel="alternate" type="text/html" title="Cara Mengamankan Kredensial di Aplikasi Web" /><published>2026-11-14T03:00:00+00:00</published><updated>2026-11-14T03:00:00+00:00</updated><id>https://zidan-herlangga.github.io/blog/2026/11/14/mengamankan-kredensial-aplikasi-web</id><content type="html" xml:base="https://zidan-herlangga.github.io/blog/2026/11/14/mengamankan-kredensial-aplikasi-web/"><![CDATA[<p>Kebocoran kredensial adalah pintu masuk favorit penyerang – dari insiden Cursor (kunci API Fireworks AI) hingga kampanye yang mencuri token dari trace AI. Berikut checklist praktis agar secret tidak bocor.</p>
+
+<h2 id="1-jangan-pernah-commit-secret-ke-repo">1. Jangan pernah commit secret ke repo</h2>
+
+<ul>
+  <li>Tambahkan <code class="language-plaintext highlighter-rouge">.env</code>, <code class="language-plaintext highlighter-rouge">*.key</code>, <code class="language-plaintext highlighter-rouge">*.pem</code> ke <code class="language-plaintext highlighter-rouge">.gitignore</code> sebelum commit pertama.</li>
+  <li>Pakai <strong>secret scanning</strong> di CI: gitleaks, trufflehog, atau GitHub secret scanning.</li>
+  <li>Kalau secret sudah ter-commit: <strong>rotasi segera</strong>, lalu bersihkan history dengan <code class="language-plaintext highlighter-rouge">git filter-repo</code> (rotasi lebih penting daripada membersihkan history).</li>
+</ul>
+
+<h2 id="2-pakai-environment-variable-bukan-hardcode">2. Pakai environment variable, bukan hardcode</h2>
+
+<ul>
+  <li>Baca secret dari env var di runtime, bukan dari source code.</li>
+  <li>Pisahkan file <code class="language-plaintext highlighter-rouge">.env</code> per environment (dev, staging, prod) dan jangan commit.</li>
+  <li>Di frontend (browser), jangan taruh secret apa pun – anggap semua kode frontend publik.</li>
+</ul>
+
+<h2 id="3-secret-manager-untuk-produksi">3. Secret manager untuk produksi</h2>
+
+<ul>
+  <li>Gunakan vault: AWS Secrets Manager, GCP Secret Manager, Azure Key Vault, HashiCorp Vault, atau Doppler.</li>
+  <li>Aplikasi mengambil secret saat startup atau via sidecar, bukan dari file konfigurasi.</li>
+  <li>Rotasi otomatis jika didukung (mis. database password).</li>
+</ul>
+
+<h2 id="4-batasi-hak-akses-least-privilege">4. Batasi hak akses (least privilege)</h2>
+
+<ul>
+  <li>Satu kunci = satu tujuan. Kunci yang bisa membaca seluruh bucket adalah masalah arsitektur.</li>
+  <li>Pakai token berumur pendek (short-lived) dan scoped (read-only, per-resource).</li>
+  <li>Pisahkan kredensial per layanan; jangan satu key untuk semua.</li>
+</ul>
+
+<h2 id="5-jangan-log-atau-tampilkan-secret">5. Jangan log atau tampilkan secret</h2>
+
+<ul>
+  <li>Secret tidak boleh muncul di log, error message, stack trace, atau trace AI/prompt.</li>
+  <li>Masking di logger: ganti nilai secret dengan <code class="language-plaintext highlighter-rouge">***</code>.</li>
+  <li>Audit kode untuk <code class="language-plaintext highlighter-rouge">console.log</code>, <code class="language-plaintext highlighter-rouge">print</code>, <code class="language-plaintext highlighter-rouge">logger.info</code> yang mencetak env.</li>
+</ul>
+
+<h2 id="6-deteksi-kebocoran">6. Deteksi kebocoran</h2>
+
+<ul>
+  <li>Aktifkan alert GitHub/GitLab untuk push secret.</li>
+  <li>Pantau penggunaan kredensial: request dari IP baru, volume tidak wajar, akses di luar jam kerja.</li>
+  <li>Pakai honeytoken (kredensial palsu) untuk mendeteksi penggunaan tidak sah.</li>
+</ul>
+
+<h2 id="7-backup--recovery">7. Backup &amp; recovery</h2>
+
+<ul>
+  <li>Simpan secret di tempat yang terenkripsi dan ter-backup (vault), bukan di chat atau dokumen.</li>
+  <li>Siapkan prosedur rotasi cepat: siapa yang bisa revoke, berapa lama, dan bagaimana deploy ulang.</li>
+</ul>
+
+<h2 id="ringkasan">Ringkasan</h2>
+
+<p>Secret yang aman adalah secret yang <strong>tidak pernah muncul di kode, log, atau prompt</strong>, <strong>berumur pendek</strong>, dan <strong>bisa dirotasi dalam hitungan menit</strong>. Insiden Cursor menunjukkan satu kunci yang bocor bisa membuka jalan ke seluruh sistem – bukan karena teknologi canggih, tapi karena kredensial disimpan di tempat yang salah.</p>
+
+<h2 id="sumber">Sumber</h2>
+
+<ul>
+  <li><a href="https://www.bleepingcomputer.com/news/security/cursor-confirms-security-breach-led-to-malicious-claude-code-extension/">Cursor confirms security breach led to malicious Claude Code extension – BleepingComputer</a></li>
+</ul>
+
+<p><em>Artikel ini ringkasan praktis, bukan panduan resmi vendor. Sesuaikan dengan kebijakan keamanan organisasimu.</em></p>]]></content><author><name>Zidan Herlangga</name></author><category term="keamanan" /><category term="web" /><summary type="html"><![CDATA[Checklist praktis menyimpan secret: env var, secret manager, rotasi, scanning, dan least privilege.]]></summary><media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="https://zidan-herlangga.github.io/blog/assets/images/news/secrets-cover.webp" /><media:content medium="image" url="https://zidan-herlangga.github.io/blog/assets/images/news/secrets-cover.webp" xmlns:media="http://search.yahoo.com/mrss/" /></entry><entry><title type="html">Checklist Hardening Server Linux untuk Pemula</title><link href="https://zidan-herlangga.github.io/blog/2026/11/13/hardening-server-linux/" rel="alternate" type="text/html" title="Checklist Hardening Server Linux untuk Pemula" /><published>2026-11-13T03:00:00+00:00</published><updated>2026-11-13T03:00:00+00:00</updated><id>https://zidan-herlangga.github.io/blog/2026/11/13/hardening-server-linux</id><content type="html" xml:base="https://zidan-herlangga.github.io/blog/2026/11/13/hardening-server-linux/"><![CDATA[<p>Server Linux yang baru dipasang belum aman. Berikut checklist minimal yang sebaiknya dilakukan sebelum server menerima traffic produksi.</p>
+
+<h2 id="1-update-sistem">1. Update sistem</h2>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">apt update &amp;&amp; apt upgrade -y</code> (Debian/Ubuntu) atau <code class="language-plaintext highlighter-rouge">dnf update -y</code> (RHEL/Fedora).</li>
+  <li>Aktifkan unattended upgrades untuk patch keamanan otomatis.</li>
+  <li>Jadwalkan reboot jika kernel diperbarui.</li>
+</ul>
+
+<h2 id="2-amankan-ssh">2. Amankan SSH</h2>
+
+<ul>
+  <li>Nonaktifkan login root: <code class="language-plaintext highlighter-rouge">PermitRootLogin no</code> di <code class="language-plaintext highlighter-rouge">/etc/ssh/sshd_config</code>.</li>
+  <li>Pakai autentikasi kunci, bukan password: <code class="language-plaintext highlighter-rouge">PasswordAuthentication no</code>.</li>
+  <li>(Opsional) Ganti port default dan batasi user dengan <code class="language-plaintext highlighter-rouge">AllowUsers</code>.</li>
+  <li>Restart SSH: <code class="language-plaintext highlighter-rouge">systemctl restart sshd</code>.</li>
+</ul>
+
+<h2 id="3-firewall">3. Firewall</h2>
+
+<ul>
+  <li>Aktifkan UFW: <code class="language-plaintext highlighter-rouge">ufw default deny incoming</code>, <code class="language-plaintext highlighter-rouge">ufw default allow outgoing</code>, <code class="language-plaintext highlighter-rouge">ufw allow 22/tcp</code>, <code class="language-plaintext highlighter-rouge">ufw allow 80/tcp</code>, <code class="language-plaintext highlighter-rouge">ufw allow 443/tcp</code>, lalu <code class="language-plaintext highlighter-rouge">ufw enable</code>.</li>
+  <li>Atau pakai <code class="language-plaintext highlighter-rouge">firewalld</code> / nftables sesuai distro.</li>
+  <li>Hanya buka port yang benar-benar dipakai.</li>
+</ul>
+
+<h2 id="4-fail2ban">4. Fail2ban</h2>
+
+<ul>
+  <li>Install fail2ban untuk memblokir IP yang berulang gagal login.</li>
+  <li>Aktifkan jail untuk SSH: <code class="language-plaintext highlighter-rouge">systemctl enable --now fail2ban</code>.</li>
+  <li>Cek status: <code class="language-plaintext highlighter-rouge">fail2ban-client status sshd</code>.</li>
+</ul>
+
+<h2 id="5-pengguna--hak-akses">5. Pengguna &amp; hak akses</h2>
+
+<ul>
+  <li>Buat user non-root dengan sudo: <code class="language-plaintext highlighter-rouge">adduser deploy &amp;&amp; usermod -aG sudo deploy</code>.</li>
+  <li>Jangan berbagi akun root.</li>
+  <li>Nonaktifkan akun yang tidak dipakai.</li>
+</ul>
+
+<h2 id="6-layanan--permukaan-serangan">6. Layanan &amp; permukaan serangan</h2>
+
+<ul>
+  <li>Cek layanan aktif: <code class="language-plaintext highlighter-rouge">systemctl list-units --type=service --state=running</code>.</li>
+  <li>Nonaktifkan yang tidak diperlukan: <code class="language-plaintext highlighter-rouge">systemctl disable --now &lt;service&gt;</code>.</li>
+  <li>Hapus paket yang tidak dipakai.</li>
+</ul>
+
+<h2 id="7-patch-kernel-rutin">7. Patch kernel rutin</h2>
+
+<ul>
+  <li>Kernel adalah permukaan serangan besar (lihat Dirty Frag, Januscape, NoisyTCP).</li>
+  <li>Pastikan jalur update kernel berjalan dan ada jendela maintenance untuk reboot.</li>
+</ul>
+
+<h2 id="8-logging--audit">8. Logging &amp; audit</h2>
+
+<ul>
+  <li>Pastikan journald/rsyslog aktif.</li>
+  <li>Kirim log ke tempat terpusat (opsional) untuk deteksi insiden.</li>
+  <li>Pantau login gagal, sudo, dan perubahan file penting.</li>
+</ul>
+
+<h2 id="9-backup">9. Backup</h2>
+
+<ul>
+  <li>Backup konfigurasi dan data secara rutin (rsync, restic, borg).</li>
+  <li>Uji restore secara berkala – backup yang tidak pernah diuji = tidak ada backup.</li>
+</ul>
+
+<h2 id="10-opsional-mac--monitoring">10. (Opsional) MAC &amp; monitoring</h2>
+
+<ul>
+  <li>Aktifkan AppArmor/SELinux (biasanya sudah aktif di distro modern).</li>
+  <li>Pasang monitoring sederhana (uptime, CPU, disk, login) – Netdata, Prometheus, atau Uptime Kuma.</li>
+</ul>
+
+<h2 id="ringkasan">Ringkasan</h2>
+
+<p>Urutan yang paling berdampak: <strong>update → SSH → firewall → fail2ban → user</strong>. Lima langkah ini bisa dilakukan dalam 30 menit dan menutup sebagian besar vektor serangan umum.</p>
+
+<h2 id="sumber">Sumber</h2>
+
+<ul>
+  <li><a href="https://www.bleepingcomputer.com/news/linux/new-noisytcp-linux-kernel-flaw-lets-attackers-crash-servers/">New NoisyTCP Linux kernel flaw lets attackers crash servers – BleepingComputer</a></li>
+</ul>
+
+<p><em>Artikel ini ringkasan praktis, bukan panduan resmi. Sesuaikan dengan kebijakan dan lingkungan kamu.</em></p>]]></content><author><name>Zidan Herlangga</name></author><category term="keamanan" /><category term="linux" /><summary type="html"><![CDATA[Langkah-langkah praktis mengamankan server Linux: SSH, firewall, update, fail2ban, backup, dan monitoring.]]></summary><media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="https://zidan-herlangga.github.io/blog/assets/images/news/hardening-cover.webp" /><media:content medium="image" url="https://zidan-herlangga.github.io/blog/assets/images/news/hardening-cover.webp" xmlns:media="http://search.yahoo.com/mrss/" /></entry><entry><title type="html">Patch Tuesday November 2026: 1.093 Celah, Zero-Day Outlook, dan Prioritas Update</title><link href="https://zidan-herlangga.github.io/blog/2026/11/12/patch-tuesday-november-2026/" rel="alternate" type="text/html" title="Patch Tuesday November 2026: 1.093 Celah, Zero-Day Outlook, dan Prioritas Update" /><published>2026-11-12T01:00:00+00:00</published><updated>2026-11-12T01:00:00+00:00</updated><id>https://zidan-herlangga.github.io/blog/2026/11/12/patch-tuesday-november-2026</id><content type="html" xml:base="https://zidan-herlangga.github.io/blog/2026/11/12/patch-tuesday-november-2026/"><![CDATA[<p>Microsoft kembali merilis pembaruan empat digit. Patch Tuesday November 2026 memperbaiki <strong>1.093 kerentanan</strong>, termasuk <strong>63 celah kritis</strong> dan satu <strong>zero-day di Outlook</strong> yang sudah dieksploitasi di lapangan.</p>
+
+<p>Angka itu bukan anomali. Bulan lalu Microsoft memperbaiki lebih dari 1.400 celah. Sepanjang 2026, total patch yang dikirim perusahaan sudah melewati <strong>5.100</strong>. Sebagai perbandingan, setahun sebelumnya rata-rata sekitar 100 patch per bulan.</p>
+
+<p>Penyebabnya, menurut Microsoft sendiri, adalah bantuan AI dalam menemukan bug. Ini masuk akal: alat berbasis AI memang jauh lebih cepat memindai kode dan menemukan pola kesalahan. Konsekuensinya bagi tim IT juga jelas – volume patch yang harus diuji dan diterapkan terus naik.</p>
+
+<h2 id="angka-yang-perlu-dibaca">Angka yang perlu dibaca</h2>
+
+<table>
+  <thead>
+    <tr>
+      <th>Kategori</th>
+      <th>Jumlah</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Total kerentanan diperbaiki</td>
+      <td>1.093</td>
+    </tr>
+    <tr>
+      <td>Celah kritis</td>
+      <td>63</td>
+    </tr>
+    <tr>
+      <td>Kritis berupa remote code execution</td>
+      <td>hampir separuh</td>
+    </tr>
+    <tr>
+      <td>Celah yang memungkinkan eskalasi hak akses</td>
+      <td>535</td>
+    </tr>
+    <tr>
+      <td>Zero-day yang sudah dieksploitasi</td>
+      <td>1 (Outlook)</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>Dari 63 celah kritis, hampir setengahnya adalah <strong>remote code execution</strong> – jenis yang memungkinkan penyerang mengambil kendali sistem dengan sedikit atau tanpa bantuan pengguna. Sementara 535 celah eskalasi hak akses layak diperhatikan karena bisa dipakai setelah penyerang punya pijakan awal, misalnya lewat phishing atau malware.</p>
+
+<h2 id="zero-day-outlook-cve-2026-124194">Zero-day Outlook: CVE-2026-124194</h2>
+
+<p>Hanya satu celah yang dilaporkan sudah dieksploitasi aktif bulan ini: <strong>CVE-2026-124194</strong>, sebuah bug <em>spoofing</em> di Outlook. Dampaknya mencakup <strong>Microsoft 365 Apps for Enterprise</strong> dan edisi Microsoft Office.</p>
+
+<p>Spoofing terdengar lebih ringan dibandingkan RCE, tetapi jangan diremehkan. Dalam konteks email dan aplikasi produktivitas, spoofing bisa dipakai untuk membuat konten atau identitas terlihat tepercaya, lalu memancing korban mengklik tautan, membuka lampiran, atau menyerahkan kredensial. Kalau celah ini sudah dieksploitasi di dunia nyata, patch-nya masuk kategori paling atas.</p>
+
+<h2 id="vendor-lain-juga-bergerak">Vendor lain juga bergerak</h2>
+
+<p>Patch Tuesday bukan hanya soal Microsoft:</p>
+
+<ul>
+  <li><strong>Apple</strong> merilis pembaruan di luar jadwal untuk setidaknya sembilan kerentanan di iOS/iPadOS, macOS, watchOS, dan visionOS. Salah satunya memungkinkan penyerang jarak jauh bergabung ke grup chat iMessage dan menerima pesannya; celah lain memungkinkan orang yang ditambahkan ke grup membaca pesan yang dikirim sebelum ia bergabung. Apple bahkan mem-backport perbaikan ke iOS 18 – tanda cakupan pengguna yang luas.</li>
+  <li><strong>Adobe, Google, dan Mozilla</strong> juga merilis pembaruan keamanan pada pekan yang sama.</li>
+</ul>
+
+<h2 id="urutan-prioritas-yang-masuk-akal">Urutan prioritas yang masuk akal</h2>
+
+<p>Tidak semua patch bisa diterapkan pada hari yang sama. Kalau harus menyusun urutan:</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Prioritas</th>
+      <th>Target</th>
+      <th>Alasan</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>1</td>
+      <td>CVE-2026-124194 (Outlook)</td>
+      <td>Sudah dieksploitasi aktif</td>
+    </tr>
+    <tr>
+      <td>2</td>
+      <td>Celah kritis RCE di layanan yang menghadap internet</td>
+      <td>Bisa diambil alih tanpa akses awal</td>
+    </tr>
+    <tr>
+      <td>3</td>
+      <td>Eskalasi hak akses di server dan endpoint</td>
+      <td>Memperbesar dampak setelah pijakan awal</td>
+    </tr>
+    <tr>
+      <td>4</td>
+      <td>Browser, office, dan aplikasi pengguna</td>
+      <td>Vektor phishing sehari-hari</td>
+    </tr>
+    <tr>
+      <td>5</td>
+      <td>Celah lain sesuai risiko aset</td>
+      <td>Tetap penting, tapi tidak mendesak</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>Untuk layanan yang tidak bisa langsung di-patch, kurangi paparannya: batasi akses jaringan, matikan fitur yang tidak dipakai, dan tambahkan monitoring pada log autentikasi.</p>
+
+<h2 id="checklist-operasional">Checklist operasional</h2>
+
+<ol>
+  <li><strong>Inventarisasi dulu.</strong> Patch tidak berguna kalau ada server yang tidak masuk daftar aset.</li>
+  <li><strong>Uji di ring kecil.</strong> Satu atau dua host non-kritis sebelum rollout luas.</li>
+  <li><strong>Pastikan reboot benar-benar terjadi.</strong> Patch kernel dan beberapa komponen Windows baru aktif setelah restart.</li>
+  <li><strong>Siapkan rollback.</strong> Snapshot atau backup sebelum patch massal, terutama untuk server database.</li>
+  <li><strong>Verifikasi setelah patch.</strong> Cek versi build, bukan hanya status “installed” di konsol.</li>
+  <li><strong>Pantau beberapa hari.</strong> Perhatikan crash, masalah printing, dan gangguan autentikasi – tiga jenis regresi yang cukup sering muncul setelah Patch Tuesday.</li>
+</ol>
+
+<h2 id="catatan-windows-server-2016-mendekati-akhir">Catatan: Windows Server 2016 mendekati akhir</h2>
+
+<p>Dalam pekan yang sama, Microsoft mengingatkan bahwa <strong>Windows Server 2016 mencapai akhir dukungan pada 12 Januari 2027</strong> – kurang dari dua bulan lagi. Setelah tanggal itu, tidak ada lagi patch keamanan rutin untuk sistem tersebut.</p>
+
+<p>Kalau masih ada Server 2016 di produksi, ini saatnya memilih: migrasi, upgrade, atau membeli extended security updates. Menunda sampai setelah dukungan berakhir berarti menjalankan server yang tidak lagi menerima perbaikan untuk celah baru – termasuk celah yang ditemukan oleh alat berbasis AI yang membuat volume patch terus meningkat.</p>
+
+<h2 id="pertanyaan-yang-sering-diajukan">Pertanyaan yang sering diajukan</h2>
+
+<p><strong>Apa yang paling penting dari Patch Tuesday November 2026?</strong>
+Microsoft merilis 1.093 celah keamanan, termasuk zero-day Outlook CVE-2026-124194 yang sudah dieksploitasi aktif.</p>
+
+<p><strong>Apakah Windows Server 2016 masih didukung?</strong>
+Mendekati akhir dukungan; tinjau timeline migrasi sebelum celah baru tidak lagi ditambal.</p>
+
+<p><strong>Urutan prioritas patch yang masuk akal?</strong>
+Celah yang sudah dieksploitasi aktif terlebih dahulu, lalu kerentanan kritis pada layanan yang menghadap internet, baru sisanya sesuai kapasitas tim.</p>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "Apa yang paling penting dari Patch Tuesday November 2026?",
+      "acceptedAnswer": { "@type": "Answer", "text": "Microsoft merilis 1.093 celah keamanan, termasuk zero-day Outlook CVE-2026-124194 yang sudah dieksploitasi aktif." }
+    },
+    {
+      "@type": "Question",
+      "name": "Apakah Windows Server 2016 masih didukung?",
+      "acceptedAnswer": { "@type": "Answer", "text": "Mendekati akhir dukungan; tinjau timeline migrasi sebelum celah baru tidak lagi ditambal." }
+    },
+    {
+      "@type": "Question",
+      "name": "Urutan prioritas patch yang masuk akal?",
+      "acceptedAnswer": { "@type": "Answer", "text": "Celah yang sudah dieksploitasi aktif terlebih dahulu, lalu kerentanan kritis pada layanan yang menghadap internet, baru sisanya sesuai kapasitas tim." }
+    }
+  ]
+}
+</script>
+
+<h2 id="sumber">Sumber</h2>
+
+<ul>
+  <li><a href="https://krebsonsecurity.com/2026/11/microsoft-fixes-nearly-1100-security-vulnerabilities/">Microsoft Fixes Nearly 1,100 Security Vulnerabilities – Krebs on Security</a></li>
+  <li><a href="https://www.bleepingcomputer.com/news/microsoft/microsoft-windows-server-2016-reaches-end-of-support-in-60-days/">Microsoft: Windows Server 2016 reaches end of support in 60 days – BleepingComputer</a></li>
+  <li><a href="https://commons.wikimedia.org/wiki/File:Programming_code.jpg">Programming code, CC BY-SA 4.0 – Wikimedia Commons</a></li>
+</ul>
+
+<p><em>Artikel ini ringkasan dan analisis pribadi. Selalu rujuk MSRC, advisory vendor, dan hasil pengujian lingkungan kamu sendiri sebelum menerapkan patch.</em></p>]]></content><author><name>Zidan Herlangga</name></author><category term="keamanan" /><category term="patch" /><summary type="html"><![CDATA[Patch Tuesday November 2026 membawa 1.093 perbaikan, 63 kritis, dan zero-day Outlook CVE-2026-124194 yang sudah dieksploitasi.]]></summary><media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="https://zidan-herlangga.github.io/blog/assets/images/news/patch-tuesday-cover.webp" /><media:content medium="image" url="https://zidan-herlangga.github.io/blog/assets/images/news/patch-tuesday-cover.webp" xmlns:media="http://search.yahoo.com/mrss/" /></entry><entry><title type="html">Halo Dunia – Tulisan Pertama</title><link href="https://zidan-herlangga.github.io/blog/2026/01/01/halo-dunia/" rel="alternate" type="text/html" title="Halo Dunia – Tulisan Pertama" /><published>2026-01-01T00:00:00+00:00</published><updated>2026-01-01T00:00:00+00:00</updated><id>https://zidan-herlangga.github.io/blog/2026/01/01/halo-dunia</id><content type="html" xml:base="https://zidan-herlangga.github.io/blog/2026/01/01/halo-dunia/"><![CDATA[<p>Selamat datang di blog saya. Ini adalah tulisan pertama sebagai pembuka.</p>
+
+<p>Di sini saya akan menulis tentang:</p>
+
+<ul>
+  <li>Eksperimen dan proyek yang sedang dikerjakan</li>
+  <li>Catatan belajar keamanan siber dan <em>ethical hacking</em></li>
+  <li>Tips pengembangan web dengan Laravel dan React</li>
+  <li>Review tools dan teknologi</li>
+</ul>
+
+<h2 id="contoh-gambar">Contoh gambar</h2>
+
+<p>Gambar di bawah ini ditambahkan lewat include <code class="language-plaintext highlighter-rouge">figure</code>, jadi otomatis responsif,
+lazy-load, dan punya caption:</p>
+
+<figure class="post-figure">
+  <img src="/blog/assets/images/contoh-gambar.png" alt="Contoh gambar artikel" loading="lazy" decoding="async" />
+  <figcaption>Contoh gambar dengan caption – file disimpan di assets/images/.</figcaption>
+</figure>
+
+<h2 id="diskusi">Diskusi</h2>
+
+<p>Kalau ada pertanyaan atau koreksi, tulis di kolom komentar paling bawah.
+Komentar memakai GitHub Issues, jadi kamu perlu masuk dengan akun GitHub –
+tidak ada database dan tidak ada pelacakan.</p>
+
+<p>Stay tuned!</p>]]></content><author><name>Zidan Herlangga</name></author><category term="umum" /><summary type="html"><![CDATA[Pembuka: rencana isi blog, contoh gambar, dan cara ikut berkomentar.]]></summary><media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="https://zidan-herlangga.github.io/blog/assets/images/contoh-gambar.png" /><media:content medium="image" url="https://zidan-herlangga.github.io/blog/assets/images/contoh-gambar.png" xmlns:media="http://search.yahoo.com/mrss/" /></entry></feed>
