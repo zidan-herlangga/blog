@@ -1,0 +1,41 @@
+<section class="post-share" aria-labelledby="share-title">
+  <h2 class="post-share__title" id="share-title">Bagikan tulisan ini</h2>
+  <div class="post-share__buttons">
+    <a class="post-share__btn" id="shareX" href="#" rel="noopener noreferrer" target="_blank" aria-label="Bagikan ke X">
+      <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"></path></svg>
+      <span>X</span>
+    </a>
+    <a class="post-share__btn" id="shareLinkedIn" href="#" rel="noopener noreferrer" target="_blank" aria-label="Bagikan ke LinkedIn">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path><rect x="2" y="9" width="4" height="12"></rect><circle cx="4" cy="4" r="2"></circle></svg>
+      <span>LinkedIn</span>
+    </a>
+    <button class="post-share__btn" type="button" id="shareCopy" aria-label="Salin tautan">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+      <span id="shareCopyLabel">Salin tautan</span>
+    </button>
+  </div>
+</section>
+<script>
+(function () {
+  const url = {{ page.url | absolute_url | jsonify }};
+  const title = {{ page.title | jsonify }};
+  const x = document.getElementById('shareX');
+  const li = document.getElementById('shareLinkedIn');
+  const copy = document.getElementById('shareCopy');
+  const label = document.getElementById('shareCopyLabel');
+  if (x) x.href = 'https://twitter.com/intent/tweet?url=' + encodeURIComponent(url) + '&text=' + encodeURIComponent(title);
+  if (li) li.href = 'https://www.linkedin.com/sharing/share-offsite/?url=' + encodeURIComponent(url);
+  if (copy) {
+    copy.addEventListener('click', async () => {
+      try {
+        await navigator.clipboard.writeText(url);
+        if (label) label.textContent = 'Tersalin';
+        setTimeout(() => { if (label) label.textContent = 'Salin tautan'; }, 1800);
+      } catch (e) {
+        if (label) label.textContent = 'Gagal';
+        setTimeout(() => { if (label) label.textContent = 'Salin tautan'; }, 1800);
+      }
+    });
+  }
+})();
+</script>

@@ -72,6 +72,41 @@ Dalam pekan yang sama, Microsoft mengingatkan bahwa **Windows Server 2016 mencap
 
 Kalau masih ada Server 2016 di produksi, ini saatnya memilih: migrasi, upgrade, atau membeli extended security updates. Menunda sampai setelah dukungan berakhir berarti menjalankan server yang tidak lagi menerima perbaikan untuk celah baru – termasuk celah yang ditemukan oleh alat berbasis AI yang membuat volume patch terus meningkat.
 
+## Pertanyaan yang sering diajukan
+
+**Apa yang paling penting dari Patch Tuesday November 2026?**
+Microsoft merilis 1.093 celah keamanan, termasuk zero-day Outlook CVE-2026-124194 yang sudah dieksploitasi aktif.
+
+**Apakah Windows Server 2016 masih didukung?**
+Mendekati akhir dukungan; tinjau timeline migrasi sebelum celah baru tidak lagi ditambal.
+
+**Urutan prioritas patch yang masuk akal?**
+Celah yang sudah dieksploitasi aktif terlebih dahulu, lalu kerentanan kritis pada layanan yang menghadap internet, baru sisanya sesuai kapasitas tim.
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "Apa yang paling penting dari Patch Tuesday November 2026?",
+      "acceptedAnswer": { "@type": "Answer", "text": "Microsoft merilis 1.093 celah keamanan, termasuk zero-day Outlook CVE-2026-124194 yang sudah dieksploitasi aktif." }
+    },
+    {
+      "@type": "Question",
+      "name": "Apakah Windows Server 2016 masih didukung?",
+      "acceptedAnswer": { "@type": "Answer", "text": "Mendekati akhir dukungan; tinjau timeline migrasi sebelum celah baru tidak lagi ditambal." }
+    },
+    {
+      "@type": "Question",
+      "name": "Urutan prioritas patch yang masuk akal?",
+      "acceptedAnswer": { "@type": "Answer", "text": "Celah yang sudah dieksploitasi aktif terlebih dahulu, lalu kerentanan kritis pada layanan yang menghadap internet, baru sisanya sesuai kapasitas tim." }
+    }
+  ]
+}
+</script>
+
 ## Sumber
 
 - [Microsoft Fixes Nearly 1,100 Security Vulnerabilities – Krebs on Security](https://krebsonsecurity.com/2026/11/microsoft-fixes-nearly-1100-security-vulnerabilities/)

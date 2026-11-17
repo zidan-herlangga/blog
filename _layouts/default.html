@@ -30,6 +30,21 @@
   <meta property="og:image:alt" content="{{ page.image_alt | default: page.title | default: site.title }}">
   <meta name="twitter:image:alt" content="{{ page.image_alt | default: page.title | default: site.title }}">
   <link rel="sitemap" type="application/xml" href="{{ '/sitemap.xml' | relative_url }}">
+  {% if page.url == '/' %}
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    "name": {{ site.title | jsonify }},
+    "url": {{ '/' | absolute_url | jsonify }},
+    "potentialAction": {
+      "@type": "SearchAction",
+      "target": {{ '/cari/?q={search_term_string}' | absolute_url | jsonify }},
+      "query-input": "required name=search_term_string"
+    }
+  }
+  </script>
+  {% endif %}
 </head>
 <body>
   <div class="scroll-progress" aria-hidden="true"></div>

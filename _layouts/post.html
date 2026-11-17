@@ -8,6 +8,7 @@ layout: default
     <h1 class="post-title">{{ page.title }}</h1>
     <p class="post-meta">
       <time datetime="{{ page.date | date_to_xmlschema }}">{{ page.date | date: "%d %B %Y" }}</time>
+      {% if page.updated %} · Diperbarui <time datetime="{{ page.updated | date_to_xmlschema }}">{{ page.updated | date: "%d %B %Y" }}</time>{% endif %}
       {% if page.categories.size > 0 %} · {{ page.categories | join: ", " }}{% endif %}
       {% assign words = content | number_of_words %}
       · {{ words | divided_by: 200 | plus: 1 }} menit baca
@@ -60,6 +61,8 @@ layout: default
   {% include related.html %}
 
   {% include author-box.html %}
+
+  {% include share.html %}
 
   <footer class="post-footer">
     <a href="{{ '/' | relative_url }}">&larr; Kembali ke beranda</a>

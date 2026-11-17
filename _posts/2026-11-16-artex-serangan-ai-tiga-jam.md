@@ -89,6 +89,41 @@ Rekomendasi FBI dan GTIG, diterjemahkan ke bahasa operasional:
 
 Karena serangan bisa mencapai akses istimewa dalam tiga jam, playbook yang disusun saat insiden sedang berlangsung sudah terlambat. Isolasi host, rotasi kredensial, dan penghentian sesi harus sudah diuji sebelumnya.
 
+## Pertanyaan yang sering diajukan
+
+**Apa itu ARTEX?**
+Framework *penetration testing* otonom berbasis AI yang mengotomatiskan tahapan serangan dari *reconnaissance* sampai eksfiltrasi, dengan terhubung ke LLM eksternal seperti Claude, GPT, dan DeepSeek.
+
+**Berapa cepat serangan yang menggunakan ARTEX?**
+Sebagian intrusi berjalan dari tahap *targeting* ke akses istimewa dalam waktu di bawah tiga jam.
+
+**Apa yang sebaiknya dilakukan organisasi?**
+Kurangi permukaan serangan, percepat patch untuk celah yang mudah dieksploitasi, perkuat identitas (MFA dan token berumur pendek), dan siapkan prosedur respons sebelum insiden terjadi.
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "Apa itu ARTEX?",
+      "acceptedAnswer": { "@type": "Answer", "text": "Framework penetration testing otonom berbasis AI yang mengotomatiskan tahapan serangan dari reconnaissance sampai eksfiltrasi, dengan terhubung ke LLM eksternal seperti Claude, GPT, dan DeepSeek." }
+    },
+    {
+      "@type": "Question",
+      "name": "Berapa cepat serangan yang menggunakan ARTEX?",
+      "acceptedAnswer": { "@type": "Answer", "text": "Sebagian intrusi berjalan dari tahap targeting ke akses istimewa dalam waktu di bawah tiga jam." }
+    },
+    {
+      "@type": "Question",
+      "name": "Apa yang sebaiknya dilakukan organisasi?",
+      "acceptedAnswer": { "@type": "Answer", "text": "Kurangi permukaan serangan, percepat patch untuk celah yang mudah dieksploitasi, perkuat identitas (MFA dan token berumur pendek), dan siapkan prosedur respons sebelum insiden terjadi." }
+    }
+  ]
+}
+</script>
+
 ## Catatan penutup
 
 Kemunculan ARTEX bukan berarti AI "mengalahkan" pertahanan. Banyak organisasi yang diserang lewat celah yang sebenarnya sudah bisa ditutup dengan patch dan konfigurasi yang benar. Yang berubah adalah **kecepatan dan biaya**: penyerang sekarang bisa mencoba lebih banyak hal, lebih cepat, dengan tim yang lebih kecil.
