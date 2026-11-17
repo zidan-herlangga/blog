@@ -1944,7 +1944,7 @@ hr {
   top: calc(100% + 0.5rem);
   right: 0;
   width: 320px;
-  max-width: 90vw;
+  max-width: calc(100vw - 6rem);
   max-height: 60vh;
   overflow-y: auto;
   border: 1px solid var(--line);
