@@ -1456,15 +1456,14 @@ hr {
 
 @media (max-width: 640px) {
   .site-header .container {
-    flex-wrap: wrap;
     gap: 0.6rem;
   }
 
   .header-actions {
-    width: 100%;
-    justify-content: space-between;
-    flex-wrap: wrap;
-    gap: 0.5rem;
+    flex: 1;
+    justify-content: flex-end;
+    min-width: 0;
+    gap: 0.35rem;
   }
 
   .site-search {
@@ -1795,6 +1794,21 @@ hr {
 
   .menu-toggle {
     display: flex;
+  }
+
+  .header-actions {
+    flex: 1;
+    min-width: 0;
+    justify-content: flex-end;
+  }
+
+  .site-search {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .site-search__input {
+    width: 100%;
   }
 }
 
