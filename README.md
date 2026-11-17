@@ -4,6 +4,7 @@ Portal artikel pribadi berbasis Jekyll, live di **https://zidan-herlangga.github
 
 ## Struktur
 - `_config.yml` – konfigurasi situs (`url` + `baseurl: /blog`)
+- `_data/authors.yml` – metadata penulis (nama, situs, handle X) untuk SEO
 - `_layouts/` – template (`default.html`, `post.html`)
 - `_includes/sidebar.html` – sidebar kanan (kategori, tulisan terbaru, arsip, tautan)
 - `_includes/figure.html` – komponen gambar + caption
@@ -14,10 +15,11 @@ Portal artikel pribadi berbasis Jekyll, live di **https://zidan-herlangga.github
 - `assets/images/news/` – cover & diagram untuk seri sorotan keamanan
 - `assets/fonts/` – font Inter & Space Grotesk (self-hosted)
 - `assets/css/style.css` – stylesheet (palet steel blue, sama dengan situs utama)
-- `index.md` – beranda
+- `index.md` – beranda (daftar tulisan, 6 per halaman)
 - `about.html` – halaman Tentang (dengan foto profil)
 - `kategori.html` – halaman semua kategori (`/blog/kategori/`)
 - `arsip.html` – halaman arsip per tahun (`/blog/arsip/`)
+- `cari.html` + `search.json` – pencarian sisi klien (`/blog/cari/`)
 
 ## Sidebar
 Sidebar kanan otomatis terisi dari data Jekyll:
@@ -38,11 +40,24 @@ title: "Judul Artikel"
 description: "Ringkasan singkat untuk daftar & SEO."
 date: 2026-01-02
 categories: [web]
+image: /assets/images/news/cover.webp        # cover besar (1200px)
+thumb: /assets/images/news/cover-thumb.webp  # thumbnail 360px untuk daftar & pencarian
+image_alt: "Deskripsi gambar"
 ---
 Isi artikel...
 ```
 
 Commit & push ke `main` – GitHub Pages akan build otomatis.
+
+> `thumb` opsional. Kalau kosong, daftar memakai `image` (lebih berat).
+> Buat thumbnail dengan gambar 360px lebar dan kualitas WebP ~72.
+
+## Beranda & pagination
+
+Beranda menampilkan 6 tulisan per halaman. Pagination berjalan di sisi klien
+(GitHub Pages tidak menjalankan `jekyll-paginate`), jadi nomor halaman memakai
+query string `?halaman=2` dan tetap bisa dibuka langsung. Tanpa JavaScript,
+semua tulisan tampil sekaligus.
 
 ## Deploy
 Repo: `zidan-herlangga/blog` → Settings → Pages → Source: `Deploy from a branch`, branch `main`, folder `/ (root)`.
@@ -61,8 +76,11 @@ Repo: `zidan-herlangga/blog` → Settings → Pages → Source: `Deploy from a b
 **Dengan caption (disarankan)**
 
 ```liquid
-{% include figure.html src="/assets/images/foto.webp" alt="Deskripsi gambar" caption="Keterangan di bawah gambar." %}
+{% include figure.html src="/assets/images/foto.webp" alt="Deskripsi gambar" width="1200" height="780" caption="Keterangan di bawah gambar." %}
 ```
+
+Sertakan `width` dan `height` (piksel asli) agar ruang gambar sudah dipesan
+sebelum dimuat, sehingga tata letak tidak bergeser (CLS).
 
 > Selalu bungkus path dengan `relative_url` supaya otomatis berawalan `/blog/`.
 > Kalau ditulis `/assets/images/...` saja, gambar akan 404.
@@ -105,6 +123,8 @@ Sudah otomatis, tidak perlu diurus per artikel:
 
 - `jekyll-seo-tag` menulis `<title>`, description, canonical, Open Graph,
   Twitter card, dan JSON-LD (`BlogPosting`, `Person`, `WebSite`)
+- Handle `twitter:creator` diambil dari `_data/authors.yml`. Tanpa berkas itu,
+  `jekyll-seo-tag` memakai nama penulis sebagai handle (tidak valid).
 - `jekyll-sitemap` → `https://zidan-herlangga.github.io/blog/sitemap.xml`
 - `jekyll-feed` → `https://zidan-herlangga.github.io/blog/feed.xml`
 - Breadcrumb (`BreadcrumbList`) + navigasi antar artikel
