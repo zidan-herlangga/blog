@@ -28,7 +28,7 @@ Dalam jendela waktu yang sempit, kernel bisa membaca **socket yang sudah di-recy
 
 Red Hat menjelaskan intinya begini: diperlukan lookup ehash yang basi bersamaan dengan pembebasan dan realokasi request socket di konteks RX yang berbeda. Karena itu, serangan lebih mudah berhasil pada server dengan **dua RX queue atau lebih**, atau yang memakai RPS untuk menyebarkan paket ke beberapa CPU.
 
-{% include figure.html src="/assets/images/news/diagram-noisytcp.png" width="1200" height="780" alt="Diagram race condition NoisyTCP di dua RX queue yang berujung kernel panic" caption="Dua RX queue memproses SYN cookie dan socket reuse secara bersamaan; jendela race yang sempit tetap bisa memicu kernel panic." %}
+{% include figure.html src="/assets/images/news/diagram-noisytcp.webp" width="1200" height="780" alt="Diagram race condition NoisyTCP di dua RX queue yang berujung kernel panic" caption="Dua RX queue memproses SYN cookie dan socket reuse secara bersamaan; jendela race yang sempit tetap bisa memicu kernel panic." %}
 
 ## Seberapa berbahaya?
 

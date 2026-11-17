@@ -25,7 +25,10 @@
     const host = document.querySelector('[data-comments]');
     if (!host) return;
 
+    let mounted = false;
+
     const mount = () => {
+      mounted = true;
       const dark = document.documentElement.classList.contains('dark');
       host.innerHTML = '';
       const s = document.createElement('script');
@@ -42,8 +45,26 @@
       host.appendChild(s);
     };
 
-    mount();
-    document.addEventListener('themechange', mount);
+    // Muat komentar hanya ketika kolom komentar mendekati viewport,
+    // supaya skrip pihak ketiga tidak membebani muat awal artikel.
+    if ('IntersectionObserver' in window) {
+      const io = new IntersectionObserver(
+        (entries) => {
+          if (entries.some((entry) => entry.isIntersecting)) {
+            io.disconnect();
+            mount();
+          }
+        },
+        { rootMargin: '400px 0px' }
+      );
+      io.observe(host);
+    } else {
+      mount();
+    }
+
+    document.addEventListener('themechange', () => {
+      if (mounted) mount();
+    });
   })();
 </script>
 {%- endif -%}

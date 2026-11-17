@@ -94,6 +94,15 @@ cover: /assets/images/cover.png   # gambar hero besar di atas artikel
 cover_alt: "Deskripsi cover"
 ```
 
+Untuk cover, siapkan tiga ukuran dengan nama berakhiran tetap:
+
+- `nama-cover.webp` – 1200 px, dipakai di layar besar
+- `nama-cover-800.webp` – 800 px, dipakai lewat `srcset` di laptop/tablet
+- `nama-cover-thumb.webp` – 360 px, dipakai di daftar beranda & pencarian
+
+Layout membuat `srcset` otomatis dari ketiga berkas itu, jadi penamaannya
+harus konsisten. Gunakan format WebP (bukan PNG) untuk ukuran lebih kecil.
+
 ## Komentar
 
 Komentar memakai **[utterances](https://utteranc.es)** – berbasis GitHub Issues,

@@ -15,9 +15,14 @@ layout: default
   </header>
 
   {% if page.cover %}
+  {%- assign cover_800 = page.cover | replace: '.webp', '-800.webp' -%}
   <figure class="post-cover">
     <img
       src="{{ page.cover | relative_url }}"
+      {%- if page.thumb %}
+      srcset="{{ page.thumb | relative_url }} 360w, {{ cover_800 | relative_url }} 800w, {{ page.cover | relative_url }} 1200w"
+      sizes="(max-width: 900px) 100vw, (max-width: 1200px) 68vw, 720px"
+      {%- endif %}
       alt="{{ page.cover_alt | default: page.title }}"
       width="1200"
       height="630"

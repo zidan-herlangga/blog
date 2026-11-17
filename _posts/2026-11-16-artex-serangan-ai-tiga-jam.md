@@ -29,7 +29,7 @@ Alurnya meniru pekerjaan tim red team:
 
 Yang membuatnya efektif bukan kecanggihan satu langkah, tetapi kemampuannya **merangkai langkah-langkah itu secara otomatis dan paralel** pada banyak target sekaligus. FBI mencatat framework ini sangat berguna untuk menemukan celah di partner portal, aplikasi internal karyawan, layanan legacy, dan integrasi pihak ketiga – area yang sering luput dari pemindaian rutin.
 
-{% include figure.html src="/assets/images/news/diagram-artex.png" width="1200" height="780" alt="Diagram lima tahap serangan ARTEX dari recon hingga eksfiltrasi" caption="Alur kerja ARTEX: recon, pencarian celah, eksekusi, eskalasi hak, dan eksfiltrasi – sebagian besar tanpa campur tangan manusia." %}
+{% include figure.html src="/assets/images/news/diagram-artex.webp" width="1200" height="780" alt="Diagram lima tahap serangan ARTEX dari recon hingga eksfiltrasi" caption="Alur kerja ARTEX: recon, pencarian celah, eksekusi, eskalasi hak, dan eksfiltrasi – sebagian besar tanpa campur tangan manusia." %}
 
 ## Asal-usul dan skala
 
