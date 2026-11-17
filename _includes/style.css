@@ -2480,3 +2480,93 @@ hr {
 .post-share__btn { display: inline-flex; align-items: center; gap: 0.45rem; padding: 0.5rem 0.85rem; border: 1px solid var(--line); border-radius: 10px; background: var(--bg); color: var(--fg); font-size: 0.85rem; font-weight: 600; text-decoration: none; cursor: pointer; transition: border-color 0.15s ease, transform 0.15s ease; }
 .post-share__btn:hover { border-color: color-mix(in oklab, var(--accent) 45%, var(--line)); transform: translateY(-1px); text-decoration: none; }
 .post-share__btn svg { width: 16px; height: 16px; }
+
+/* ---------- skip link ---------- */
+.skip-link {
+  position: absolute;
+  left: -9999px;
+  top: 0;
+  padding: 0.6rem 1rem;
+  background: var(--fg);
+  color: var(--bg);
+  border-radius: 0 0 10px 0;
+  z-index: 1000;
+  font-weight: 600;
+  text-decoration: none;
+}
+.skip-link:focus {
+  left: 0;
+}
+
+/* ---------- daftar isi menempel ---------- */
+@media (min-width: 900px) {
+  .toc {
+    position: sticky;
+    top: 5rem;
+    align-self: start;
+  }
+}
+
+/* ---------- cetak ---------- */
+@media print {
+  .backdrop, .site-header, .site-footer, .offcanvas, .scroll-progress,
+  .new-post-banner, .sidebar, .site-search, .menu-toggle, .theme-toggle,
+  .post-share, .comments, .post-nav, .post-related, .post-series { display: none !important; }
+  body { background: #fff; color: #000; }
+  .container, .layout, .layout__main { max-width: 100%; width: 100%; }
+  .post-content img, .post-figure img, .post-cover img { max-width: 100%; page-break-inside: avoid; }
+  a { color: #000; text-decoration: underline; }
+  a[href^="http"]::after { content: " (" attr(href) ")"; font-size: 0.8em; }
+}
+
+/* ---------- lightbox ---------- */
+.lightbox {
+  position: fixed;
+  inset: 0;
+  background: rgb(0 0 0 / 0.85);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  padding: 2rem;
+  cursor: zoom-out;
+}
+.lightbox.is-open { display: flex; }
+.lightbox img {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+  border-radius: 8px;
+  box-shadow: 0 20px 60px rgb(0 0 0 / 0.5);
+}
+.lightbox__close {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  width: 40px;
+  height: 40px;
+  border: 0;
+  border-radius: 50%;
+  background: rgb(255 255 255 / 0.15);
+  color: #fff;
+  font-size: 1.4rem;
+  cursor: pointer;
+}
+
+/* ---------- salin kode ---------- */
+.code-copy {
+  position: absolute;
+  top: 0.5rem;
+  right: 0.5rem;
+  padding: 0.25rem 0.55rem;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  background: var(--card);
+  color: var(--muted);
+  font-size: 0.72rem;
+  cursor: pointer;
+  opacity: 0;
+  transition: opacity 0.15s ease;
+}
+pre:hover .code-copy { opacity: 1; }
+.post-content pre { position: relative; }

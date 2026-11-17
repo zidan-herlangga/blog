@@ -48,6 +48,7 @@
   {% endif %}
 </head>
 <body>
+  <a class="skip-link" href="#main-content">Lewati ke konten utama</a>
   <div class="scroll-progress" aria-hidden="true"></div>
   <div class="backdrop" aria-hidden="true">
     <div class="orb orb--1"></div>
@@ -134,7 +135,7 @@
     </aside>
   </div>
 
-  <main class="container">
+  <main class="container" id="main-content">
     <div class="layout">
       <div class="layout__main">
         {{ content }}
@@ -432,6 +433,62 @@
           e.preventDefault();
           first.focus();
         }
+      });
+    })();
+  </script>
+  <div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="Pratinjau gambar">
+    <button class="lightbox__close" type="button" aria-label="Tutup pratinjau">&times;</button>
+    <img id="lightboxImg" alt="">
+  </div>
+
+  <script>
+    (() => {
+      const lb = document.getElementById('lightbox');
+      const img = document.getElementById('lightboxImg');
+      const closeBtn = lb ? lb.querySelector('.lightbox__close') : null;
+      if (!lb || !img) return;
+      const open = (src, alt) => {
+        img.src = src;
+        img.alt = alt || '';
+        lb.classList.add('is-open');
+        document.body.style.overflow = 'hidden';
+      };
+      const close = () => {
+        lb.classList.remove('is-open');
+        document.body.style.overflow = '';
+        img.src = '';
+      };
+      document.addEventListener('click', (e) => {
+        const t = e.target;
+        if (t && t.tagName === 'IMG' && t.closest('.post-content, .post-figure, .post-cover')) {
+          open(t.currentSrc || t.src, t.alt);
+        }
+      });
+      lb.addEventListener('click', (e) => { if (e.target === lb) close(); });
+      if (closeBtn) closeBtn.addEventListener('click', close);
+      document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && lb.classList.contains('is-open')) close(); });
+    })();
+  </script>
+  <script>
+    (() => {
+      document.querySelectorAll('.post-content pre').forEach((pre) => {
+        const code = pre.querySelector('code');
+        if (!code) return;
+        const btn = document.createElement('button');
+        btn.type = 'button';
+        btn.className = 'code-copy';
+        btn.textContent = 'Salin';
+        btn.addEventListener('click', async () => {
+          try {
+            await navigator.clipboard.writeText(code.textContent);
+            btn.textContent = 'Tersalin';
+            setTimeout(() => { btn.textContent = 'Salin'; }, 1600);
+          } catch (e) {
+            btn.textContent = 'Gagal';
+            setTimeout(() => { btn.textContent = 'Salin'; }, 1600);
+          }
+        });
+        pre.appendChild(btn);
       });
     })();
   </script>
