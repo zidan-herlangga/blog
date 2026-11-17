@@ -9,6 +9,8 @@ description: "Catatan, tulisan, dan eksperimen seputar web development, keamanan
 {% assign total_pages = total_posts | divided_by: 6.0 | ceil %}
 {% if total_pages < 1 %}{% assign total_pages = 1 %}{% endif %}
 
+<h1 class="sr-only">Blog Zidan Herlangga – catatan keamanan siber, Linux, dan web</h1>
+
 <section class="posts">
   <div class="section-heading">
     <h2>Semua tulisan</h2>
@@ -23,8 +25,10 @@ description: "Catatan, tulisan, dan eksperimen seputar web development, keamanan
         <a class="news-item__link" href="{{ post.url | relative_url }}">
           <span class="news-item__media">
             <img
-              src="{{ post.image | default: '/assets/images/og-default.png' | relative_url }}"
+              src="{{ post.thumb | default: post.image | default: '/assets/images/og-default.png' | relative_url }}"
               alt="{{ post.image_alt | default: post.title }}"
+              width="360"
+              height="270"
               loading="lazy"
               decoding="async">
           </span>
@@ -46,14 +50,14 @@ description: "Catatan, tulisan, dan eksperimen seputar web development, keamanan
   </div>
 
   {% if total_pages > 1 %}
-  <nav class="pagination" id="pagination" aria-label="Navigasi halaman" data-total="{{ total_pages }}">
+  <nav class="pagination" id="pagination" aria-label="Navigasi halaman" data-total="{{ total_pages }}" hidden>
     <button class="pagination__btn" type="button" data-prev>← Sebelumnya</button>
     <span class="pagination__pages">
       {% for p in (1..total_pages) %}
-      <button class="pagination__num {% if p == 1 %}is-active{% endif %}" type="button" data-page="{{ p }}">{{ p }}</button>
+      <button class="pagination__num{% if p == 1 %} is-active{% endif %}" type="button" data-page="{{ p }}" aria-label="Halaman {{ p }}"{% if p == 1 %} aria-current="page"{% endif %}>{{ p }}</button>
       {% endfor %}
     </span>
-    <span class="pagination__info" id="pageInfo">Halaman 1 dari {{ total_pages }}</span>
+    <span class="pagination__info" id="pageInfo" role="status" aria-live="polite">Halaman 1 dari {{ total_pages }}</span>
     <button class="pagination__btn" type="button" data-next>Berikutnya →</button>
   </nav>
   {% endif %}
@@ -69,31 +73,52 @@ description: "Catatan, tulisan, dan eksperimen seputar web development, keamanan
   if (!list || !nav) return;
   const items = [...list.querySelectorAll('.news-item')];
   const total = Number(nav.dataset.total || 1);
-  const perPage = 6;
-  let current = 1;
-
   const nums = [...nav.querySelectorAll('[data-page]')];
   const prev = nav.querySelector('[data-prev]');
   const next = nav.querySelector('[data-next]');
   const info = document.getElementById('pageInfo');
+  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  let current = 1;
 
-  function show(page) {
+  const requested = Number(new URLSearchParams(location.search).get('halaman'));
+  const initial = Number.isFinite(requested) && requested > 0 ? Math.min(total, requested) : 1;
+
+  function show(page, scroll) {
     current = Math.max(1, Math.min(total, page));
+
     items.forEach((it) => {
-      const p = Number(it.dataset.page);
-      it.style.display = p === current ? '' : 'none';
+      it.hidden = Number(it.dataset.page) !== current;
     });
-    nums.forEach((n) => n.classList.toggle('is-active', Number(n.dataset.page) === current));
+
+    nums.forEach((n) => {
+      const active = Number(n.dataset.page) === current;
+      n.classList.toggle('is-active', active);
+      if (active) n.setAttribute('aria-current', 'page');
+      else n.removeAttribute('aria-current');
+    });
+
     if (info) info.textContent = 'Halaman ' + current + ' dari ' + total;
     if (prev) prev.disabled = current === 1;
     if (next) next.disabled = current === total;
-    window.scrollTo({ top: list.offsetTop - 80, behavior: 'smooth' });
+
+    if (scroll) {
+      const top = list.getBoundingClientRect().top + window.scrollY - 80;
+      window.scrollTo({ top, behavior: reduceMotion ? 'auto' : 'smooth' });
+    }
+
+    try {
+      const url = new URL(location.href);
+      if (current === 1) url.searchParams.delete('halaman');
+      else url.searchParams.set('halaman', String(current));
+      history.replaceState(null, '', url);
+    } catch (e) { /* abaikan */ }
   }
 
-  nums.forEach((n) => n.addEventListener('click', () => show(Number(n.dataset.page))));
-  prev.addEventListener('click', () => show(current - 1));
-  next.addEventListener('click', () => show(current + 1));
+  nav.hidden = false;
+  nums.forEach((n) => n.addEventListener('click', () => show(Number(n.dataset.page), true)));
+  prev.addEventListener('click', () => show(current - 1, true));
+  next.addEventListener('click', () => show(current + 1, true));
 
-  show(1);
+  show(initial, false);
 })();
 </script>

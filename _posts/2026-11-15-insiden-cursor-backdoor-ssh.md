@@ -5,6 +5,7 @@ description: "Kunci API Fireworks AI yang bocor membuka jalan bagi ekstensi Clau
 date: 2026-11-15 09:30:00 +0700
 categories: [keamanan, rantai-pasok]
 image: /assets/images/news/cursor-cover.webp
+thumb: /assets/images/news/cursor-cover-thumb.webp
 image_alt: "Foto monitor yang menampilkan kode sumber di editor"
 cover: /assets/images/news/cursor-cover.webp
 cover_alt: "Foto monitor yang menampilkan kode sumber di editor"

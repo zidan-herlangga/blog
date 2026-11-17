@@ -5,6 +5,7 @@ description: "Langkah-langkah praktis mengamankan server Linux: SSH, firewall, u
 date: 2026-11-13 10:00:00 +0700
 categories: [keamanan, linux]
 image: /assets/images/news/hardening-cover.webp
+thumb: /assets/images/news/hardening-cover-thumb.webp
 image_alt: "Foto data center dengan rak server"
 cover: /assets/images/news/hardening-cover.webp
 cover_alt: "Foto data center dengan rak server"

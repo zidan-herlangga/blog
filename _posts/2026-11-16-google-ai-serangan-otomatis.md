@@ -5,6 +5,7 @@ description: "GTIG mengonfirmasi ancaman baru: kerangka kerja LLM yang mengotoma
 date: 2026-11-16 14:00:00 +0700
 categories: [keamanan, ai]
 image: /assets/images/news/google-ai-cover.webp
+thumb: /assets/images/news/google-ai-cover-thumb.webp
 image_alt: "Foto layar yang menampilkan kode program"
 cover: /assets/images/news/google-ai-cover.webp
 cover_alt: "Foto layar yang menampilkan kode program"

@@ -4,15 +4,17 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="google-site-verification" content="BupvolCrGC68WJRZIYdQAB48-oAs_ChjwpQyIZEKSPc" />
+  <meta name="theme-color" content="#090b0f">
   <script>
     (() => {
       try {
-        const stored = localStorage.getItem('theme');
-        document.documentElement.classList.toggle('dark', stored !== 'light');
+        const light = localStorage.getItem('theme') === 'light';
+        document.documentElement.classList.toggle('dark', !light);
+        const meta = document.querySelector('meta[name="theme-color"]');
+        if (meta) meta.setAttribute('content', light ? '#e9ecf1' : '#090b0f');
       } catch (e) { /* abaikan */ }
     })();
   </script>
-  <meta name="theme-color" content="#090b0f">
   {% if page.noindex %}<meta name="robots" content="noindex, follow">{% endif %}
   <link rel="icon" href="{{ '/assets/favicon.svg' | relative_url }}" type="image/svg+xml">
   <link rel="preload" href="{{ '/assets/fonts/inter-latin-wght-normal.woff2' | relative_url }}" as="font" type="font/woff2" crossorigin>
@@ -72,7 +74,7 @@
 
   <div class="offcanvas" id="offcanvas" aria-hidden="true">
     <div class="offcanvas__backdrop" data-offcanvas-close></div>
-    <aside class="offcanvas__panel" aria-label="Menu navigasi">
+    <aside class="offcanvas__panel" role="dialog" aria-modal="true" aria-label="Menu navigasi">
       <div class="offcanvas__head">
         <span class="brand-mark">ZH</span>
         <button class="offcanvas__close" type="button" data-offcanvas-close aria-label="Tutup menu">&times;</button>
@@ -227,17 +229,27 @@
       const bar = document.querySelector('.scroll-progress');
       if (!bar) return;
       let ticking = false;
-      const update = () => {
+      let max = 0;
+      const measure = () => {
         const h = document.documentElement;
-        const max = h.scrollHeight - h.clientHeight;
-        const pct = max > 0 ? (h.scrollTop / max) * 100 : 0;
+        max = h.scrollHeight - h.clientHeight;
+      };
+      const update = () => {
+        const pct = max > 0 ? (Math.min(window.scrollY, max) / max) * 100 : 0;
         bar.style.width = pct + '%';
         ticking = false;
       };
-      window.addEventListener('scroll', () => {
-        if (!ticking) { requestAnimationFrame(update); ticking = true; }
-      }, { passive: true });
+      const onScroll = () => {
+        if (!ticking) {
+          ticking = true;
+          requestAnimationFrame(update);
+        }
+      };
+      measure();
       update();
+      window.addEventListener('scroll', onScroll, { passive: true });
+      window.addEventListener('resize', () => { measure(); update(); }, { passive: true });
+      window.addEventListener('load', () => { measure(); update(); }, { once: true });
     })();
   </script>
   <script>
@@ -261,7 +273,7 @@
         }
         dropdown.innerHTML = hits.map((p) => `
           <a class="live-search__item" href="${esc(p.url)}">
-            <img src="${esc(p.image)}" alt="" loading="lazy" decoding="async">
+            <img src="${esc(p.thumb || p.image)}" alt="" loading="lazy" decoding="async">
             <span class="live-search__text">
               <span class="live-search__title">${esc(p.title)}</span>
               <span class="live-search__meta">${esc(p.date)} · ${(p.categories || []).map(esc).join(', ')}</span>
@@ -284,22 +296,53 @@
       const toggle = document.querySelector('[data-menu-toggle]');
       const offcanvas = document.getElementById('offcanvas');
       if (!toggle || !offcanvas) return;
+      const panel = offcanvas.querySelector('.offcanvas__panel');
+      const closeBtn = offcanvas.querySelector('.offcanvas__close');
+      const isOpen = () => offcanvas.classList.contains('is-open');
+      let lastFocus = null;
+
       const open = () => {
+        lastFocus = document.activeElement;
         offcanvas.classList.add('is-open');
         offcanvas.setAttribute('aria-hidden', 'false');
         toggle.setAttribute('aria-expanded', 'true');
         document.body.style.overflow = 'hidden';
+        if (closeBtn) closeBtn.focus();
       };
+
       const close = () => {
+        if (!isOpen()) return;
         offcanvas.classList.remove('is-open');
         offcanvas.setAttribute('aria-hidden', 'true');
         toggle.setAttribute('aria-expanded', 'false');
         document.body.style.overflow = '';
+        if (lastFocus && typeof lastFocus.focus === 'function') lastFocus.focus();
       };
+
       toggle.addEventListener('click', open);
       offcanvas.querySelectorAll('[data-offcanvas-close]').forEach((el) => el.addEventListener('click', close));
       offcanvas.querySelectorAll('a').forEach((a) => a.addEventListener('click', close));
-      document.addEventListener('keydown', (e) => { if (e.key === 'Escape') close(); });
+
+      document.addEventListener('keydown', (e) => {
+        if (!isOpen()) return;
+        if (e.key === 'Escape') {
+          close();
+          return;
+        }
+        if (e.key !== 'Tab' || !panel) return;
+        const focusables = [...panel.querySelectorAll('a[href], button:not([disabled]), input, [tabindex]:not([tabindex="-1"])')]
+          .filter((el) => el.offsetParent !== null);
+        if (!focusables.length) return;
+        const first = focusables[0];
+        const last = focusables[focusables.length - 1];
+        if (e.shiftKey && document.activeElement === first) {
+          e.preventDefault();
+          last.focus();
+        } else if (!e.shiftKey && document.activeElement === last) {
+          e.preventDefault();
+          first.focus();
+        }
+      });
     })();
   </script>
 </body>

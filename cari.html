@@ -7,9 +7,10 @@ permalink: /cari/
 
 <section class="search-page">
   <h1>Cari tulisan</h1>
-  <p class="search-page__lead">Ketik kata kunci – judul, kategori, atau isi ringkasan.</p>
+  <p class="search-page__lead">Ketik kata kunci – judul, kategori, atau ringkasan.</p>
 
-  <form class="search-form" role="search" onsubmit="return false;">
+  <form class="search-form" id="searchForm" role="search">
+    <label class="sr-only" for="searchInput">Kata kunci pencarian</label>
     <input
       type="search"
       id="searchInput"
@@ -17,54 +18,54 @@ permalink: /cari/
       placeholder="Contoh: ransomware, Linux, Cursor..."
       autocomplete="off"
       autofocus>
-    <button type="button" class="search-form__clear" id="searchClear" aria-label="Bersihkan">✕</button>
+    <button type="button" class="search-form__clear" id="searchClear" aria-label="Bersihkan pencarian" hidden>✕</button>
   </form>
 
-  <p class="search-page__status" id="searchStatus">Memuat indeks...</p>
+  <p class="search-page__status" id="searchStatus" role="status" aria-live="polite">Memuat indeks...</p>
 
   <div class="search-results" id="searchResults"></div>
 </section>
 
 <script>
 (function () {
+  const form = document.getElementById('searchForm');
   const input = document.getElementById('searchInput');
   const clear = document.getElementById('searchClear');
   const status = document.getElementById('searchStatus');
   const results = document.getElementById('searchResults');
-  if (!input || !results) return;
+  if (!form || !input || !results) return;
 
   let posts = [];
-  fetch('{{ "/search.json" | relative_url }}')
-    .then((r) => r.json())
-    .then((data) => {
-      posts = Array.isArray(data) ? data : [];
-      status.textContent = posts.length + ' tulisan terindeks. Ketik untuk mencari.';
-      render('');
-    })
-    .catch(() => { status.textContent = 'Gagal memuat indeks pencarian.'; });
+  let ready = false;
 
   function escapeHtml(s) {
     return String(s).replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
   }
 
   function render(q) {
+    if (!ready) return;
     const query = q.trim().toLowerCase();
+    if (clear) clear.hidden = !query;
+
     if (!query) {
       results.innerHTML = '';
       status.textContent = posts.length + ' tulisan terindeks. Ketik untuk mencari.';
       return;
     }
+
     const hits = posts.filter((p) => {
       const hay = [p.title, p.description, (p.categories || []).join(' ')].join(' ').toLowerCase();
       return hay.includes(query);
     });
+
     status.textContent = hits.length === 0
       ? `Tidak ada hasil untuk "${query}".`
       : `${hits.length} hasil untuk "${query}".`;
+
     results.innerHTML = hits.map((p) => `
       <a class="search-result" href="${escapeHtml(p.url)}">
         <span class="search-result__media">
-          <img src="${escapeHtml(p.image)}" alt="${escapeHtml(p.title)}" loading="lazy" decoding="async">
+          <img src="${escapeHtml(p.thumb || p.image)}" alt="" loading="lazy" decoding="async">
         </span>
         <span class="search-result__body">
           <span class="search-result__meta">${escapeHtml(p.date)} · ${(p.categories || []).map(escapeHtml).join(', ')}</span>
@@ -75,17 +76,49 @@ permalink: /cari/
     `).join('');
   }
 
-  input.addEventListener('input', () => render(input.value));
-  clear.addEventListener('click', () => { input.value = ''; input.focus(); render(''); });
+  fetch('{{ "/search.json" | relative_url }}')
+    .then((r) => r.json())
+    .then((data) => {
+      posts = Array.isArray(data) ? data : [];
+      ready = true;
+      const q = new URLSearchParams(location.search).get('q');
+      if (q) input.value = q;
+      render(input.value);
+    })
+    .catch(() => { status.textContent = 'Gagal memuat indeks pencarian.'; });
 
-  // support ?q= dari header
-  const params = new URLSearchParams(location.search);
-  if (params.get('q')) {
-    input.value = params.get('q');
-    // tunggu posts loaded
-    const wait = setInterval(() => {
-      if (posts.length) { render(input.value); clearInterval(wait); }
-    }, 100);
+  input.addEventListener('input', () => render(input.value));
+
+  function updateUrl() {
+    try {
+      const url = new URL(location.href);
+      if (input.value.trim()) url.searchParams.set('q', input.value.trim());
+      else url.searchParams.delete('q');
+      history.replaceState(null, '', url);
+    } catch (e) { /* abaikan */ }
   }
+
+  form.addEventListener('submit', (e) => {
+    e.preventDefault();
+    updateUrl();
+    render(input.value);
+  });
+
+  if (clear) {
+    clear.addEventListener('click', () => {
+      input.value = '';
+      input.focus();
+      updateUrl();
+      render('');
+    });
+  }
+
+  input.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') {
+      input.value = '';
+      updateUrl();
+      render('');
+    }
+  });
 })();
 </script>

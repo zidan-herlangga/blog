@@ -5,6 +5,7 @@ description: "Dirty Frag memberi root, Januscape memungkinkan escape dari VM. Ke
 date: 2026-11-17 09:00:00 +0700
 categories: [keamanan, linux]
 image: /assets/images/news/dirtyfrag-cover.webp
+thumb: /assets/images/news/dirtyfrag-cover-thumb.webp
 image_alt: "Foto lorong data center dengan rak server"
 cover: /assets/images/news/dirtyfrag-cover.webp
 cover_alt: "Foto lorong data center dengan rak server"

@@ -5,6 +5,7 @@ description: "FBI mewaspadai ARTEX, framework pentest berbasis AI yang mempercep
 date: 2026-11-16 20:00:00 +0700
 categories: [keamanan, ai]
 image: /assets/images/news/artex-cover.webp
+thumb: /assets/images/news/artex-cover-thumb.webp
 image_alt: "Foto gembok logam dengan kunci"
 cover: /assets/images/news/artex-cover.webp
 cover_alt: "Foto gembok logam dengan kunci"

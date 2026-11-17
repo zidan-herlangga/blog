@@ -5,6 +5,7 @@ description: "Checklist praktis menyimpan secret: env var, secret manager, rotas
 date: 2026-11-14 10:00:00 +0700
 categories: [keamanan, web]
 image: /assets/images/news/secrets-cover.webp
+thumb: /assets/images/news/secrets-cover-thumb.webp
 image_alt: "Foto gembok logam dengan kunci"
 cover: /assets/images/news/secrets-cover.webp
 cover_alt: "Foto gembok logam dengan kunci"

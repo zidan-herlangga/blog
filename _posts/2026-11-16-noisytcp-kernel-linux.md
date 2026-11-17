@@ -5,6 +5,7 @@ description: "CVE-2026-99288 memungkinkan penyerang tanpa login memicu kernel pa
 date: 2026-11-16 10:00:00 +0700
 categories: [keamanan, linux]
 image: /assets/images/news/noisytcp-cover.webp
+thumb: /assets/images/news/noisytcp-cover-thumb.webp
 image_alt: "Foto lorong data center dengan rak server"
 cover: /assets/images/news/noisytcp-cover.webp
 cover_alt: "Foto lorong data center dengan rak server"
