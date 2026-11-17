@@ -13,8 +13,13 @@ Portal artikel pribadi berbasis Jekyll, live di **https://zidan-herlangga.github
 - `_posts/` – artikel (format `YYYY-MM-DD-judul.md`)
 - `assets/images/` – gambar artikel (termasuk `og-default.png`)
 - `assets/images/news/` – cover & diagram untuk seri sorotan keamanan
-- `assets/fonts/` – font Inter & Space Grotesk (self-hosted)
-- `assets/css/style.css` – stylesheet (palet steel blue, sama dengan situs utama)
+- `assets/fonts/` – font Inter & Space Grotesk (self-hosted, sudah di-subset)
+- `_includes/style.css` – **sumber utama stylesheet** (palet steel blue, sama
+  dengan situs utama). Di-inline ke `<head>` saat build lewat
+  `{% include style.css %}` di `_layouts/default.html`, jadi tidak ada request CSS
+  yang memblokir render.
+- `assets/css/style.css` – hanya stub (front matter + include) supaya URL lama
+  `/blog/assets/css/style.css` yang masih di cache tetap dapat CSS.
 - `index.md` – beranda (daftar tulisan, 6 per halaman)
 - `about.html` – halaman Tentang (dengan foto profil)
 - `kategori.html` – halaman semua kategori (`/blog/kategori/`)
@@ -139,7 +144,13 @@ Sudah otomatis, tidak perlu diurus per artikel:
 - Breadcrumb (`BreadcrumbList`) + navigasi antar artikel
 - Gambar OG default: `assets/images/og-default.png` (dipakai kalau artikel
   tidak punya `image:` di front matter)
-- Font di-self-host, tanpa request ke Google Fonts
+- Font di-self-host, tanpa request ke Google Fonts, dan sudah di-subset ke
+  Latin-1 + tanda baca (Inter 37,9 KB, Space Grotesk 19,1 KB) dengan variable
+  axis tetap utuh. Kalau suatu saat menambah karakter di luar rentang itu
+  (mis. huruf Yunani/Sirilik), jalankan ulang subset atau font akan jatuh ke
+  font sistem.
+- Cover artikel di-preload di `<head>` dengan `imagesrcset`/`imagesizes`, jadi
+  browser memilih ukuran 360/800/1200 px lebih awal.
 
 **Checklist sekali saja (manual):**
 
