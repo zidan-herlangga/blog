@@ -4,6 +4,7 @@ title: "Checklist Hardening Server Linux untuk Pemula"
 description: "Langkah-langkah praktis mengamankan server Linux: SSH, firewall, update, fail2ban, backup, dan monitoring."
 date: 2026-11-13 10:00:00 +0700
 categories: [keamanan, linux]
+series: "Sorotan Keamanan November 2026"
 image: /assets/images/news/hardening-cover.webp
 thumb: /assets/images/news/hardening-cover-thumb.webp
 image_alt: "Foto data center dengan rak server"

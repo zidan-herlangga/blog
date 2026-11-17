@@ -4,6 +4,7 @@ title: "Insiden Cursor: Kunci API Bocor hingga Backdoor SSH di 5.000 Developer"
 description: "Kunci API Fireworks AI yang bocor membuka jalan bagi ekstensi Claude Code palsu di Cursor. Hingga 5.000 developer terpapar backdoor SSH."
 date: 2026-11-15 09:30:00 +0700
 categories: [keamanan, rantai-pasok]
+series: "Sorotan Keamanan November 2026"
 image: /assets/images/news/cursor-cover.webp
 thumb: /assets/images/news/cursor-cover-thumb.webp
 image_alt: "Foto monitor yang menampilkan kode sumber di editor"

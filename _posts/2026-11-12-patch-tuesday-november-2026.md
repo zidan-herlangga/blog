@@ -4,6 +4,7 @@ title: "Patch Tuesday November 2026: 1.093 Celah, Zero-Day Outlook, dan Priorita
 description: "Patch Tuesday November 2026 membawa 1.093 perbaikan, 63 kritis, dan zero-day Outlook CVE-2026-124194 yang sudah dieksploitasi."
 date: 2026-11-12 08:00:00 +0700
 categories: [keamanan, patch]
+series: "Sorotan Keamanan November 2026"
 image: /assets/images/news/patch-tuesday-cover.webp
 thumb: /assets/images/news/patch-tuesday-cover-thumb.webp
 image_alt: "Foto layar yang menampilkan kode program"

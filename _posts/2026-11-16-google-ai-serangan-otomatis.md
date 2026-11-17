@@ -4,6 +4,7 @@ title: "Google GTIG: Serangan AI yang Sepenuhnya Otomatis Sudah Dimulai"
 description: "GTIG mengonfirmasi ancaman baru: kerangka kerja LLM yang mengotomatiskan pencarian dan eksploitasi celah tanpa manusia di loop."
 date: 2026-11-16 14:00:00 +0700
 categories: [keamanan, ai]
+series: "Sorotan Keamanan November 2026"
 image: /assets/images/news/google-ai-cover.webp
 thumb: /assets/images/news/google-ai-cover-thumb.webp
 image_alt: "Foto layar yang menampilkan kode program"

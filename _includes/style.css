@@ -1,4 +1,4 @@
-﻿/* =========================================================
+/* =========================================================
    Zidan Herlangga – Blog
    Palet & komponen disamakan dengan situs utama (steel blue).
    ========================================================= */
@@ -1939,7 +1939,7 @@ hr {
   position: relative;
 }
 
-.site-search__dropdown {
+.site-search__panel {
   position: absolute;
   top: calc(100% + 0.5rem);
   right: 0;
@@ -1955,7 +1955,16 @@ hr {
   padding: 0.4rem;
 }
 
-.site-search__dropdown[hidden] {
+.site-search__panel[hidden] {
+  display: none;
+}
+
+.site-search__dropdown {
+  display: flex;
+  flex-direction: column;
+}
+
+.site-search__dropdown:empty {
   display: none;
 }
 
@@ -2391,3 +2400,75 @@ hr {
     transition: none;
   }
 }
+
+/* ---------- daftar isi artikel ---------- */
+
+.toc { border: 1px solid var(--line); border-radius: 16px; background: var(--card); padding: 1rem 1.15rem; margin: 0 0 1.75rem; }
+.toc__title { font-size: 0.74rem; text-transform: uppercase; letter-spacing: 0.08em; color: var(--muted); margin: 0 0 0.6rem; font-family: 'Inter', system-ui, sans-serif; font-weight: 600; }
+.toc__list { margin: 0; padding-left: 1.15rem; display: grid; gap: 0.35rem; font-size: 0.9rem; }
+.toc__list a { color: var(--fg); text-decoration: none; }
+.toc__list a:hover { color: var(--accent-text); text-decoration: underline; }
+
+/* ---------- seri tulisan ---------- */
+
+.post-series { margin: 2rem 0 0; padding: 1rem 1.15rem; border: 1px solid var(--line); border-radius: 16px; background: var(--card); }
+.post-series__title { font-size: 1.05rem; margin: 0 0 0.35rem; }
+.post-series__hint { color: var(--muted); font-size: 0.82rem; margin: 0 0 0.7rem; }
+.post-series__list { margin: 0; padding-left: 1.15rem; display: grid; gap: 0.4rem; font-size: 0.9rem; }
+.post-series__list .is-current { color: var(--muted); font-weight: 600; }
+
+/* ---------- tulisan terkait ---------- */
+
+.post-related { margin-top: 2.5rem; }
+.post-related__title { font-size: 1.1rem; margin: 0 0 1rem; }
+.news-list--compact { gap: 0.8rem; }
+.news-list--compact .news-item__media { width: 104px; }
+.news-list--compact .news-item__title { font-size: 0.98rem; -webkit-line-clamp: 2; }
+.news-list--compact .news-item__excerpt { font-size: 0.82rem; -webkit-line-clamp: 2; }
+
+/* ---------- kotak penulis ---------- */
+
+.author-box { display: flex; gap: 1rem; align-items: flex-start; margin-top: 2.5rem; padding: 1.15rem; border: 1px solid var(--line); border-radius: 18px; background: var(--card); }
+.author-box__avatar { width: 72px; height: 72px; border-radius: 50%; object-fit: cover; flex-shrink: 0; background: var(--card); }
+.author-box__body { min-width: 0; }
+.author-box__title { font-size: 0.74rem; text-transform: uppercase; letter-spacing: 0.08em; color: var(--muted); margin: 0 0 0.3rem; font-family: 'Inter', system-ui, sans-serif; font-weight: 600; }
+.author-box__name { font-weight: 600; margin: 0 0 0.35rem; }
+.author-box__bio { color: var(--muted); font-size: 0.9rem; line-height: 1.6; margin: 0 0 0.5rem; }
+.author-box__links { display: flex; flex-wrap: wrap; gap: 0.35rem 0.6rem; font-size: 0.85rem; margin: 0; color: var(--muted); }
+.author-box__links a { color: var(--accent-text); text-decoration: none; }
+.author-box__links a:hover { text-decoration: underline; }
+@media (max-width: 520px) { .author-box { flex-direction: column; } }
+
+/* ---------- halaman kategori ---------- */
+
+.cat-page__count { color: var(--muted); font-size: 0.82rem; margin-top: 0.5rem; }
+.cat-page__back { margin-top: 2rem; font-size: 0.88rem; }
+.cat-index { display: grid; gap: 1rem; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); margin-top: 1.5rem; }
+.cat-card { display: flex; flex-direction: column; gap: 0.35rem; padding: 1.15rem 1.25rem; border: 1px solid var(--line); border-radius: 16px; background: var(--card); color: var(--fg); text-decoration: none; transition: transform 0.18s ease, border-color 0.18s ease; }
+.cat-card:hover { transform: translateY(-2px); border-color: color-mix(in oklab, var(--accent) 40%, var(--line)); text-decoration: none; }
+.cat-card__title { font-size: 1.05rem; margin: 0; }
+.cat-card__title a { color: var(--fg); text-decoration: none; }
+.cat-card__count { color: var(--muted); font-size: 0.75rem; margin: 0; }
+.cat-card__desc { color: var(--muted); font-size: 0.85rem; line-height: 1.55; margin: 0.15rem 0 0; }
+.cat-card__latest { list-style: none; padding: 0; margin: 0.6rem 0 0; display: grid; gap: 0.3rem; font-size: 0.82rem; }
+.cat-card__latest a { color: var(--fg); text-decoration: none; }
+.cat-card__latest a:hover { color: var(--accent-text); text-decoration: underline; }
+.cat-card__more { margin-top: 0.6rem; font-size: 0.82rem; font-weight: 600; color: var(--accent-text); text-decoration: none; }
+
+/* ---------- filter pencarian ---------- */
+
+.search-filters { display: flex; align-items: center; gap: 0.6rem; flex-wrap: wrap; margin: 0 0 1.1rem; }
+.search-filters__label { color: var(--muted); font-size: 0.74rem; text-transform: uppercase; letter-spacing: 0.06em; font-weight: 600; }
+.search-filters__chips { display: flex; flex-wrap: wrap; gap: 0.4rem; }
+.search-chip { display: inline-flex; align-items: center; gap: 0.4rem; padding: 0.35rem 0.7rem; border: 1px solid var(--line); border-radius: 999px; background: var(--card); color: var(--muted); font-size: 0.8rem; cursor: pointer; transition: border-color 0.15s ease, color 0.15s ease, background 0.15s ease; }
+.search-chip:hover { border-color: color-mix(in oklab, var(--accent) 40%, var(--line)); color: var(--fg); }
+.search-chip[aria-pressed="true"] { border-color: color-mix(in oklab, var(--accent) 55%, var(--line)); color: var(--fg); background: color-mix(in oklab, var(--accent) 16%, transparent); }
+.search-filters[hidden] { display: none; }
+
+/* ---------- live search aktif ---------- */
+
+.live-search__item.is-active { background: color-mix(in oklab, var(--accent) 12%, var(--card)); outline: 1px solid color-mix(in oklab, var(--accent) 40%, var(--line)); }
+
+/* ---------- scroll margin heading ---------- */
+
+.post-content h2, .post-content h3 { scroll-margin-top: 4.5rem; }

@@ -4,6 +4,7 @@ title: "Dirty Frag dan Januscape: Dua Celah Kernel yang Lebih Berbahaya dari Noi
 description: "Dirty Frag memberi root, Januscape memungkinkan escape dari VM. Keduanya ditemukan peneliti yang sama yang menemukan NoisyTCP."
 date: 2026-11-17 09:00:00 +0700
 categories: [keamanan, linux]
+series: "Sorotan Keamanan November 2026"
 image: /assets/images/news/dirtyfrag-cover.webp
 thumb: /assets/images/news/dirtyfrag-cover-thumb.webp
 image_alt: "Foto lorong data center dengan rak server"

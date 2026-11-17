@@ -1,0 +1,32 @@
+{%- assign _author = site.data.authors[site.author] -%}
+{%- if _author -%}
+<section class="author-box" aria-labelledby="author-title">
+  {%- if _author.picture %}
+  <img
+    class="author-box__avatar"
+    src="{{ _author.picture | relative_url }}"
+    alt="Foto {{ _author.name }}"
+    width="72"
+    height="72"
+    loading="lazy"
+    decoding="async">
+  {%- endif %}
+  <div class="author-box__body">
+    <h2 class="author-box__title" id="author-title">Tentang penulis</h2>
+    <p class="author-box__name">
+      {{ _author.name }}
+      {%- if _author.twitter %} · <a href="https://x.com/{{ _author.twitter }}" rel="me noopener">@{{ _author.twitter }}</a>{% endif -%}
+    </p>
+    {%- if _author.bio %}
+    <p class="author-box__bio">{{ _author.bio }}</p>
+    {%- endif %}
+    <p class="author-box__links">
+      <a href="{{ _author.url }}">Situs utama</a>
+      <span aria-hidden="true">·</span>
+      <a href="{{ '/about/' | relative_url }}">Tentang blog ini</a>
+      <span aria-hidden="true">·</span>
+      <a href="{{ '/feed.xml' | relative_url }}">RSS</a>
+    </p>
+  </div>
+</section>
+{%- endif -%}

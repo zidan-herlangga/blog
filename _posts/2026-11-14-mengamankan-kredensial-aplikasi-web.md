@@ -4,6 +4,7 @@ title: "Cara Mengamankan Kredensial di Aplikasi Web"
 description: "Checklist praktis menyimpan secret: env var, secret manager, rotasi, scanning, dan least privilege."
 date: 2026-11-14 10:00:00 +0700
 categories: [keamanan, web]
+series: "Sorotan Keamanan November 2026"
 image: /assets/images/news/secrets-cover.webp
 thumb: /assets/images/news/secrets-cover-thumb.webp
 image_alt: "Foto gembok logam dengan kunci"

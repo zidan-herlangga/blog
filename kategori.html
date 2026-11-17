@@ -1,31 +1,34 @@
 ---
 layout: default
 title: Kategori
-description: "Semua kategori tulisan di blog Zidan Herlangga."
+description: "Semua kategori tulisan di blog Zidan Herlangga, dari keamanan siber dan Linux sampai pengembangan web."
 permalink: /kategori/
 ---
 
 <div class="page-intro">
   <h1>Kategori</h1>
-  <p>Kumpulan tulisan berdasarkan topik.</p>
+  <p>Kumpulan tulisan berdasarkan topik. Pilih kategori untuk melihat semua artikelnya.</p>
 </div>
 
 {% assign cats = site.categories | sort %}
 {% if cats.size > 0 %}
-  {% for cat in cats %}
-    {% assign slug = cat[0] | slugify %}
-    <section class="cat-block" id="{{ slug }}">
-      <h2>{{ cat[0] }} <span class="side-count">{{ cat[1].size }}</span></h2>
-      <ul class="archive-list">
-        {% for post in cat[1] %}
-          <li>
-            <a href="{{ post.url | relative_url }}">{{ post.title }}</a>
-            <time datetime="{{ post.date | date_to_xmlschema }}">{{ post.date | date: "%d %b %Y" }}</time>
-          </li>
-        {% endfor %}
-      </ul>
-    </section>
-  {% endfor %}
+  <div class="cat-index">
+    {% for cat in cats %}
+      {% assign cat_page = site.pages | where: "category", cat[0] | first %}
+      {% assign cat_url = cat_page.url | default: '/kategori/' %}
+      <section class="cat-card">
+        <h2 class="cat-card__title"><a href="{{ cat_url | relative_url }}">{{ cat_page.title | default: cat[0] }}</a></h2>
+        <p class="cat-card__count">{{ cat[1].size }} tulisan</p>
+        {% if cat_page.description %}<p class="cat-card__desc">{{ cat_page.description }}</p>{% endif %}
+        <ul class="cat-card__latest">
+          {% for post in cat[1] limit: 3 %}
+            <li><a href="{{ post.url | relative_url }}">{{ post.title }}</a></li>
+          {% endfor %}
+        </ul>
+        <a class="cat-card__more" href="{{ cat_url | relative_url }}">Lihat semua &rarr;</a>
+      </section>
+    {% endfor %}
+  </div>
 {% else %}
   <p class="empty">Belum ada kategori.</p>
 {% endif %}

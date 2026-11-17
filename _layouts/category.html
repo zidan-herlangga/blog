@@ -1,0 +1,81 @@
+---
+layout: default
+---
+{%- assign _posts = site.categories[page.category] -%}
+{%- assign _cat_url = '/kategori/' | append: page.category | append: '/' -%}
+<div class="cat-page">
+  <nav class="breadcrumbs" aria-label="Breadcrumb">
+    <a href="{{ '/' | relative_url }}">Beranda</a>
+    <span class="breadcrumbs__sep" aria-hidden="true">/</span>
+    <a href="{{ '/kategori/' | relative_url }}">Kategori</a>
+    <span class="breadcrumbs__sep" aria-hidden="true">/</span>
+    <span aria-current="page">{{ page.title }}</span>
+  </nav>
+
+  <header class="page-intro">
+    <h1>{{ page.title }}</h1>
+    <p>{{ page.description }}</p>
+    <p class="cat-page__count">{{ _posts.size }} tulisan</p>
+  </header>
+
+  {%- if _posts.size > 0 %}
+  <div class="news-list">
+    {%- for post in _posts %}
+    <article class="news-item">
+      <a class="news-item__link" href="{{ post.url | relative_url }}">
+        <span class="news-item__media">
+          <img
+            src="{{ post.thumb | default: post.image | default: '/assets/images/og-default.png' | relative_url }}"
+            alt="{{ post.image_alt | default: post.title }}"
+            width="360"
+            height="270"
+            loading="lazy"
+            decoding="async">
+        </span>
+        <span class="news-item__body">
+          <span class="news-item__meta">
+            <time datetime="{{ post.date | date_to_xmlschema }}">{{ post.date | date: "%d %b %Y" }}</time>
+            {%- if post.categories.size > 1 %} · {{ post.categories | join: ", " }}{% endif -%}
+          </span>
+          <h2 class="news-item__title">{{ post.title }}</h2>
+          {%- if post.description %}
+          <p class="news-item__excerpt">{{ post.description }}</p>
+          {%- endif %}
+        </span>
+      </a>
+    </article>
+    {%- endfor %}
+  </div>
+  {%- else %}
+  <p class="empty">Belum ada tulisan dalam kategori ini.</p>
+  {%- endif %}
+
+  <p class="cat-page__back"><a href="{{ '/kategori/' | relative_url }}">&larr; Semua kategori</a></p>
+</div>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "CollectionPage",
+  "name": {{ page.title | jsonify }},
+  "description": {{ page.description | jsonify }},
+  "url": {{ page.url | absolute_url | jsonify }},
+  "numberOfItems": {{ _posts.size }},
+  "isPartOf": {
+    "@type": "Blog",
+    "name": {{ site.title | jsonify }},
+    "url": {{ '/' | absolute_url | jsonify }}
+  }
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    { "@type": "ListItem", "position": 1, "name": "Beranda", "item": {{ '/' | absolute_url | jsonify }} },
+    { "@type": "ListItem", "position": 2, "name": "Kategori", "item": {{ '/kategori/' | absolute_url | jsonify }} },
+    { "@type": "ListItem", "position": 3, "name": {{ page.title | jsonify }}, "item": {{ page.url | absolute_url | jsonify }} }
+  ]
+}
+</script>

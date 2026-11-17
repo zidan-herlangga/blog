@@ -8,10 +8,10 @@
       <ul class="side-list">
         {% assign cats = site.categories | sort %}
         {% for cat in cats %}
-          {% assign slug = cat[0] | slugify %}
+          {% assign cat_page = site.pages | where: "category", cat[0] | first %}
           <li>
-            <a href="{{ '/kategori/#' | append: slug | relative_url }}">
-              <span>{{ cat[0] }}</span>
+            <a href="{{ cat_page.url | default: '/kategori/' | relative_url }}">
+              <span>{{ cat_page.title | default: cat[0] }}</span>
               <span class="side-count">{{ cat[1].size }}</span>
             </a>
           </li>

@@ -1,0 +1,25 @@
+{%- comment -%}
+  Daftar isi otomatis dari heading H2 di dalam artikel.
+  Pakai: {% include toc.html html=content %}
+  Hanya tampil kalau ada minimal 3 heading, supaya artikel pendek tidak
+  dipenuhi navigasi.
+{%- endcomment -%}
+{%- assign _toc_parts = include.html | split: '<h2' -%}
+{%- assign _toc_count = _toc_parts.size | minus: 1 -%}
+{%- if _toc_count >= 3 -%}
+<nav class="toc" aria-labelledby="toc-title">
+  <h2 class="toc__title" id="toc-title">Daftar isi</h2>
+  <ol class="toc__list">
+    {%- for _part in _toc_parts offset: 1 -%}
+      {%- if _part contains 'id="' -%}
+        {%- assign _head = _part | split: '</h2>' | first -%}
+        {%- assign _id = _head | split: 'id="' | last | split: '"' | first -%}
+        {%- assign _label = _head | split: 'id="' | last | split: '"' | last | remove_first: '>' | strip_html | normalize_whitespace -%}
+        {%- if _id != '' and _label != '' -%}
+    <li><a href="#{{ _id }}">{{ _label }}</a></li>
+        {%- endif -%}
+      {%- endif -%}
+    {%- endfor -%}
+  </ol>
+</nav>
+{%- endif -%}

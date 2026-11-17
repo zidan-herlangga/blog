@@ -1,7 +1,7 @@
 ---
 layout: default
 title: Cari
-description: "Cari tulisan di blog Zidan Herlangga."
+description: "Cari tulisan di blog Zidan Herlangga: judul, kategori, ringkasan."
 permalink: /cari/
 ---
 
@@ -21,6 +21,11 @@ permalink: /cari/
     <button type="button" class="search-form__clear" id="searchClear" aria-label="Bersihkan pencarian" hidden>✕</button>
   </form>
 
+  <div class="search-filters" id="searchFilters" hidden>
+    <span class="search-filters__label">Kategori</span>
+    <div class="search-filters__chips" id="searchChips" role="group" aria-label="Filter kategori"></div>
+  </div>
+
   <p class="search-page__status" id="searchStatus" role="status" aria-live="polite">Memuat indeks...</p>
 
   <noscript>
@@ -34,6 +39,15 @@ permalink: /cari/
   <div class="search-results" id="searchResults"></div>
 </section>
 
+<script type="application/json" id="catData">
+[
+  {%- assign _cps = site.pages | where: "layout", "category" | sort: "title" -%}
+  {%- for cp in _cps -%}
+  { "slug": {{ cp.category | jsonify }}, "name": {{ cp.title | jsonify }} }{% unless forloop.last %},{% endunless %}
+  {%- endfor -%}
+]
+</script>
+
 <script>
 (function () {
   const form = document.getElementById('searchForm');
@@ -41,34 +55,83 @@ permalink: /cari/
   const clear = document.getElementById('searchClear');
   const status = document.getElementById('searchStatus');
   const results = document.getElementById('searchResults');
+  const filters = document.getElementById('searchFilters');
+  const chips = document.getElementById('searchChips');
   if (!form || !input || !results) return;
 
   let posts = [];
   let ready = false;
+  let activeCat = '';
+
+  let catNames = {};
+  try {
+    const raw = document.getElementById('catData');
+    if (raw) {
+      JSON.parse(raw.textContent).forEach((c) => { catNames[c.slug] = c.name; });
+    }
+  } catch (e) { /* abaikan */ }
 
   function escapeHtml(s) {
     return String(s).replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
   }
 
+  function labelOf(slug) { return catNames[slug] || slug; }
+
+  function countsByCat() {
+    const counts = {};
+    posts.forEach((p) => (p.categories || []).forEach((c) => { counts[c] = (counts[c] || 0) + 1; }));
+    return counts;
+  }
+
+  function renderChips() {
+    if (!chips) return;
+    const counts = countsByCat();
+    const slugs = Object.keys(counts).sort((a, b) => counts[b] - counts[a]);
+    if (!slugs.length) { if (filters) filters.hidden = true; return; }
+    let html = '<button type="button" class="search-chip" data-cat="" aria-pressed="' + (activeCat === '' ? 'true' : 'false') + '">Semua</button>';
+    slugs.forEach((slug) => {
+      html += `<button type="button" class="search-chip" data-cat="${escapeHtml(slug)}" aria-pressed="${activeCat === slug ? 'true' : 'false'}">${escapeHtml(labelOf(slug))} <span class="side-count">${counts[slug]}</span></button>`;
+    });
+    chips.innerHTML = html;
+    if (filters) filters.hidden = false;
+    chips.querySelectorAll('.search-chip').forEach((btn) => {
+      btn.addEventListener('click', () => {
+        activeCat = btn.dataset.cat;
+        updateUrl();
+        render(input.value);
+      });
+    });
+  }
+
+  function updateChipsPressed() {
+    if (!chips) return;
+    chips.querySelectorAll('.search-chip').forEach((btn) => {
+      btn.setAttribute('aria-pressed', btn.dataset.cat === activeCat ? 'true' : 'false');
+    });
+  }
+
   function render(q) {
     if (!ready) return;
     const query = q.trim().toLowerCase();
-    if (clear) clear.hidden = !query;
-
-    if (!query) {
-      results.innerHTML = '';
-      status.textContent = posts.length + ' tulisan terindeks. Ketik untuk mencari.';
-      return;
-    }
+    if (clear) clear.hidden = !query && !activeCat;
+    updateChipsPressed();
 
     const hits = posts.filter((p) => {
       const hay = [p.title, p.description, (p.categories || []).join(' ')].join(' ').toLowerCase();
-      return hay.includes(query);
+      const qOk = !query || hay.includes(query);
+      const cOk = !activeCat || (p.categories || []).includes(activeCat);
+      return qOk && cOk;
     });
 
+    if (!query && !activeCat) {
+      results.innerHTML = '';
+      status.textContent = posts.length + ' tulisan terindeks. Ketik atau pilih kategori untuk memfilter.';
+      return;
+    }
+
     status.textContent = hits.length === 0
-      ? `Tidak ada hasil untuk "${query}".`
-      : `${hits.length} hasil untuk "${query}".`;
+      ? `Tidak ada hasil${query ? ' untuk "' + query + '"' : ''}${activeCat ? ' di kategori ' + labelOf(activeCat) : ''}.`
+      : `${hits.length} hasil${query ? ' untuk "' + query + '"' : ''}${activeCat ? ' · ' + labelOf(activeCat) : ''}.`;
 
     results.innerHTML = hits.map((p) => `
       <a class="search-result" href="${escapeHtml(p.url)}">
@@ -76,7 +139,7 @@ permalink: /cari/
           <img src="${escapeHtml(p.thumb || p.image)}" alt="" loading="lazy" decoding="async">
         </span>
         <span class="search-result__body">
-          <span class="search-result__meta">${escapeHtml(p.date)} · ${(p.categories || []).map(escapeHtml).join(', ')}</span>
+          <span class="search-result__meta">${escapeHtml(p.date)} · ${(p.categories || []).map(escapeHtml).map((c) => labelOf(c)).join(', ')}</span>
           <span class="search-result__title">${escapeHtml(p.title)}</span>
           <span class="search-result__excerpt">${escapeHtml(p.description || '')}</span>
         </span>
@@ -84,27 +147,31 @@ permalink: /cari/
     `).join('');
   }
 
+  function updateUrl() {
+    try {
+      const url = new URL(location.href);
+      if (input.value.trim()) url.searchParams.set('q', input.value.trim()); else url.searchParams.delete('q');
+      if (activeCat) url.searchParams.set('kategori', activeCat); else url.searchParams.delete('kategori');
+      history.replaceState(null, '', url);
+    } catch (e) { /* abaikan */ }
+  }
+
   fetch('{{ "/search.json" | relative_url }}')
     .then((r) => r.json())
     .then((data) => {
       posts = Array.isArray(data) ? data : [];
       ready = true;
-      const q = new URLSearchParams(location.search).get('q');
+      const params = new URLSearchParams(location.search);
+      const q = params.get('q');
+      const k = params.get('kategori');
       if (q) input.value = q;
+      if (k && catNames[k]) activeCat = k;
+      renderChips();
       render(input.value);
     })
     .catch(() => { status.textContent = 'Gagal memuat indeks pencarian.'; });
 
-  input.addEventListener('input', () => render(input.value));
-
-  function updateUrl() {
-    try {
-      const url = new URL(location.href);
-      if (input.value.trim()) url.searchParams.set('q', input.value.trim());
-      else url.searchParams.delete('q');
-      history.replaceState(null, '', url);
-    } catch (e) { /* abaikan */ }
-  }
+  input.addEventListener('input', () => { updateUrl(); render(input.value); });
 
   form.addEventListener('submit', (e) => {
     e.preventDefault();

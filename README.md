@@ -174,6 +174,25 @@ Sudah otomatis, tidak perlu diurus per artikel:
 Tips konten: satu artikel = satu topik/kata kunci, description 120–155 karakter,
 saling tautkan antar artikel, dan posting rutin (minimal 1–2× per bulan).
 
+## Fitur tambahan (batch 3)
+
+- **Hub per kategori** di `/kategori/<slug>/` (keamanan, linux, web, patch,
+  rantai-pasok, ai, umum) – masing-masing berisi daftar artikel kategori
+  tersebut dan data terstruktur `CollectionPage`.
+- **Daftar isi otomatis** di artikel yang punya minimal 3 heading H2
+  (`_includes/toc.html`), dengan anchor ke heading.
+- **Tulisan terkait** (3 artikel dari kategori yang sama) di akhir artikel,
+  ditambah **navigasi seri** untuk artikel yang memakai `series` di front
+  matter.
+- **Kotak penulis** (bio + tautan situs utama/GitHub/RSS) di akhir artikel,
+  data di `_data/authors.yml`.
+- **Pencarian ditingkatkan**: navigasi panah atas/bawah + Enter di dropdown
+  live search, dan filter kategori di `/cari/`.
+- **Pemeriksa konten** `tools/check-content.mjs`: validasi cover & variannya,
+  front matter wajib, em dash, BOM/encoding, tautan internal, dan kesegaran
+  CSS hasil build. Jalankan sebelum push:
+  `node tools/check-content.mjs`.
+
 ## Catatan penting
 - Situs ini adalah **project page**, jadi semua aset & tautan dirender memakai
   `relative_url` agar otomatis berawalan `/blog/`. Jangan ganti `baseurl`.

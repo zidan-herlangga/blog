@@ -32,9 +32,13 @@ layout: default
   </figure>
   {% endif %}
 
+  {% include toc.html html=content %}
+
   <div class="post-content">
     {{ content }}
   </div>
+
+  {% include series.html %}
 
   {% if page.previous or page.next %}
   <nav class="post-nav" aria-label="Navigasi antar tulisan">
@@ -52,6 +56,10 @@ layout: default
     {% endif %}
   </nav>
   {% endif %}
+
+  {% include related.html %}
+
+  {% include author-box.html %}
 
   <footer class="post-footer">
     <a href="{{ '/' | relative_url }}">&larr; Kembali ke beranda</a>
