@@ -23,6 +23,14 @@ permalink: /cari/
 
   <p class="search-page__status" id="searchStatus" role="status" aria-live="polite">Memuat indeks...</p>
 
+  <noscript>
+    <p class="search-page__status">
+      Pencarian memerlukan JavaScript. Sementara itu, telusuri
+      <a href="{{ '/arsip/' | relative_url }}">arsip</a> atau
+      <a href="{{ '/kategori/' | relative_url }}">kategori</a>.
+    </p>
+  </noscript>
+
   <div class="search-results" id="searchResults"></div>
 </section>
 
