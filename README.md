@@ -14,19 +14,20 @@ Portal artikel pribadi berbasis Jekyll, live di **https://zidan-herlangga.github
 - `assets/images/` – gambar artikel (termasuk `og-default.png`)
 - `assets/images/news/` – cover & diagram untuk seri sorotan keamanan
 - `assets/fonts/` – font Inter & Space Grotesk (self-hosted, sudah di-subset)
-- `_includes/style.css` – **sumber utama stylesheet** (palet steel blue, sama
-  dengan situs utama). Sunting berkas ini, bukan hasil minify.
-- `_includes/style.min.css` – hasil minify dari `style.css` (43,8 → 33,7 KB).
-  Inilah yang di-inline ke `<head>` lewat `{% include style.min.css %}` di
-  `_layouts/default.html`. Setiap kali `style.css` diubah, jalankan:
+- `_includes/style.css` – **sumber stylesheet** (palet steel blue, sama dengan
+  situs utama). Sunting berkas ini.
+- `assets/css/style.css` – **hasil build** (minify) dari `_includes/style.css`,
+  berkas inilah yang dimuat lewat `<link rel="stylesheet">`. Jangan disunting
+  langsung; setelah mengubah `_includes/style.css`, jalankan dari root repo:
 
   ```bash
-  npx csso-cli@4 _includes/style.css --output _includes/style.min.css
+  node tools/build-css.mjs
   ```
 
-  Karena CSS di-inline, semua `url(...)` di dalamnya ditulis dengan
-  `relative_url` (mis. `@font-face`), bukan path relatif – path relatif akan
-  dihitung dari URL halaman, bukan dari folder CSS.
+  Skrip itu meminify CSS (csso) lalu mengubah URL font Liquid menjadi path
+  relatif (`../fonts/...`), karena `assets/css/style.css` dilayani sebagai
+  berkas statis sehingga Liquid tidak diproses di sana.
+- `tools/build-css.mjs` – skrip build CSS di atas
 - `index.md` – beranda (daftar tulisan, 6 per halaman)
 - `about.html` – halaman Tentang (dengan foto profil)
 - `kategori.html` – halaman semua kategori (`/blog/kategori/`)
