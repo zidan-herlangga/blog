@@ -24,9 +24,7 @@
   <link rel="preload" as="image" fetchpriority="high" href="{{ page.cover | relative_url }}"
     {%- if page.thumb %} imagesrcset="{{ page.thumb | relative_url }} 360w, {{ cover_800 | relative_url }} 800w, {{ page.cover | relative_url }} 1200w" imagesizes="(max-width: 900px) 100vw, (max-width: 1200px) 68vw, 720px"{% endif %}>
   {%- endif %}
-  <style>
-{% include style.min.css %}
-  </style>
+  <link rel="stylesheet" href="{{ '/assets/css/style.css' | relative_url }}">
   {% feed_meta %}
   {% seo %}
   <meta property="og:image:alt" content="{{ page.image_alt | default: page.title | default: site.title }}">
