@@ -15,11 +15,18 @@ Portal artikel pribadi berbasis Jekyll, live di **https://zidan-herlangga.github
 - `assets/images/news/` – cover & diagram untuk seri sorotan keamanan
 - `assets/fonts/` – font Inter & Space Grotesk (self-hosted, sudah di-subset)
 - `_includes/style.css` – **sumber utama stylesheet** (palet steel blue, sama
-  dengan situs utama). Di-inline ke `<head>` saat build lewat
-  `{% include style.css %}` di `_layouts/default.html`, jadi tidak ada request CSS
-  yang memblokir render. Karena di-inline, semua `url(...)` di dalamnya ditulis
-  dengan `relative_url` (mis. `@font-face`), bukan path relatif – path relatif
-  akan dihitung dari URL halaman, bukan dari folder CSS.
+  dengan situs utama). Sunting berkas ini, bukan hasil minify.
+- `_includes/style.min.css` – hasil minify dari `style.css` (43,8 → 33,7 KB).
+  Inilah yang di-inline ke `<head>` lewat `{% include style.min.css %}` di
+  `_layouts/default.html`. Setiap kali `style.css` diubah, jalankan:
+
+  ```bash
+  npx csso-cli@4 _includes/style.css --output _includes/style.min.css
+  ```
+
+  Karena CSS di-inline, semua `url(...)` di dalamnya ditulis dengan
+  `relative_url` (mis. `@font-face`), bukan path relatif – path relatif akan
+  dihitung dari URL halaman, bukan dari folder CSS.
 - `index.md` – beranda (daftar tulisan, 6 per halaman)
 - `about.html` – halaman Tentang (dengan foto profil)
 - `kategori.html` – halaman semua kategori (`/blog/kategori/`)
