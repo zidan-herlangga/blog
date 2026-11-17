@@ -119,6 +119,14 @@
     </div>
   </div>
 
+  {% if site.posts.size > 0 %}
+  <script type="application/json" id="npData">[
+    {%- for post in site.posts %}
+    {"date":{{ post.date | date_to_xmlschema | jsonify }},"url":{{ post.url | relative_url | jsonify }},"title":{{ post.title | jsonify }}}{% unless forloop.last %},{% endunless %}
+    {%- endfor %}
+  ]</script>
+  {% endif %}
+
   <footer class="site-footer">
     <div class="container">
       <div class="site-footer__top">
@@ -186,42 +194,45 @@
   <script>
     (() => {
       const banner = document.getElementById('newPostBanner');
-      if (!banner) return;
+      const dataEl = document.getElementById('npData');
+      if (!banner || !dataEl) return;
       const countEl = document.getElementById('npCount');
       const titleEl = document.getElementById('npTitle');
       const linkEl = document.getElementById('npLink');
       const closeEl = document.getElementById('npClose');
       const KEY = 'blog_last_seen';
-      fetch('{{ "/feed.xml" | relative_url }}')
-        .then((r) => r.text())
-        .then((xml) => {
-          const doc = new DOMParser().parseFromString(xml, 'application/xml');
-          const items = [...doc.querySelectorAll('entry')];
-          if (!items.length) return;
-          const dates = items.map((it) => new Date(it.querySelector('updated')?.textContent || 0).getTime());
-          const latest = dates[0];
-          const lastSeen = Number(localStorage.getItem(KEY) || 0);
-          if (lastSeen === 0) {
-            localStorage.setItem(KEY, String(latest));
-            return;
-          }
-          const newCount = dates.filter((d) => d > lastSeen).length;
-          if (newCount === 0) return;
-          countEl.textContent = newCount > 1 ? `${newCount} tulisan baru` : 'Tulisan baru';
-          titleEl.textContent = items[0].querySelector('title')?.textContent || '';
-          const linkHref = items[0].querySelector('link[rel="alternate"]')?.getAttribute('href')
-            || items[0].querySelector('link')?.getAttribute('href')
-            || '/';
-          linkEl.setAttribute('href', linkHref);
-          banner.hidden = false;
-          const dismiss = () => {
-            banner.hidden = true;
-            localStorage.setItem(KEY, String(latest));
-          };
-          closeEl.addEventListener('click', dismiss);
-          linkEl.addEventListener('click', dismiss);
-        })
-        .catch(() => { /* abaikan */ });
+
+      let posts;
+      try { posts = JSON.parse(dataEl.textContent); } catch (e) { return; }
+      if (!Array.isArray(posts) || posts.length === 0) return;
+
+      const dates = posts.map((p) => new Date(p.date).getTime()).filter((n) => !Number.isNaN(n));
+      if (dates.length === 0) return;
+      const latest = Math.max(...dates);
+
+      let lastSeen = 0;
+      try { lastSeen = Number(localStorage.getItem(KEY) || 0); } catch (e) { /* abaikan */ }
+
+      if (lastSeen === 0) {
+        try { localStorage.setItem(KEY, String(latest)); } catch (e) { /* abaikan */ }
+        return;
+      }
+
+      const newCount = dates.filter((d) => d > lastSeen).length;
+      if (newCount === 0) return;
+
+      const newest = posts[0];
+      countEl.textContent = newCount > 1 ? `${newCount} tulisan baru` : 'Tulisan baru';
+      titleEl.textContent = newest.title;
+      linkEl.setAttribute('href', newest.url);
+      banner.hidden = false;
+
+      const dismiss = () => {
+        banner.hidden = true;
+        try { localStorage.setItem(KEY, String(latest)); } catch (e) { /* abaikan */ }
+      };
+      closeEl.addEventListener('click', dismiss);
+      linkEl.addEventListener('click', dismiss);
     })();
   </script>
   <script>
