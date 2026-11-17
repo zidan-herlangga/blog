@@ -17,9 +17,9 @@ Portal artikel pribadi berbasis Jekyll, live di **https://zidan-herlangga.github
 - `_includes/style.css` – **sumber utama stylesheet** (palet steel blue, sama
   dengan situs utama). Di-inline ke `<head>` saat build lewat
   `{% include style.css %}` di `_layouts/default.html`, jadi tidak ada request CSS
-  yang memblokir render.
-- `assets/css/style.css` – hanya stub (front matter + include) supaya URL lama
-  `/blog/assets/css/style.css` yang masih di cache tetap dapat CSS.
+  yang memblokir render. Karena di-inline, semua `url(...)` di dalamnya ditulis
+  dengan `relative_url` (mis. `@font-face`), bukan path relatif – path relatif
+  akan dihitung dari URL halaman, bukan dari folder CSS.
 - `index.md` – beranda (daftar tulisan, 6 per halaman)
 - `about.html` – halaman Tentang (dengan foto profil)
 - `kategori.html` – halaman semua kategori (`/blog/kategori/`)
