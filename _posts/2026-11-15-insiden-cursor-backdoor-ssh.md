@@ -28,7 +28,7 @@ Urutannya kurang lebih seperti ini:
 
 Ekstensi palsu itu menjalankan JavaScript berbahaya yang mengumpulkan informasi sistem, menanam **SSH key milik penyerang**, mencoba mengaktifkan SSH, lalu memasang mekanisme persistence agar akses bisa dipertahankan.
 
-{% include figure.html src="/assets/images/news/diagram-cursor.png" alt="Diagram lima tahap rantai serangan Cursor" caption="Rantai serangan: kunci pihak ketiga → trace AI → kredensial internal → marketplace → backdoor SSH." %}
+{% include figure.html src="/assets/images/news/diagram-cursor.png" width="1200" height="780" alt="Diagram lima tahap rantai serangan Cursor" caption="Rantai serangan: kunci pihak ketiga → trace AI → kredensial internal → marketplace → backdoor SSH." %}
 
 ## Seberapa besar dampaknya
 

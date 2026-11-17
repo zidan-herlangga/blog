@@ -5,7 +5,8 @@
     alt="{{ include.alt | default: '' }}"
     loading="lazy"
     decoding="async"
-    {%- if include.width %} width="{{ include.width }}"{% endif %}>
+    {%- if include.width %} width="{{ include.width }}"{% endif %}
+    {%- if include.height %} height="{{ include.height }}"{% endif %}>
   {%- if include.caption %}
   <figcaption>{{ include.caption }}</figcaption>
   {%- endif %}
