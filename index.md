@@ -57,7 +57,6 @@ description: "Catatan, tulisan, dan eksperimen seputar web development, keamanan
       <button class="pagination__num{% if p == 1 %} is-active{% endif %}" type="button" data-page="{{ p }}" aria-label="Halaman {{ p }}"{% if p == 1 %} aria-current="page"{% endif %}>{{ p }}</button>
       {% endfor %}
     </span>
-    <span class="pagination__info" id="pageInfo" role="status" aria-live="polite">Halaman 1 dari {{ total_pages }}</span>
     <button class="pagination__btn" type="button" data-next>Berikutnya →</button>
   </nav>
   {% endif %}
@@ -76,7 +75,6 @@ description: "Catatan, tulisan, dan eksperimen seputar web development, keamanan
   const nums = [...nav.querySelectorAll('[data-page]')];
   const prev = nav.querySelector('[data-prev]');
   const next = nav.querySelector('[data-next]');
-  const info = document.getElementById('pageInfo');
   const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   let current = 1;
 
@@ -97,7 +95,6 @@ description: "Catatan, tulisan, dan eksperimen seputar web development, keamanan
       else n.removeAttribute('aria-current');
     });
 
-    if (info) info.textContent = 'Halaman ' + current + ' dari ' + total;
     if (prev) prev.disabled = current === 1;
     if (next) next.disabled = current === total;
 
