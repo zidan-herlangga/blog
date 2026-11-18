@@ -54,8 +54,10 @@ Dengan dua nama, workflow bisa membaca keduanya dan memilih yang tersedia.
 Contoh di workflow:
 
 ```yaml
+{% raw %}
 env:
   DATABASE_URL: ${{ secrets.DATABASE_URL_NEW || secrets.DATABASE_URL }}
+{% endraw %}
 ```
 
 GitHub Actions mengevaluasi `||` pada string kosong, jadi kalau `DATABASE_URL_NEW` belum ada, ia jatuh ke `DATABASE_URL`. Ini membuat transisi mulus.
