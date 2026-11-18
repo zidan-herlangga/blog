@@ -62,9 +62,22 @@ layout: default
 
   {% include author-box.html %}
 
-  {% include share.html %}
-
-  <footer class="post-footer">
+  {% if page.news %}
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "NewsArticle",
+    "headline": {{ page.title | jsonify }},
+    "description": {{ page.description | default: page.excerpt | strip_html | truncate: 200 | jsonify }},
+    "datePublished": "{{ page.date | date_to_xmlschema }}",
+    "dateModified": "{{ page.updated | default: page.date | date_to_xmlschema }}",
+    "author": { "@type": "Person", "name": {{ site.author | jsonify }}, "url": "https://zidanherlangga.vercel.app" },
+    "image": {{ page.cover | default: page.image | absolute_url | jsonify }},
+    "publisher": { "@type": "Organization", "name": {{ site.title | jsonify }}, "logo": { "@type": "ImageObject", "url": {{ '/assets/images/og-default.png' | absolute_url | jsonify }} } },
+    "mainEntityOfPage": { "@type": "WebPage", "@id": {{ page.url | absolute_url | jsonify }} }
+  }
+  </script>
+  {% endif %}
     <a href="{{ '/' | relative_url }}">&larr; Kembali ke beranda</a>
   </footer>
 </article>

@@ -59,6 +59,7 @@ defaults:
       type: posts
     values:
       image: /assets/images/og-default.png
+      news: true
   - scope:
       path: ""
       type: pages

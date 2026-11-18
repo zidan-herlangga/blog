@@ -193,6 +193,23 @@ saling tautkan antar artikel, dan posting rutin (minimal 1–2× per bulan).
   CSS hasil build. Jalankan sebelum push:
   `node tools/check-content.mjs`.
 
+## Keyword & berita (SEO)
+
+- Google **mengabaikan** meta `keywords` sejak 2009, tetapi Bing masih
+  membacanya ringan. Tetap isi untuk konsistensi: tambahkan `keywords: [...]`
+  di front matter artikel (contoh ada di artikel ARTEX).
+- Meta `keywords` dirender otomatis dari `page.keywords` di `default.html`.
+- Semua artikel default bertipe **NewsArticle** (set via `defaults` di
+  `_config.yml`, bisa dimatikan dengan `news: false` di front matter).
+  jekyll-seo-tag tetap mengeluarkan BlogPosting; NewsArticle ditambahkan
+  sebagai JSON-LD terpisah.
+- Strategi per artikel:
+  - **1 kata kunci utama** di judul (sudah dilakukan: "Patch Tuesday November 2026", "NoisyTCP", dll.).
+  - **2-3 kata kunci turunan** di description & excerpt.
+  - **Kategori** sebagai topik (keamanan, linux, ai, web, patch, rantai-pasok).
+  - Tautkan ke artikel lain dengan anchor text yang mengandung kata kunci.
+- Hindari keyword stuffing; utamakan kejelasan untuk pembaca.
+
 ## Catatan penting
 - Situs ini adalah **project page**, jadi semua aset & tautan dirender memakai
   `relative_url` agar otomatis berawalan `/blog/`. Jangan ganti `baseurl`.

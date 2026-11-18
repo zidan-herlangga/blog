@@ -4,6 +4,7 @@ title: "ARTEX dan Serangan Berbasis AI: Akses Istimewa dalam Waktu di Bawah 3 Ja
 description: "FBI mewaspadai ARTEX, framework pentest berbasis AI yang mempercepat serangan ke akses istimewa dalam hitungan jam."
 date: 2026-11-16 20:00:00 +0700
 categories: [keamanan, ai]
+keywords: [ARTEX, AI hacking, penetration testing otonom, serangan siber, FBI advisory, keamanan siber]
 series: "Sorotan Keamanan November 2026"
 image: /assets/images/news/artex-cover.webp
 thumb: /assets/images/news/artex-cover-thumb.webp

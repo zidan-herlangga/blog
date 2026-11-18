@@ -32,6 +32,7 @@
   {% seo %}
   <meta property="og:image:alt" content="{{ page.image_alt | default: page.title | default: site.title }}">
   <meta name="twitter:image:alt" content="{{ page.image_alt | default: page.title | default: site.title }}">
+  {% if page.keywords %}<meta name="keywords" content="{{ page.keywords | join: ', ' }}">{% endif %}
   <link rel="sitemap" type="application/xml" href="{{ '/sitemap.xml' | relative_url }}">
   {% if page.url == '/' %}
   <script type="application/ld+json">
