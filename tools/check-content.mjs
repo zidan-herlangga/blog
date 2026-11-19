@@ -137,7 +137,7 @@ for (const file of filesToScan) {
   while ((m = linkRe.exec(raw)) !== null) {
     let url = m[1].split('?')[0].split('#')[0];
     if (url.startsWith('/blog/')) url = url.slice(5) || '/';
-    if (url.startsWith('http')) continue;
+    if (url.startsWith('http') || url.startsWith('//')) continue;
     if (url === '/' ) continue;
     // normalize trailing
     const ok = [...validRoutes].some((r) => url === r || url.startsWith(r) && (r.endsWith('/') ? true : false) || url.startsWith('/assets/'));
