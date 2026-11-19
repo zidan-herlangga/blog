@@ -2569,3 +2569,6 @@ hr {
 }
 pre:hover .code-copy { opacity: 1; }
 .post-content pre { position: relative; }
+
+.post-views { color: var(--muted); font-size: 0.82rem; margin: 0.75rem 0 0; display: flex; align-items: center; gap: 0.4rem; }
+.post-views img { height: 20px; width: auto; }

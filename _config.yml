@@ -43,6 +43,10 @@ comments:
   theme_light: "github-light"
   theme_dark: "github-dark"
 
+# Analitik (GoatCounter, opsional – kosongkan untuk menonaktifkan)
+# Daftar gratis di https://www.goatcounter.com, lalu isi kode situs (mis. "zidanherlangga")
+goatcounter: ""
+
 # Exclude
 exclude:
   - Gemfile

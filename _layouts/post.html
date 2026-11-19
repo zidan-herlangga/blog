@@ -13,6 +13,25 @@ layout: default
       {% assign words = content | number_of_words %}
       · {{ words | divided_by: 200 | plus: 1 }} menit baca
     </p>
+    {% if site.goatcounter %}
+    <p class="post-views" id="postViews">Memuat tayangan...</p>
+    <script>
+    (function () {
+      const el = document.getElementById('postViews');
+      if (!el) return;
+      const code = {{ site.goatcounter | jsonify }};
+      const path = {{ page.url | jsonify }};
+      fetch('https://' + code + '.goatcounter.com/counter/' + encodeURIComponent(path) + '.json')
+        .then((r) => r.json())
+        .then((d) => { el.textContent = (d.count || 0) + ' tayangan'; })
+        .catch(() => { el.textContent = ''; el.hidden = true; });
+    })();
+    </script>
+    {% else %}
+    <p class="post-views">
+      <img src="https://hits.seeyoufarm.com/api/count/incr/badge.svg?url={{ page.url | absolute_url | url_encode }}&count_bg=%237d9cc0&title_bg=%23090b0f&icon=&icon_color=%23e7e7e7&title=tayangan&edge_flat=false" alt="Jumlah tayangan" loading="lazy" height="20">
+    </p>
+    {% endif %}
   </header>
 
   {% if page.cover %}
